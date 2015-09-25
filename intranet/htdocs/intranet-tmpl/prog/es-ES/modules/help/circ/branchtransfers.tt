@@ -1,0 +1,22 @@
+[% INCLUDE 'help-top.inc' %] <h1>Transferencias</h1>
+
+<p>Si trabaja en un sistema de múltiples sedes puede transferir ítems de una biblioteca a otra mediante el uso de la herramienta de Transferencia. Para transferir un ítem</p>
+
+<ul>
+ <li>Haga clic en 'Transferir' en la página de circulación <ul>
+ <li>Introduzca la biblioteca a la que quiere transferir el ítem</li>
+ <li>Escanee o tipee el código de barras del ítem que desee transferir</li>
+</ul>
+</li>
+ <li>Haga clic en 'Enviar''</li>
+ <li>El ítem ahora está en tránsito</li>
+ <li>Cuando el ítem llega a otra sede el bibliotecario debe comprobar el ítem para establecer que ya no está en tránsito</li>
+ <li>El ítem no será movido permanentemente a la nueva biblioteca <ul>
+ <li>El ítem muestra la misma 'Biblioteca de origen' pero ha actualizado la 'Ubicación actual' para notificar dónde se encuentra en este momento</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Ver la documentación completa para Transferencias en el <a href="http://es.koha-community.org/manual/3.12/es/transfers.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

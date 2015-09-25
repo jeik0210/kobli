@@ -1,0 +1,204 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Herramientas &rsaquo; Exportar MARC</title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+    $('#exporttype').tabs();
+});
+//]]>
+</script>
+</head>
+<body id="tools_export" class="tools">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/tools/tools-home.pl">Herramientas</a> &rsaquo; Exportar MARC </div>
+
+<div id="doc3" class="yui-t2">
+ 
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+<div id="exporttype" class="toptabs">
+<ul>
+<li><a href="#bibs">Exportar registros bibliográficos</a></li>
+<li><a href="#auths">Exportar registros de autoridad</a></li>
+[% IF ( allow_db_export ) %] <li><a href="#db">Exportar base de datos</a></li>
+[% END %] [% IF ( allow_conf_export ) %] <li><a href="#conf">Exportar configuración</a></li>
+[% END %] </ul>
+<div id="bibs">
+<p>
+ <b>Nota: los ítems son exportados por esta herramienta a menos que sea especificado.</b>
+</p>
+
+<form method="post" action="/cgi-bin/koha/tools/export.pl">
+ <fieldset class="rows">
+ <legend> Seleccionar registros a exportar </legend>
+ <ol><li>
+ <label for="start">Desde un número de registro </label>
+ <input id="start" type="text" name="StartingBiblionumber" size="5" />
+ </li>
+ <li>
+ <label for="end">A registro número: </label>
+ <input id="end" type="text" name="EndingBiblionumber" size="5" />
+ </li>
+ 
+ <li>
+ <label for="itemtype">Tipo de ítem: </label>
+ <select name="itemtype" id="itemtype">
+ <option value="">-- Todos --</option>
+ [% FOREACH itemtypeloo IN itemtypeloop %] [% IF ( itemtypeloo.selected ) %] <option value="[% itemtypeloo.value %]" selected="selected">[% itemtypeloo.description %]</option>
+[% ELSE %] <option value="[% itemtypeloo.value %]">[% itemtypeloo.description %]</option>
+[% END %] [% END %] </select>
+ </li>
+ 
+ <li>
+ <label for="branch">Biblioteca: </label>
+ <select id="branch" name="branch">
+ <option value="">-- Todos --</option>
+ [% FOREACH branchloo IN branchloop %] [% IF ( branchloo.selected ) %]<option value="[% branchloo.value %]" selected="selected">[% branchloo.branchname %]</option>
+ [% ELSE %] <option value="[% branchloo.value %]">[% branchloo.branchname %]</option>
+ [% END %] [% END %] </select>
+ </li>
+ <li>
+ <label for="startcn">Desde signatura: </label>
+ <input id="startcn" type="text" name="start_callnumber" size="5" />
+ </li>
+ <li>
+ <label for="endcn">Hasta signatura topográfica:</label>
+ <input id="endcn" type="text" name="end_callnumber" size="5" />
+ </li>
+ <li>Fecha de acceso (inclusive): <ul><li>
+ <label for="from">Fecha de Inicio:</label>
+ <input type="text" size="10" id="from" name="start_accession" value="[% from %]" class="datepickerfrom" />
+</li>
+<li><label for="to">
+ Fecha final: </label>
+<input size="10" id="to" name="end_accession" value="[% end_accession %]" type="text" class="datepickerto" />
+</li>
+</ul></li></ol>
+ </fieldset>
+ <fieldset class="rows">
+ <legend> Opciones</legend>
+<ol> <li>
+ <label for="dont_export_item">No exporte ítems</label>
+ <input id="dont_export_item" type="checkbox" name="dont_export_item" />
+ </li>
+ <li>
+ <label for="strip_nonlocal_items">Remover ítems no locales</label>
+ <input id="strip_nonlocal_items" type="checkbox" name="strip_nonlocal_items" />
+ </li>
+ <li>
+ <label for="export_remove_fields">No exporte campos</label>
+ <input id="export_remove_fields" type="text" name="export_remove_fields" value="[% export_remove_fields %]" />
+ separados por un espacio en blanco (ej. 100a 200 606</li></ol>
+ </fieldset>
+ <fieldset class="rows">
+ <legend>
+ Formato de salida </legend>
+ <ol><li>
+ <label for="output_format">Formato de archivo: </label>
+ <select id="output_format" name="output_format">
+ <option value="marc">marc</option>
+ <option value="xml">xml</option>
+ </select>
+ 
+ </li>
+ <li>
+ <label for="filename">Nombre de archivo:</label><input id="filename" type="text" name="filename" value="koha.mrc" />
+ </li></ol>
+ </fieldset>
+ <input type="hidden" name="op" value="export" />
+ <input type="hidden" name="record_type" value="bibs" />
+
+ <fieldset class="action"><input value="Exportar registros bibliográficos" type="submit" class="button" /></fieldset>
+</form>
+</div>
+
+<div id="auths">
+<form method="post" action="/cgi-bin/koha/tools/export.pl">
+ <fieldset class="rows">
+ <legend> Seleccionar registros a exportar </legend>
+ <ol><li>
+ <label for="start">De authid:</label>
+ <input id="start" type="text" name="starting_authid" size="6" />
+ </li>
+ <li>
+ <label for="end">Para autorizar: </label>
+ <input id="end" type="text" name="ending_authid" size="6" />
+ </li>
+ <li>
+ <label for="authtype">Tipo de autoridad: </label>
+ <select name="authtype" id="authtype">
+ <option value="">-- Todos --</option>
+ [% FOREACH authtypeloo IN authtypeloop %] [% IF ( authtypeloo.selected ) %] <option value="[% authtypeloo.value %]" selected="selected">[% authtypeloo.description %]</option>
+[% ELSE %] <option value="[% authtypeloo.value %]">[% authtypeloo.description %]</option>
+[% END %] [% END %] </select>
+ </li>
+ </ol>
+ </fieldset>
+ <fieldset class="rows">
+ <legend>Opciones</legend>
+ <ol>
+ <li>
+ <label for="export_remove_fields">No exporte campos</label>
+ <input id="export_remove_fields" type="text" name="export_remove_fields" />
+ separados por un espacio en blanco (ej. 100a 200 606</li></ol>
+ </fieldset>
+ <fieldset class="rows">
+ <legend>Formato de salida  </legend>
+ <ol><li>
+ <label for="output_format">Formato de archivo: </label>
+ <select id="output_format" name="output_format">
+ <option value="marc">marc</option>
+ <option value="xml">xml</option>
+ </select>
+ </li>
+ <li>
+ <label for="filename">Nombre de archivo:</label><input id="filename" type="text" name="filename" value="koha.mrc" />
+ </li></ol>
+ </fieldset>
+ <input type="hidden" name="op" value="export" />
+ <input type="hidden" name="record_type" value="auths" />
+
+ <fieldset class="action"><input value="Exportar registros de autoridad" type="submit" class="button" /></fieldset>
+</form>
+</div>
+
+[% IF ( allow_db_export ) %] <div id="db">
+<form method="post" action="/cgi-bin/koha/tools/export.pl">
+ <p><b>Nota: Este fichero exportado será muy largo, y se genera cada noche.</b></p>
+ <fieldset class="rows">
+ <legend> Elija el archivo</legend>
+ [% IF ( dbfiles && (dbfiles.size > 0) ) %] <ul>
+ [% FOREACH dbfile IN dbfiles %] <li><input type="radio" name="filename" value="[% dbfile %]">[% dbfile %]</input></li>
+ [% END %] </ul>
+ [% ELSE %] <p>Desafortunadamente, no hay copias disponibles.</p>
+ [% END %] </fieldset>
+
+ [% IF ( dbfiles && (dbfiles.size > 0) ) %] <input type="hidden" name="op" value="export" />
+ <input type="hidden" name="record_type" value="db" />
+ <fieldset class="action"><input value="Descargar base de datos" type="submit" class="button" /></fieldset>
+ [% END %] </form>
+</div>
+[% END %] [% IF ( allow_conf_export ) %] <div id="conf">
+<form method="post" action="/cgi-bin/koha/tools/export.pl">
+ <p><b>Nota: Este fichero exportado será muy largo, y se genera cada noche.</b></p>
+ <fieldset class="rows">
+ <legend> Elija el archivo</legend>
+ [% IF ( conffiles && (conffiles.size > 0) ) %] <ul>
+ [% FOREACH conffile IN conffiles %] <li><input type="radio" name="filename" value="[% conffile %]">[% conffile %]</input></li>
+ [% END %] </ul>
+ [% ELSE %] <p>Desafortunadamente, no hay copias disponibles.</p>
+ [% END %] </fieldset>
+
+ [% IF ( conffiles && (conffiles.size > 0) ) %] <input type="hidden" name="op" value="export" />
+ <input type="hidden" name="record_type" value="conf" />
+ <fieldset class="action"><input value="Descargar configuración" type="submit" class="button" /></fieldset>
+ [% END %] </form>
+</div>
+[% END %] </div>
+
+</div>
+</div>
+<div class="yui-b noprint">
+[% INCLUDE 'tools-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

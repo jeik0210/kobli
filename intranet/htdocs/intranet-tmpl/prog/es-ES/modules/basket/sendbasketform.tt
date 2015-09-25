@@ -1,0 +1,28 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>[% IF ( LibraryNameTitle ) %][% LibraryNameTitle %][% ELSE %]Kobli online[% END %] catálogo &rsaquo; Enviando su cesta </title>
+[% INCLUDE 'doc-head-close.inc' %] </head>
+<body style="padding: 1em;" id="cart_sendbasketform" class="cart">
+<div class="container">[% IF ( email_add ) %] [% IF ( SENT ) %] <h3>Mensaje enviado</h3>
+ <p>La bolsa fue enviada a: [% email_add %]</p>
+ <p><a class="focus close" href="#">Cerrar ventana</a></p>
+ [% END %] [% IF ( error ) %] <p>Problema al enviar el cesta...</p>
+ [% END %] [% ELSE %] <form action="[% url %]" method="post">
+
+<fieldset class="rows"> 
+<legend>Enviar su cesta</legend>
+<ol> <li>
+ <label for="email_add">Correo electrónico:</label>
+ <input type="text" id="email_add" name="email_add" size="43" class="focus" />
+ </li>
+ <li>
+ <label for="comment">Comentario:</label>
+ <textarea id="comment" name="comment" rows="4" cols="40"></textarea>
+ </li>
+ <li>
+ <input type="hidden" name="bib_list" value="[% bib_list %]" />
+ </li></ol></fieldset>
+ <fieldset class="action"> <input value="Enviar" type="submit" /> <a class="cancel close" href="#">Cancelar</a> </fieldset>
+</form>
+
+[% END %]</div>
+</body>
+</html>

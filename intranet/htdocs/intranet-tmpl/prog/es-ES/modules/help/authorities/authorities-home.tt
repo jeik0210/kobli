@@ -1,0 +1,18 @@
+[% INCLUDE 'help-top.inc' %] <h1>Autoridades</h1>
+
+<p>Los registros de autoridad son una manera de controlar campos en sus registros MARC. El utilizar registros de autoridad le provee control sobre temas, nombres personales y lugares.</p>
+
+<h2>Buscar Autoridades</h2>
+
+<p>Desde la página de autoridades puede buscar términos existentes y sus registros bibliográficos asociados.</p>
+
+<p>Desde los resultados podrá ver el registro de autoridad, a cuantos registros bibliográficos está asociado, y un enlace para eliminarla (si no hay registros asociados)</p>
+
+<p>Haciendo clic en el resumen del registro de autoridad abrirá el registro completo y la opción de editarlo.</p>
+
+<p>Si la autoridad tiene See Alsos en él podrás ver  en los resultados de búsqueda, haga clic en los títulos vinculados llevará a cabo una búsqueda de ese título en su lugar.</p>
+
+<p><strong>Ver la documentación completa para Autoridades en el <a href="http://es.koha-community.org/manual/3.12/es/catauthorities.html">manual</a> (en línea).</strong></p>
+
+
+[% INCLUDE 'help-bottom.inc' %] 

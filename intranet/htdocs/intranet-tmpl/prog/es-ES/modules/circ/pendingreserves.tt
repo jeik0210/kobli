@@ -1,0 +1,163 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Circulación &rsaquo; Reservas a preparar</title>
+[% INCLUDE 'doc-head-close.inc' %]
+[% INCLUDE 'calendar.inc' %]
+<!-- Plugin datatables -->
+<link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+<script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+<script type="text/JavaScript" language="JavaScript">
+//<![CDATA[
+$(document).ready(function() {
+  [% IF (dateformat == 'metric') %]
+      dt_add_type_uk_date();
+  [% END %]
+  var holdst = $("#holdst").dataTable($.extend(true, {}, dataTablesDefaults, {
+  }));
+  holdst.fnAddFilters("filter");
+  [%# add separateData function to cleanse jQuery select lists by breaking apart strings glued with BR tags and then de-duplicating any repeated library codes %]
+  function separateData ( ColumnData ){
+    var cD = ColumnData;
+    var new_array = new Array();
+    for ( j=0 ; j<cD.length ; j++ ) {
+        var split_array = cD[j].split(/<br>/gi);
+        for ( k=0 ; k<split_array.length ; k++ ){
+            var check_array = $.inArray(split_array[k], new_array);
+            if (check_array == -1) {
+                new_array.push(split_array[k]);
+            }
+        }
+    }
+    new_array.sort();
+    return new_array;
+  }
+  [%# add SeparateData function into createSelect function, so that it does the createSelect on clean data %]
+  function createSelect( data ) {
+      data = separateData(data);
+      var r='<select style="width:99%"><option value="">None</option>', i, len=data.length;
+      for ( i=0 ; i<len ; i++ ) {
+          r += '<option value="'+data[i]+'">'+data[i]+'</option>';
+      }
+      return r+'</select>';
+  }
+  $("#homebranchfilter").each( function () {
+      $(this).html( createSelect( holdst.fnGetColumnData(4) ) );
+      $('select', this).change( function () {
+          holdst.fnFilter( $(this).val(), 4 );
+      } );
+  } );
+  $("#itypefilter").each( function () {
+      $(this).html( createSelect( holdst.fnGetColumnData(8) ) );
+      $('select', this).change( function () {
+          holdst.fnFilter( $(this).val(), 8 );
+      } );
+  } );
+  $("#locationfilter").each( function () {
+      $(this).html( createSelect( holdst.fnGetColumnData(9) ) );
+      $('select', this).change( function () {
+          holdst.fnFilter( $(this).val(), 9 );
+      } );
+  } );
+});
+//]]>
+</script>
+</head>
+<body id="circ_pendingreserves" class="circ">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'circ-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/circ/circulation-home.pl">Circulación</a> &rsaquo; Reservas a retirar </div>
+
+<div id="doc3" class="yui-t2">
+
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+<h2>Reservas a retirar[% IF ( run_report ) %] colocadas entre [% from %] y [% to %][% END %]</h2>
+[% IF ( run_report ) %] <h3>Reportada el [% todaysdate %]</h3>
+<p>Las siguientes reservas no se han completado. Por favor búsquelas y retórnelas.</p>
+<div class="searchresults">
+ [% IF ( reserveloop ) %] <table id="holdst">
+ <thead>
+ <tr>
+ <th>Retirar estos muchos ítems </th>
+ <th>Ítems disponibles </th>
+ <th>Usuarios con reservas </th>
+ <th>Título</th>
+ <th>Bibliotecas</th>
+ <th>Signaturas topográficas disponibles </th>
+ <th>Copia disponible Nro </th>
+ <th>Enumeración disponible </th>
+ <th>Tipos de ítem disponibles </th>
+ <th>Ubicaciones disponibles </th>
+ <th>Primera fecha de reserva</th>
+ </tr>
+ </thead>
+ <tbody>
+ [% FOREACH reserveloo IN reserveloop %] <tr>
+ [% IF ( reserveloo.borrowernumber ) %] <td><p><b>[% reserveloo.pullcount %]</b></p></td>
+ <td>[% reserveloo.count %]</td>
+ <td>[% reserveloo.rcount %]</td>
+ <td>
+ <p>
+ [% INCLUDE 'biblio-default-view.inc' biblionumber = reserveloo.biblionumber %] [% reserveloo.title |html %] </a> [% IF ( reserveloo.author ) %]<p> por [% reserveloo.author %]</p>[% END %] </p>
+ </td>
+ [% ELSE %] <td>"</td>
+ <td>"</td>
+ <td>"</td>
+ <td>"</td>
+ [% END %] <td>[% reserveloo.holdingbranch %]</td>
+ <td><p>[% reserveloo.itemcallnumber %]</p></td>
+ <td><p>[% reserveloo.copyno %]</p></td>
+ <td><p>[% reserveloo.enumchron %]</p></td>
+ <td>[% reserveloo.itype %]</td>
+ <td>[% reserveloo.location %]</td>
+ <td width="15%">
+ <p>[% reserveloo.reservedate %]</p>
+ <p>en [% reserveloo.branch %]</p>
+ [% IF ( reserveloo.statusw ) %]<p>Esperando</p>[% END %][% IF ( reserveloo.statusf ) %]<p>Llenado por completo</p>[% END %] </td>
+ </tr>
+ [% END %] </tbody>
+ <tfoot>
+ <tr>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="0" placeholder="Retirar estos muchos ítems " /></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="1" placeholder="Ítems disponibles " /></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="2" placeholder="Usuarios con reservas  " /></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="3" placeholder="Título" /></td>
+ <td id="homebranchfilter"></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="5" placeholder="Signatura" /></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="6" placeholder="Copia disponible " /></td>
+ <td><input style="width:95%" type="text" class="filter" data-column_num="7" placeholder="Enumeración disponible " /></td>
+ <td id="itypefilter"></td>
+ <td id="locationfilter"></td>
+ <td></td>
+ </tr>
+ </tfoot>
+ </table>
+ [% ELSE %] <b>No se encontraron ítems</b>
+ [% END %] </div>
+[% END %] </div>
+</div>
+<div class="yui-b">
+<div id="filters">
+
+<form action="/cgi-bin/koha/circ/pendingreserves.pl" method="post" >
+<fieldset class="brief">
+<h4>Refinar resultados</h4>
+<ol>
+<li>
+<label for="from">
+ Fecha de Inicio: </label>
+<input type="text" size="10" id="from" name="from" value="[% from %]" class="datepickerfrom" />
+</li>
+<li><label for="to">
+ Fecha final: </label>
+<input type="text" size="10" id="to" name="to" value="[% to %]" class="datepickerto" />
+</li>
+</ol>
+<p><i>(Inclusive, el valor por defecto es de [% HoldsToPullStartDate %] días atrás hasta hoy, establezca otros rangos si es necesario.) </i></p>
+<fieldset class="action"><input value="Enviar" name="run_report" type="submit" class="submit" /></fieldset>
+</fieldset>
+</form>
+
+</div>
+</div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

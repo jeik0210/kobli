@@ -1,0 +1,54 @@
+--- 
+i18n_l10n.pref: 
+  - 
+    - Formatear fechas como
+    - 
+      choices: 
+        iso: aaaa-mm-dd
+        metric: dd/mm/aaaa
+        us: mm/dd/aaaa
+      default: us
+      pref: dateformat
+    - .
+  - 
+    - Format times in
+    - 
+      choices: 
+        12hr: Formato 12 horas ( ej.  "02:18 PM" )
+        24hr: Formato 24 horas ( ej. "14:18" )
+      default: 24hr
+      pref: TimeFormat
+    - .
+  - 
+    - Usar
+    - 
+      choices: 
+        Monday: Lunes
+        Sunday: Domingo
+      default: Sunday
+      pref: CalendarFirstDayOfWeek
+    - "como el primer d\xC3\xADa de la semana en el calendario."
+  - 
+    - "Habilite los siguientes lenguajes en la interfaz administrativa:"
+    - 
+      pref: language
+      type: staff-languages
+  - 
+    - 
+      choices: 
+        "": No permitir
+        1: Permitir
+      default: 0
+      pref: opaclanguagesdisplay
+    - a los usuarios cambiar el lenguaje que ven en el OPAC.
+  - 
+    - "Habilite los siguientes lenguajes en el OPAC:"
+    - 
+      pref: opaclanguages
+      type: opac-languages
+  - 
+    - Usar el alfabeto
+    - 
+      class: long
+      pref: alphabet
+    - "para listas de cartas navegables. \xC3\x89sta deber\xC3\xADa ser una lista separada por espacios de letras may\xC3\xBAsculas."

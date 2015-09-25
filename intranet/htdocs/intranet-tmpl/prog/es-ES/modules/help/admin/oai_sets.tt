@@ -1,0 +1,32 @@
+[% INCLUDE 'help-top.inc' %] <h1>Configuración de colecciones OAI-PMH</h1>
+
+<p>En esta página puede crear, modificar y eliminar conjuntos OAI-PMH<p>
+
+<h2>Crear un conjunto</h2>
+
+<ol>
+ <li>Haga clic en el enlace 'Agregar un nuevo conjunto'</li>
+ <li>Rellene los campos obligatorios 'setSpec' y 'setName'</li>
+ <li>Después  puede agregar descripciones para este conjunto. Para hacerloseleccionar en 'Agregar descripción' y rellene la casilla de texto creada. Puede agregar cuantas descripciones desee.</li>
+ <li>Haga clic en al botón  'Guardar'</li>
+</ol>
+
+<h2>Modificar un conjunto</h2>
+
+<p>Para modificar un conjunto, seleccione el enlace 'Modificar' en la mísma línea del conjunto que desea modificar. Aparecerá un formulario similar al de creación y le permitirá modificar setSpec, setName y descriptores.</p>
+
+<h2>Eliminar un conjunto</h2>
+
+<p>Para eliminar un conjunto, sólo tiene que seleccionar en el enlace 'Eliminar' en la misma línea del conjunto que desea eliminar. </p>
+
+<h2>Definir correspondencias</h2>
+
+<p>El enlace 'Define mappings'  le permitirá contar cómo se construirá el conjunto (que registros pertenecerán a este conjunto)</p>
+
+<h2>Crear conjuntos</h2>
+
+<p>Una vez haya configurado todos sus sets, deberá construirlos. Este se hace llamando al script misc/migration_tools/build_oai_sets.pl.</p>
+
+<p><strong>Ver la documentación completa para Sets de OAI en el <a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#oaisetsconfig">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

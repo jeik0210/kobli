@@ -1,0 +1,21 @@
+[% INCLUDE 'doc-head-open.inc' %] [% IF ( LibraryNameTitle ) %][% LibraryNameTitle %][% ELSE %]Koha Online[% END %] Catálogo [% INCLUDE 'doc-head-close.inc' %]<style type="text/css">
+#opac-maintenance-message {
+background:none repeat scroll 0 0 #FFFFFF;
+border:1px solid #A2A2A2;
+margin:4em auto;
+padding:1.5em;
+position:relative;
+right:auto;
+top:auto;
+width:50%;
+}
+</style>
+</head>
+<body><div id="doc3" class="yui-t7">
+ [% IF ( opacheader ) %] [% opacheader %] [% END %] <div id="bd">
+<div id="opac-maintenance-message">
+<h2>Mantenimiento del sistema</h2>
+<p>El [% IF ( LibraryNameTitle ) %][% LibraryNameTitle %][% ELSE %]catálogo[% END %] está desconectado por mantenimiento. ¡Volveremos pronto! Si tienes alguna consulta, por favor, contacta al <a href="mailto:[% KohaAdminEmailAddress %]">Administrador del sitio</a></p>
+</div>
+</div>
+[% INCLUDE 'opac-bottom.inc' %] 

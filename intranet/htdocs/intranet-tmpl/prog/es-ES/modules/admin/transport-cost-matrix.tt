@@ -1,0 +1,99 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Administración &rsaquo; Coste de transporte</title>
+[% INCLUDE 'doc-head-close.inc' %] <script type="text/javascript">
+//<![CDATA[
+function check_transport_cost(e) {
+    var val = e.value;
+    if (val && val != '' && !isNaN(parseFloat(val)) && val >= 0.0) {
+        return;
+    }
+    alert("Cost must be expressed as a decimal number >= 0");
+}
+function disable_transport_cost_chg(e, cost_id) {
+    disable_transport_cost(cost_id, e.checked);
+}
+function disable_transport_cost(cost_id, disable) {
+    if (disable) {
+        $('#celldiv_'+cost_id).find('input[type=text]').attr("disabled","disabled").addClass('disabled-transfer');
+    } else {
+        $('#celldiv_'+cost_id).find('input:disabled').removeAttr("disabled").removeClass('disabled-transfer');
+    }
+}
+function enable_cost_input(cost_id) {
+    var cell = $('#celldiv_'+cost_id);
+    var cost = $(cell).text();
+    var disabled = $(cell).hasClass('disabled-transfer');
+    $(cell).removeClass('disabled-transfer');
+
+    $('#celldiv_'+cost_id).html(
+        '<input type="text" name="cost_'+cost_id+'" onblur="check_transport_cost(this);" size="4" value="'+$.trim(cost)+'" />'+
+        '<br/>Disable <input name="disable_'+cost_id+'" value="1" onchange="disable_transport_cost_chg(this, \''+cost_id+'\');" type="checkbox" '+(disabled ? 'checked' : '')+' />'
+    );
+    disable_transport_cost(cost_id, disabled);
+}
+
+function form_submit (f) {
+    $(f).find('input:disabled').removeAttr("disabled");
+    return true;
+}
+//]]>
+</script>
+<style type="text/css">
+.disabled-transfer {
+    background-color: #FF8888;
+}
+</style>
+
+</head>
+<body>
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/admin/admin-home.pl">Administración</a> &rsaquo; Transfererir coste</div>
+
+<div id="doc3" class="yui-t1">
+
+<div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+ <h1 class="parameters">
+ Definir los costos de transporte entre las bibliotecas</h1>
+[% IF ( WARNING_transport_cost_matrix_off ) %] <div class="dialog message">Debido a que la preferencia del sistema 'ExtendedPatronAttributes' no está habilitada, no se pueden dar atributos adicionales a los registros de usuarios. Vaya a  <a href="/cgi-bin/koha/admin/preferences.pl?op=search&amp;searchfield=UseTransportCostMatrix">aquí</a> si desea habilitar esta característica.</div>
+[% END %] [% IF ( errors ) %]<div class="dialog alert">
+ <h4>Hy un problema con su suscripción</h4>
+ <ul>
+ [% FOR e IN errors %] <li>[% e %]</li>
+ [% END %] </ul>
+ </div>[% END %] <form method="post" action="?" onsubmit="return form_submit(this);">
+ <input type="hidden" name="op" value="set-cost-matrix" />
+ <fieldset id="transport-cost-matrix">
+ <div class="help">
+ <p>Los costos son valores decimales entre un valor máximo arbitrario (por ejemplo 1 o 100) y 0 que es el mínimo (no) el costo.</p>
+ <p>Las células rojas significan ninguna transferencia permitido.</p>
+ <p>Haga clic en celdas individuales para editar.</p>
+ </div>
+
+ <table>
+ <tr>
+ <th>Desde \\  A</th>
+ [% FOR b IN branchloop %] <th>[% b.name %]</th>
+ [% END %] </tr>
+ [% FOR bf IN branchfromloop %] <tr>
+ <th>[% bf.name %]</th>
+ [% FOR bt IN bf.branchtoloop %] <td>
+ [% IF bt.skip %] &nbsp; [% ELSE %] [% IF bt.disabled %] <div id="celldiv_[% bt.id %]" class="disabled-transfer">
+ [% ELSE %] <div id="celldiv_[% bt.id %]">
+ [% END %] <div onclick="enable_cost_input('[% bt.id %]');">[% bt.disabled ? '&nbsp;' : bt.value %]</div>
+ <input type="hidden" name="cost_[% bt.id %]" value="[% bt.value %]" />
+ [% IF bt.disabled %] <input type="hidden" name="disable_[% bt.id %]" value="1" />
+ [% END %] </div>
+ [% END %] </td>
+ [% END %] </tr>
+ [% END %] </table>
+ </fieldset>
+ <fieldset class="action">
+ <input value="Guardar" type="submit" class="submit" /> <a href="/cgi-bin/koha/admin/transport-cost-matrix.pl" class="cancel">Cancelar</a>
+ </fieldset>
+ </form>
+ </div>
+ </div>
+<div class="yui-b">
+[% INCLUDE 'admin-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

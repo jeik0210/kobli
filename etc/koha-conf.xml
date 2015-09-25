@@ -1,0 +1,302 @@
+
+<yazgfs>
+<!-- [scheme:]host[:port][/databaseName] -->
+<!-- scheme: tcp, ssl, unix, http, sru -->
+<!-- can run all servers on tcp, but the unix socket is faster -->
+<!-- uncomment these lines and comment out the above if running on UNIX -->
+
+<listen id="biblioserver" >unix:/home/www/kobli/var/run/zebradb/bibliosocket</listen>
+<listen id="authorityserver" >unix:/home/www/kobli/var/run/zebradb/authoritysocket</listen>
+
+<!--
+<listen id="biblioserver" >tcp:@:9998</listen>
+<listen id="authorityserver" >tcp:@:9999</listen>
+-->
+
+<!-- Uncomment the following entry if you want to run the public Z39.50 server.
+    Also uncomment the <server> and <serverinfo> sections for id 'publicserver' 
+    under PUBLICSERVER'S BIBLIOGRAPHIC RECORDS title-->
+<!--
+<listen id="publicserver" >tcp:@:9998</listen>
+-->
+
+<!-- Settings for special biblio server instance for PazPar2.
+     Because PazPar2 only connects to a Z39.50 server using TCP/IP,
+     it cannot use the Unix-domain socket that biblioserver uses.
+     Therefore, a custom server is defined. -->
+<!--
+<listen id="mergeserver">tcp:@:11001</listen>
+<server id="mergeserver"  listenref="mergeserver"> 
+    <directory>/home/www/kobli/var/lib/zebradb/biblios</directory>
+    <config>/home/www/kobli/etc/zebradb/zebra-biblios-dom.cfg</config>
+    <cql2rpn>/home/www/kobli/etc/zebradb/pqf.properties</cql2rpn>
+</server>
+-->
+
+<!-- BIBLIOGRAPHIC RECORDS -->
+<server id="biblioserver"  listenref="biblioserver"> 
+    <directory>/home/www/kobli/var/lib/zebradb/biblios</directory>
+    <config>/home/www/kobli/etc/zebradb/zebra-biblios-dom.cfg</config>
+    <cql2rpn>/home/www/kobli/etc/zebradb/pqf.properties</cql2rpn>
+     <!-- <docpath>xsl</docpath> -->
+     <!-- <stylesheet>xsl/default.xsl</stylesheet> -->
+     <!-- <maximumrecordsize>2000000</maximumrecordsize> -->
+    <xi:include href="/home/www/kobli/etc/zebradb/retrieval-info-bib-dom.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+     <retrievalinfo>
+       <retrieval syntax="marc21" name="F"/>
+       <retrieval syntax="marc21" name="B"/>
+       <retrieval syntax="xml" name="F"/>
+       <retrieval syntax="xml" name="B"/>
+       <retrieval syntax="xml" name="marcxml"
+                  identifier="info:srw/schema/1/marcxml-v1.1">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="dc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2DC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="mods">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2MODS.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="rdfdc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2RDFDC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="rss2">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2RSS2.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="utils">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slimUtils.xsl"/>
+         </backend>
+       </retrieval>
+     </retrievalinfo>
+      </xi:fallback>
+      </xi:include>
+    <xi:include href="/home/www/kobli/etc/zebradb/explain-biblios.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+      <explain xmlns="http://explain.z3950.org/dtd/2.0/">
+          <serverInfo>
+            <host>localhost</host>
+            <port>9998</port>
+            <database>biblios</database>
+          </serverInfo>
+        </explain>
+      </xi:fallback>
+    </xi:include>
+</server>
+<serverinfo id="biblioserver">
+        <ccl2rpn>/home/www/kobli/etc/zebradb/ccl.properties</ccl2rpn>
+        <user>kohauser</user>    
+        <password>zebrastripes</password>
+</serverinfo>
+
+<!-- AUTHORITY RECORDS -->
+<server id="authorityserver"  listenref="authorityserver" >
+    <directory>/home/www/kobli/var/lib/zebradb/authorities</directory>
+    <config>/home/www/kobli/etc/zebradb/zebra-authorities-dom.cfg</config>
+    <cql2rpn>/home/www/kobli/etc/zebradb/pqf.properties</cql2rpn>
+     <!-- <docpath>xsl</docpath> -->
+     <!-- <stylesheet>xsl/default.xsl</stylesheet> -->
+     <!-- <maximumrecordsize>2000000</maximumrecordsize> -->
+    <xi:include href="/home/www/kobli/etc/zebradb/retrieval-info-auth-dom.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+     <retrievalinfo>
+       <retrieval syntax="marc21" name="F"/>
+       <retrieval syntax="marc21" name="B"/>
+       <retrieval syntax="xml" name="marcxml"
+                  identifier="info:srw/schema/1/marcxml-v1.1">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="dc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2DC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="mods">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2MODS.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="rdfdc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2RDFDC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="utils">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slimUtils.xsl"/>
+         </backend>
+       </retrieval>
+     </retrievalinfo>
+      </xi:fallback>
+    </xi:include>
+    <xi:include href="/home/www/kobli/etc/zebradb/explain-authorities.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+      <explain xmlns="http://explain.z3950.org/dtd/2.0/">
+          <serverInfo>
+            <host>localhost</host>
+            <port>9999</port>
+            <database>authorities</database>
+          </serverInfo>
+        </explain>
+      </xi:fallback>
+    </xi:include>
+</server>
+<serverinfo id="authorityserver">
+    <ccl2rpn>/home/www/kobli/etc/zebradb/ccl.properties</ccl2rpn>
+    <user>kohauser</user>
+    <password>zebrastripes</password>
+</serverinfo>
+
+<!-- PUBLICSERVER'S BIBLIOGRAPHIC RECORDS -->
+<!--
+<server id="publicserver"  listenref="publicserver"> 
+    <directory>/home/www/kobli/var/lib/zebradb/biblios</directory>
+    <config>/home/www/kobli/etc/zebradb/zebra-biblios-dom.cfg</config>
+    <cql2rpn>/home/www/kobli/etc/zebradb/pqf.properties</cql2rpn>
+    <xi:include href="/home/www/kobli/etc/zebradb/retrieval-info-bib-dom.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+     <retrievalinfo>
+       <retrieval syntax="marc21" name="F"/>
+       <retrieval syntax="marc21" name="B"/>
+       <retrieval syntax="xml" name="F"/>
+       <retrieval syntax="xml" name="B"/>
+       <retrieval syntax="xml" name="marcxml"
+                  identifier="info:srw/schema/1/marcxml-v1.1">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="dc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2DC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="mods">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2MODS.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="rdfdc">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2RDFDC.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="rss2">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slim2RSS2.xsl"/>
+         </backend>
+       </retrieval>
+       <retrieval syntax="xml" name="utils">
+         <backend syntax="marc21" name="F">
+           <marc inputformat="marc" outputformat="marcxml"
+                 inputcharset="utf-8"/>
+           <xslt stylesheet="/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/xslt/MARC21slimUtils.xsl"/>
+         </backend>
+       </retrieval>
+     </retrievalinfo>
+      </xi:fallback>
+    </xi:include>
+    <xi:include href="/home/www/kobli/etc/zebradb/explain-biblios.xml"
+                xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+      <explain xmlns="http://explain.z3950.org/dtd/2.0/">
+          <serverInfo>
+            <host>localhost</host>
+            <port>9998</port>
+            <database>biblios</database>
+          </serverInfo>
+        </explain>
+      </xi:fallback>
+    </xi:include>
+</server>
+<serverinfo id="publicserver">
+        <ccl2rpn>/home/www/kobli/etc/zebradb/ccl.properties</ccl2rpn>
+        <user>kohauser</user>    
+        <password>zebrastripes</password>
+</serverinfo>
+-->
+
+<!-- ADDITIONAL KOHA CONFIGURATION DIRECTIVE -->
+<!-- db_scheme should follow the DBD driver name --> 
+<!-- port info: mysql:3306 Pg:5432 (5433 on Debian) -->
+<config>
+ <db_scheme>mysql</db_scheme>
+ <database>kobli</database>
+ <hostname>localhost</hostname>
+ <port>3306</port>
+ <user>kobli_usu</user>
+ <pass>jeisonzoe</pass>
+ <biblioserver>biblios</biblioserver>
+ <biblioservershadow>1</biblioservershadow>
+ <authorityserver>authorities</authorityserver>
+ <authorityservershadow>1</authorityservershadow>
+ <pluginsdir>/home/www/kobli/var/lib/koha/plugins</pluginsdir>
+ <enable_plugins>1</enable_plugins>
+ <intranetdir>/home/www/kobli/intranet/cgi-bin</intranetdir>
+ <opacdir>/home/www/kobli/opac/cgi-bin/opac</opacdir>
+ <opachtdocs>/home/www/kobli/opac/htdocs/opac-tmpl</opachtdocs>
+ <intrahtdocs>/home/www/kobli/intranet/htdocs/intranet-tmpl</intrahtdocs>
+ <includes>/home/www/kobli/intranet/htdocs/intranet-tmpl/prog/en/includes/</includes>
+ <logdir>/home/www/kobli/var/log</logdir>
+ <docdir>/home/www/kobli/doc</docdir>
+ <backupdir>/home/www/kobli/var/spool</backupdir>
+ <!-- Enable the two following to allow superlibrarians to download
+      database and configuration dumps (respectively) from the Export
+      tool -->
+ <backup_db_via_tools>0</backup_db_via_tools>
+ <backup_conf_via_tools>0</backup_conf_via_tools>
+ <pazpar2url>http://medicas:11002/search.pz2</pazpar2url>
+ <install_log>/home/www/kobli/misc/koha-install-log</install_log>
+ <useldapserver>0</useldapserver><!-- see C4::Auth_with_ldap for extra configs you must add if you want to turn this on -->
+ <zebra_bib_index_mode>dom</zebra_bib_index_mode>
+ <zebra_auth_index_mode>dom</zebra_auth_index_mode>
+ <queryparser_config>/home/www/kobli/etc/searchengine/queryparser.yaml</queryparser_config>
+</config>
+</yazgfs>

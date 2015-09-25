@@ -1,0 +1,78 @@
+[% INCLUDE 'help-top.inc' %] <h1>Agregar una nueva suscripción a una publicación periódica</h1>
+
+<p>Las suscripciones se pueden añadir haciendo clic en el botón 'Nuevo' en cualquier registro bibliográfico o visitando el módulo de Publicaciones Periódicas y haciendo clic en 'Nueva suscripción'</p>
+
+<p>Si usted está entrando en una nueva suscripción desde el módulo de publicaciones periódicas se le presentará un formulario en blanco (si se está creando desde un registro bibliográfico existente el formulario incluirá la información correspondiente).</p>
+
+<ul>
+ <li>'Bibliotecario' le mostrará el nombre de usuario del bibliotecario registrado</li>
+ <li>Se puede encontrar un 'Proveedor' buscando proveedores introducidos por la vía del módulo de Adquisiciones o introduciendo el número de identificación ID del proveedor <ul>
+ <li>No se requiere información del vendedor</li>
+ <li>Con el fin de reclamar ejemplares perdidos o demorados tendrá que introducir la información del proveedor</li>
+</ul>
+</li>
+ <li>'Biblio' es el registro bibliográfico MARC que a Usted le gustaría enlazar con esta suscripción <ul>
+ <li>Esto puede hacerse buscando un registro existente haciendo clic en el enlace 'Buscar registro' bajo las casillas o introduciendo el número de un registro en la primer casilla. Solo si busca con el campo entre paréntesis.</li>
+</ul>
+</li>
+ <li>A continuación, puede decidir si un ítem nuevo se crea cuando se recibe un ejemplar</li>
+ <li>'Ubicación' es para la ubicación en estantería</li>
+ <li>'Signatura' es para el prefijo de la signatura topográfica de su ítem</li>
+ <li>'Biblioteca' es la biblioteca dueña de esta suscripción. <ul>
+ <li>Si hay más de una biblioteca se suscribe a esta publicación periódica tendrá que crear una suscripción para cada biblioteca</li>
+ <li>Esto puede hacerse fácilmente utilizando la opción 'Editar como nuevo (duplicados)' que se encuentra en la página de información de suscripción y cambiando únicamente el campo 'Biblioteca'</li>
+</ul>
+</li>
+ <li>El 'Período de Gracia' es el número de días antes un ejemplar se mueva automáticamente del estado 'esperado' el estado de 'en espera' y cuántos días antes que un ejemplar se mueva automáticamente del estado 'en espera' a 'retrasado'</li>
+ <li>Use la 'Nota Pública' para cualquier nota que desea aparezca en el OPAC para los usuarios</li>
+ <li>'Nota no pública' debe ser utilizado para notas que solo son visibles por los bibliotecarios vía el cliente administrativo</li>
+ <li>Para configurar una lista de circulación para publicaciones periódicas, seleccione 'Lista de circulación' desde campo 'Notificación de usuarios'. <ul>
+ <li>Para que esta opción parece que usted necesita para asegurarse de que usted tiene una notificación para listas de circulación establecido en la Herramienta de Avisos</li>
+ <li>Aprenda más sobre las listas de circulación más adelante en el manual</li>
+</ul>
+</li>
+ <li>Las opciones de pantalla para Personal y OPAC le permiten controlar cuantos ejemplares aparecen por defecto en los clientes Personal y OPAC <ul>
+ <li>Si no se introducen los valores en estos campos, se utilizarán los valores OPACSerialIssueDisplayCount y StaffSerialIssueDisplayCount del sistema de preferencias</li>
+</ul>
+</li>
+ <li>En 'Fecha del primer ejemplar' querrá introducir la fecha del ejemplar que tiene mano, la fecha desde la que el patrón de predicción se iniciará</li>
+ <li>Hay varias opciones predefinidas para la 'Frecuencia' de la publicación <ul>
+ <li>Sin periodicidad: algunas muy específicas (por lo general revistas científicas de alto nivel) no tienen una verdadera periodicidad. Cuando usted se suscribe al título, se suscribe por 6 ejemplares, que puede llegar en 1 año ... o 2 ... No hay regularidad o periodicidad conocida.</li>
+ <li>Desconocida seleccione esto si ninguna de las otras opciones son relevantes</li>
+ <li>Irregular: La revista no es "regular", pero tiene una periodicidad. Usted sabe que sale en enero, luego en octubre y diciembre, es irregular, pero se sabe cuando va a llegar.</li>
+ <li>2/día: dos veces al día</li>
+ <li>1/día: todos los días</li>
+ <li>3/semana: Tres veces a la semana</li>
+ <li>1/semana: Semanal</li>
+ <li>1/2 semanas: Dos veces al mes (quincenal)</li>
+ <li>1/3 semanas: tres veces por semana</li>
+ <li>1/mes: Mensual</li>
+ <li>1/2 meses (6/año): Bimestral</li>
+ <li>1/3 meses (1/cuatrimestre): trimestral</li>
+ <li>1/trimestre (estacional): Trimestralmente, relacionado con las estaciones (Verano, Otoño, Invierno, Primavera)</li>
+ <li>2/año: semestrales</li>
+ <li>1/año: Anual</li>
+ <li>1/2 años: Bianual</li>
+</ul>
+</li>
+ <li>Si marca la casilla de la 'Historia manual' le permitirá entrar publicaciones periódicas fuera del patrón de predicción.</li>
+ <li>'Patrón de numeración' le ayudará a determinar cómo se imprimen los números de cada ejemplar <ul>
+ <li>Comience la numeración con el ejemplar que tiene en la mano, la numeración que coincida con la fecha en que introdujo en el campo 'Publicación de primer ejemplar'</li>
+ <li>Si ha elegido un 'Formato de numeración' distinto de 'Número' en el campo 'Repetir en', introduzca el último número de ejemplar antes que el número de volumen cambie <ul>
+ <li>Si elige el Formato de numeración 'Número' verá 'ejemplares esperados' en el cual puede introducir el número total de ejemplares que espera recibir.</li>
+</ul>
+</li>
+ <li>Puede optar por crear su propio patrón de numeración eligiendo 'Ninguna de las anteriores' y haciendo clic en 'Mostrar/Ocultar patrón avanzado', situado en la parte inferior del formulario</li>
+</ul>
+</li>
+ <li>'Inicio de suscripción' es la fecha en la cual comienza la suscripción. Esto es utilizado para establecer las alertas de renovación</li>
+ <li>'Duración de suscripción' es el número de ejemplares o meses de la suscripción. Esto se utiliza para establecer alertas de renovación</li>
+ <li>'Fin de suscripción' solo debe introducirse para suscripciones que han terminado (si está analizando los pedidos no surtidos de publicaciones periódicas)</li>
+ <li>La 'Fórmula de Numeración' se puede modificar para coincidir con la forma en que desea su numeración para imprimir en el registro del ítem y las páginas de información de suscripción</li>
+</ul>
+
+<p>Haga clic en 'Guardar suscripción' para guardar la información que ha introducido.</p>
+
+<p><strong>Vea la documentación completa para Agregar suscripción en el <a href="http://es.koha-community.org/manual/3.12/es/serials.html#newsubscription">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

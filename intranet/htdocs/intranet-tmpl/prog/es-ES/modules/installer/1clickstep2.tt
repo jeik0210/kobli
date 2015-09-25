@@ -1,0 +1,380 @@
+[% INCLUDE 'doc-head-open.inc' %] 
+<title>Koha-Kobli &rsaquo; Instalador Web </title>
+[% INCLUDE '1click-installer-doc-head-close.inc' %] 
+
+			<img alt="Koha" src="[% interface %]/[% theme %]/img/kobli_nube.png" />
+
+			<div class="panel panel-default" style="margin-top:5px;">
+     				 <div class="panel-heading">
+        				<h3 class="panel-title"> Koha-Kobli de bibliotecas especializadas</h3>
+      				</div>
+      				<div class="panel-body">
+       				[% IF ( op  ) %] 
+					<p style="text-align:justify">Está usted en el formulario de <b>Instalación Web Avanzado</b> que le permite poner en marcha la instancia de <b>Koha-Kobli de bibliotecas especializadas</b> tan solo configurando una serie de valores que tienen que ver con preferencias globales del funcionamiento del programa. 
+					<p style="text-align:justify">Sin embargo, existe también a su disposición una instalación <a href="[% URL_Basica %]">básica</a> en la que solo es necesario introducir el nombre de la biblioteca y configurar la cuenta de acceso para empezar a funcionar.
+					<p style="text-align:justify">Estas funcionalidades de configuración avanzada que se ofrecen son resultado de un estudio previo de las necesidades por cada tipo de instancia, aun así, si llegado el caso quiere cambiarlas podrá hacerlo desde el propio software en cualquier momento.
+ 				[% ELSE %] 
+					<p style="text-align:justify">Está usted en el formulario de <b>Instalación Web Básico</b> que le permite poner en marcha en un clic la instancia de <b>Koha-Kobli de bibliotecas especializadas</b>. En este caso solo es obligatorio introducir el nombre de la biblioteca y configurar la cuenta de acceso para empezar a funcionar.</p>
+					<p style="text-align:justify">Sin embargo, existe también a su disposición una instalación <a href="[% URL_Avanzado %]">avanzada</a> que le permite configurar otras preferencias más concretas del programa.</p>			
+				[% END %]
+      				</div>
+    			</div>
+
+
+<h1 id="logo"> Instalador Web &rsaquo; 
+	[% IF ( op  ) %] 
+		Avanzado   <a class="btn btn-default btn-info" href="[% URL_Basica %]" role="button">Ir a Instalador &gt; Básico</a>
+ 	[% ELSE %] 
+		Básico   <a class="btn btn-default btn-info" href="[% URL_Avanzado %]" role="button">Ir a Instalador &gt; Avanzado</a>
+	[% END %]
+</h1>
+<p class="text-error">
+[% error %]
+[% message %]	
+<p>
+[% UNLESS ( language ) %] <p>Usted está a punto de instalar Kobli.</p>
+
+<p>Por favor, escoja su idioma de la siguiente lista. Si su idioma no aparece en la lista, por favor, informe a su administrador de sistemas.</p>
+<form name="language" method="post">
+<select name="language">
+[% IF ( installer_languages_loop ) %] [% FOREACH installer_languages_loo IN installer_languages_loop %] [% IF ( installer_languages_loo.plural ) %] <optgroup label="[% installer_languages_loo.language %]">
+ [% FOREACH sublanguages_loo IN installer_languages_loo.sublanguages_loop %] <option value="[% sublanguages_loo.rfc4646_subtag %]">[% IF ( sublanguages_loo.native_description ) %][% sublanguages_loo.native_description %][% ELSE %][% sublanguages_loo.rfc4646_subtag %][% END %]</option>
+ [% END %] </optgroup>
+ [% ELSE %] <option value="[% installer_languages_loo.rfc4646_subtag %]">[% IF ( installer_languages_loo.native_description ) %][% installer_languages_loo.native_description %][% ELSE %][% installer_languages_loo.rfc4646_subtag %][% END %]</option>
+ [% END %] [% END %] [% END %] </select>
+</p>
+
+<p> Haga clic en 'Siguiente' para continuar <input value="Siguiente >>" type="submit" /></p>
+</form>
+[% END %] 	
+[% IF ( language ) %] 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+	<form name="basica" id="basica" method="post"  enctype="multipart/form-data">
+		<input type="hidden" name="step" value="2" />
+		<input type="hidden" name="op" value="[% op %]" />
+		<input type="hidden" name="cuentaConfigurada" value="[% cuentaConfigurada %]" />
+  		<div class="form-group">
+    			<label for="nombreBiblioteca"><h3>Nombre de la biblioteca *</h3></label>
+			
+			<button type="button" class="btn btn-warning  btn-xs" aria-label="info" data-toggle="popover" data-trigger="focus" data-placement="right" title="Nombre de la biblioteca" 
+			data-content="En este apartado debe consignarse la denominación de la biblioteca. El texto que se introduzca será el que se mostrará en el OPAC.">
+  				<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			</button>
+
+    			<input type="text" class="form-control" name="nombreBiblioteca" id="nombreBiblioteca" placeholder="Introduce el nombre de la biblioteca" value="[% IF ( nombreBiblioteca != "Biblioteca Kobli" ) %][% nombreBiblioteca %][% END %]" />
+<p >&nbsp;<span class="pull-right text-info">(*) Campo obligatorio</span></p>  		
+</div>
+<hr />
+<h3>Configure su cuenta
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#Modalcifigcuenta">
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+</button>
+
+</h3>
+<!-- Modal -->
+<div class="modal fade" id="Modalcifigcuenta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Configure su cuenta</h4>
+      </div>
+      <div class="modal-body">
+	
+       	Los datos que introduzca son los que le permitirán el acceso como superbibliotecario a Kobli con las credenciales:
+	<dl class="dl-horizontal">
+  		<dt>Nombre del usuario</dt>
+  		<dd>Admin</dd>
+		<dt>Contraseña</dt>
+  		<dd><i>La introducida en el formulario</i></dd>
+	</dl>
+
+	La consignación del correo electrónico, le será útil para recuperar la contraseña en caso de olvido.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+		<div class="form-group">
+    			<label for="nombreBiblioteca">Correo electrónico del bibliotecario/a *</label>
+			<input type="text" class="form-control" name="correoBibliotecario" id="correoBibliotecario" placeholder="Introduzca el correo electrónico del bibliotecario/a" value="[% correoBibliotecario %]" />
+  		<p >&nbsp;<span class="pull-right text-info">(*) Campo obligatorio</span></p>  
+		</div>
+
+<div class="form-group">
+    			<label for="nombreBiblioteca">Contraseña del bibliotecario/a *</label>
+			<input type="password" class="form-control" name="passBibliotecario" id="passBibliotecario" placeholder="Introduzca la contraseña del bibliotecario/a" value="" />
+			  		</div>
+<div class="form-group">
+			<label for="nombreBiblioteca">Repita la contraseña del bibliotecario/a *</label>
+
+    			<input type="password" class="form-control" name="passBibliotecario2" id="passBibliotecario2" placeholder="Repita la contraseña del bibliotecario/a" value="" />
+<p >&nbsp;<span class="pull-right text-info">(*) Campos obligatorios</span></p>
+  		</div>
+
+<hr />	
+[% IF ( op  ) %] 
+		<h3>Otros aspectos configurables</h3>	
+ 	[% ELSE %] 
+		<h3>Otro aspecto configurable</h3>	
+	[% END %]
+
+<div class="row">
+    			<div class="col-xs-8">
+				<div class="form-group">
+        				<label for="uploadfile_1">Logo del OPAC</label> <button type="button" class="btn btn-warning  btn-xs" aria-label="info" data-toggle="popover" data-placement="right" 
+			title="Logo del OPAC" data-trigger="focus"
+			data-content="Este es el espacio desde el que puede introducir el logo de su biblioteca, de lo contrario, aparecerá el de Kobli.
+">
+  				<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			</button>
+
+        				<input id="uploadfile_1" accept="image/*"  name="uploadfile_1" type="file">
+        				<p class="help-block">Anchura máxima 300px / Altura máxima 100px</p>
+      				</div>
+
+				[% IF ( IMPORT_SUCCESSFUL ) %] 
+ 				<p class="bg-success" style="padding:10px;">Imagen subida con éxito. Archivo: [% SOURCE_FILE %]</p>
+ 				[% END %] 
+				[% IF ( error_1  ) %] 
+ 				<p class="bg-danger" style="padding:10px;">Ha ocurrido un error. Para más detalles, por favor haga que el administrador del sistema verifique el log de errores.</p>
+ 				[% ELSIF ( error_2 ) %] 
+ 				<p class="bg-danger" style="padding:10px;">Ha ocurrido un error. El archivo no es una imagen o está corrupto. Por favor haga que el administrador del sistema verifique el log de errores.</p>
+ 				[% END %]
+				<div id="preview" style="display:none">
+				<h4>Previsualización</h4>
+ 				<img id="blah" src="" alt="Previsualización" style="max-width:300px;max-height:100px;"/>
+				</div>
+
+			</div>
+			<div class="col-xs-4">
+				[% IF ( SMALLIMAGE ) %]<img src="[% SMALLIMAGE %]" class="img-thumbnail" />[% END %]
+			 </div>
+		</div>
+		[% IF ( op ) %] 
+<hr />
+		<div class="form-group">
+    			<label > Introduzca en los siguientes apartados, el número de préstamos simultáneos permitidos y el número de días
+			<button type="button" class="btn btn-warning  btn-xs" aria-label="info" data-toggle="popover" data-placement="right"  data-trigger="focus"
+			data-content="La política de préstamo aplicada por defecto es de 3 préstamos simultáneos por un periodo de 15 días. Si no introduce en estos apartados ningún dato, se aplicará la misma.">
+  				<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			</button></label>
+      		</div>
+		<div class="form-horizontal">
+  			<div class="form-group">
+    				<label for="cuantosprestamos" class="col-xs-4 control-label">Número de préstamos</label>
+    				<div class="col-xs-2">
+      					<input type="text" class="form-control" name="cuantosprestamos" id="cuantosprestamos" value="[% IF ( cuantosprestamos != "3" ) %][% cuantosprestamos %][% END %]" />    				</div>
+  			</div>
+  			<div class="form-group">
+    				<label for="cuantosdias" class="col-xs-4 control-label">Número de días</label>
+    				<div class="col-xs-2">
+      					<input type="text" class="form-control" name="cuantosdias" id="cuantosdias" value="[% IF ( cuantosdias != "15" ) %][% cuantosdias %][% END %]" />  
+  				</div>
+  			</div>
+		</div>		
+<hr />
+
+		<div class="form-group">
+    			<label >Indique si quiere que sus usuarios puedan valorar los materiales de su biblioteca mediante un sistema de estrellas</label>
+      		</div>
+		
+  			<div >
+    				<label class="radio-inline">
+					<input type="radio" name="OpacStarRatings" id="OpacStarRatings0" value="disable" [% IF ( OpacStarRatings == "disable" ) %]checked[% END %]>
+					No
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="OpacStarRatings" id="OpacStarRatings1" value="all" [% IF ( OpacStarRatings == "all" ) %]checked[% END %]>
+					Sí
+			</label>
+  			</div>
+		
+<hr />
+
+		<div class="form-group">
+    			<label >Indique si quiere habilitar el envío de comentarios anónimos</label>
+      		</div>
+		
+  			<div >
+    				<label class="radio-inline">
+					<input type="radio" name="reviewson" id="reviewson0" value="" [% IF ( reviewson == "" ) %]checked[% END %]> No
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="reviewson" id="reviewson1" value="1" [% IF ( reviewson == "1" ) %]checked[% END %]> Sí
+			</label>
+  			</div>
+
+<hr />
+
+		<div class="form-group">
+    			<label> Indique si quiere mostrar en el OPAC "Comentarios recientes" en la cabecera del registro </label>
+      		</div>
+		
+  			<div >
+    				<label class="radio-inline">
+					<input type="radio" name="OpacShowRecentComments" id="OpacShowRecentComments0" value="" [% IF ( OpacShowRecentComments == "" ) %]checked[% END %]> No
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="OpacShowRecentComments" id="OpacShowRecentComments1" value="1" [% IF (  OpacShowRecentComments == "1" ) %]checked[% END %]> Sí
+			</label>
+  			</div>
+<hr />
+
+		<div class="form-group">
+    			<label >Indique si quiere habilitar los enlaces a redes sociales en las páginas de detalles del OPAC</label>
+      		</div>
+		
+  			<div >
+    				<label class="radio-inline">
+					<input type="radio" name="SocialNetworks" id="SocialNetworks0" value="" [% IF ( SocialNetworks == "" ) %]checked[% END %]> No
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="SocialNetworks" id="SocialNetworks1" value="1" [% IF ( SocialNetworks == "1" ) %]checked[% END %]> Sí
+			</label>
+  			</div>
+			<div class="form-group" id="OPACBaseURL" style="[% IF ( SocialNetworks == "" ) %]display:none[% END %]">
+<br />
+			<label for="urlOPAC">URL del catálogo público (OPAC) *&nbsp;<button type="button" class="btn btn-warning  btn-xs" aria-label="info" data-trigger="focus" data-toggle="popover" data-placement="right" 
+			data-content="No incluya una barra final en la URL">
+  				<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			</button></label>
+
+    			<input type="text" class="form-control" name="urlOPAC" id="urlOPAC" placeholder="URL del catálogo público (OPAC)" value="[% OPACBaseURL %]" />
+			<p >&nbsp;<span class="pull-right text-info">(*) Campo obligatorio</span></p>
+  		</div>
+
+		[% END %]
+<hr />
+<div class="row"> 
+<div class="col-sm-6 col-lg-2">			
+<div class="form-group"> 
+	
+			<button type="submit" class="btn btn-default btn-primary">Enviar</button>
+</div>
+		</div>
+
+<div class="col-sm-6 col-lg-4">			
+<div class="form-group "> 
+	
+			[% IF ( op  ) %] 
+		 <a class="btn btn-default btn-info pull-right" href="[% URL_Basica %]" role="button">Ir a Instalador &gt; Básico</a>
+ 	[% ELSE %] 
+		  <a class="btn btn-default btn-info pull-right" href="[% URL_Avanzado %]" role="button">Ir a Instalador &gt; Avanzado</a>
+	[% END %]
+
+</div>
+		</div>
+
+
+
+<div class="col-sm-12 col-lg-6">
+<div class="form-group"> 
+	
+		[% IF ( nombreBiblioteca != "" && cuentaConfigurada == "1")  %] 
+		<a class="btn btn-default btn-success pull-right" href="/" role="button">Ir a la interfaz administrativa de Koha-Kobli</a>
+ 		[% END %]
+</div>
+		</div>
+</div>
+
+	</form>
+    </div>
+  </div>
+</div>
+<script >
+function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result); 		
+ 		$("#preview").css( "display", "block" );
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#uploadfile_1").change(function(){
+ 	$('#blah').attr('src', '');
+	$("#preview").css( "display", "none" );
+        readURL(this);
+    })
+$("#SocialNetworks1").change(function(){
+ 	if(this.checked) {$("#OPACBaseURL").css( "display", "block" );}
+	else {$("#OPACBaseURL").css( "display", "none" );}
+
+	
+    })
+$("#SocialNetworks0").change(function(){
+ 	if(this.checked) {$("#OPACBaseURL").css( "display", "none" );}
+	else {$("#OPACBaseURL").css( "display", "block" );}
+
+	
+    })
+
+
+$().ready(function() {
+
+		$("#basica").validate({
+			rules: {
+					nombreBiblioteca: "required",
+							
+					passBibliotecario: {
+[% IF ( cuentaConfigurada == "")  %] 
+						required: true,
+						minlength: 5
+[% END %]
+					},
+					passBibliotecario2: {
+[% IF ( cuentaConfigurada == "")  %] 
+						required: true,
+						minlength: 5,
+[% END %]
+						equalTo: "#passBibliotecario"
+					},
+					correoBibliotecario: {
+						required: true,
+						email: true
+					},
+					urlOPAC: {
+						required: $('#SocialNetworks1').is(':checked'),
+						url: true
+					}
+
+				},
+			messages: {
+					nombreBiblioteca: "El nombre de la biblioteca es requerido",
+					passBibliotecario: {
+						required:  "La contraseña es requerida",
+						minlength: "La contraseña debe tener un mínimo de 5 caracteres"
+					},
+					passBibliotecario2: {
+						required: "confirmar la contraseña es requerido",
+						minlength: "La contraseña confirmada debe tener un mínimo de 5 caracteres",
+						equalTo: "Las contraseñas no coinciden"
+					},
+					correoBibliotecario: {
+						required: "El correo electrónico es requerido",
+						email: "El correo electrónico no es válido"
+					},
+					urlOPAC: {
+						required: "La URL del catálogo público (OPAC) es requerida",
+						url: "La URL del catálogo público (OPAC) no es válida"
+					}
+
+
+									
+			}
+		});
+		$('[data-toggle="popover"]').popover();
+})
+</script>
+[% END %] 
+[% INCLUDE '1click-intranet-bottom.inc' %] 

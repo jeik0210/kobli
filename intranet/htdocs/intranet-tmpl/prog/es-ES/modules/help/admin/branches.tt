@@ -1,0 +1,49 @@
+[% INCLUDE 'help-top.inc' %] <h1>Bibliotecarios &amp; Grupos</h1>
+
+<p>Al configurar su sistema Koha tendrá que completar la información para cada biblioteca que va a compartir su sistema. Estos datos son utilizados en diversas áreas de Koha.</p>
+
+<p>Al visitar esta página se le presentará una lista de las bibliotecas y grupos que ya se han agregado al sistema.</p>
+
+<h2>Añadir una Biblioteca</h2>
+
+<p>Agregar una nueva biblioteca</p>
+
+<ul>
+ <li>Seleccionar 'Nueva biblioteca'</li>
+ <li>Complete los datos requeridos en el formulario siguiente <ul>
+ <li>De los campos de la lista, sólo 'Código de biblioteca' y 'Nombre' son obligatorios</li>
+ <li>Asegúrese de introducir la dirección de email de la biblioteca para asegurarse que los avisos se envían hacia y desde la dirección correcta</li>
+ <li>Se requiere una dirección IP si habilitó AutoLocation</li>
+</ul>
+</li>
+</ul>
+
+<h2>Editar/Eliminar una Biblioteca</h2>
+
+<p>Usted no podrá borrar bibliotecas que tengan usuarios o ítems asociados a ellas.</p>
+
+<p>Cada biblioteca tiene un botón 'Editar' a su derecha. Haga clic en este enlace para editar/alterar los detalles asociados con esa biblioteca.</p>
+
+<p>Usted no podrá editar el 'Código de Biblioteca'</p>
+
+<h2>Agregando un grupo</h2>
+
+<p>Para agregar un Dominio de Búsqueda o Grupo de Propiedad de Biblioteca seleccionar el botón 'Nuevo Grupo' en la parte superior de la pantalla.</p>
+
+<p>De los campos en el formulario de grupo, 'El código de categoría' y 'Nombre' son los únicos campos obligatorios</p>
+
+<h2>Grupos de Dominio de Búsqueda</h2>
+
+<p>Search Domain Groups  permite buscar un grupo de bibliotecas al mismo tiempo de la búsqueda de una sola  biblioteca o en todas las bibliotecas.</p>
+
+<p>Para ver en acción Buscar Grupos de Dominio visite la página de búsqueda avanzada en su sistema Koha</p>
+
+<h2>Grupos de propiedad de biblioteca </h2>
+
+<p>Usted puede asignar categorías específicas para sus bibliotecas agregando grupos para ellas.</p>
+
+<p>Propiedades se aplican luego a las bibliotecas a través del formulario agregar o editar biblioteca.</p>
+
+<p><strong>Ver la documentación completa de Bibliotecas &amp; Grupos en el <a href="http://es.koha-community.org/manual/3.12/es/basicparams.html#libsgroups">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

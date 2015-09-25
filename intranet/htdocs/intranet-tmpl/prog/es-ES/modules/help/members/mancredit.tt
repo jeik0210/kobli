@@ -1,0 +1,14 @@
+[% INCLUDE 'help-top.inc' %] <h1>Crear crédito manual</h1>
+
+<p>Los créditos manuales pueden ser utilizados para pagar parte de las multas, o para perdonar un monto de la multa.</p>
+
+<ul>
+ <li>Primero seleccione el tipo de crédito que quiere aplicar</li>
+ <li>Si este crédito se asocia con un ítem puede introducir código de barras del ítem de modo que la linea de ítems enlaza al ítem correcto</li>
+ <li>El campo de descripción es donde se entra la descripción del crédito</li>
+ <li>En la caja de cantidad no utilice ningún símbolo de moneda, solo números y decimales.</li>
+</ul>
+
+<p><strong>Ver la documentación completa para Creación de créditos manuales en el <a href="http://es.koha-community.org/manual/3.12/es/patroninformation.html#patronfines">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

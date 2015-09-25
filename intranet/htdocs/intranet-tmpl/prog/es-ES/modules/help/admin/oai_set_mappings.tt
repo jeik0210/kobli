@@ -1,0 +1,21 @@
+[% INCLUDE 'help-top.inc' %] <h1>OAI-PMH Sets Mappings Configuration</h1>
+
+<p>Aquí puede definir como un conjunto será construído (que registros pertenecerán al conjunto) definiendo correspondencias. Correspondencias son una lista de coondiciones en el contenido del registro. Un registro sólo requiere coincidir en una condición para pertenecer al conjunto. </p>
+
+<h2>Definir una correspondencia </h2>
+
+<ol>
+ <li>Complete los campos 'Campo', 'Subcampo' y 'Valor'. Por ejemplo si desea incluir en este conjunto todos los registros que tienen 999$9 igual a 'XXX'. Complete 'Campo' con 999, 'Subcampo' con 9 y 'Valor' con XXX. </li>
+ <li>Si desea agregar otra condición, seleccionar el botón 'OR' y repita el paso 1. </li>
+ <li>Haga clic en 'Guardar'</li>
+</ol>
+
+<p>Para eliminar una condición, debe dejar al menos uno de 'Campo', 'Subcampo' o 'Valor' vacíos  y seleccionar en 'Guardar'.</p>
+
+<p>Nota: En realidad, una condición es verdadera si el valor del subcampo corerspondiente es estríctamente igual a lo que se define como 'Valor'. Un registro que contiene 999$9 = 'XXX YYY' no pertenecerá al conjunto cuya condición sea 999$9 = 'XXX'.</p>
+
+<p>Y entre mayúsculas y minúsculas: un registro que tenga 999$9 = 'xxx' no pertenece a un conjunto donde la es condición 999$9 = 'XXX'. </p>
+
+<p><strong>Ver la documentación completa para Sets de OAI en el <a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#oaisetsconfig">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

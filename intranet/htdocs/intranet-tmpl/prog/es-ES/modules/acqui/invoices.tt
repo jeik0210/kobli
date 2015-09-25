@@ -1,0 +1,168 @@
+[% USE KohaDates %] [% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Adquisiciones &rsaquo; Facturas</title>
+<link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+[% INCLUDE 'doc-head-close.inc' %] <script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+[% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+[% INCLUDE 'calendar.inc' %] <script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+    [% IF (dateformat == 'metric') %]
+        dt_add_type_uk_date();
+    [% END %]
+    $("#resultst").dataTable($.extend(true, {}, dataTablesDefaults, {
+        bInfo: false,
+        bPaginate: false,
+        bFilter: false,
+        sDom: "t",
+        aoColumnDefs: [
+            { "bSortable": false, "aTargets": [6] }
+        ]
+    }));
+});
+//]]>
+</script>
+</head>
+
+<body>
+[% INCLUDE 'header.inc' %] [% INCLUDE 'acquisitions-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/acqui/acqui-home.pl">Adquisiciones</a> &rsaquo; Factura </div>
+
+<div id="doc3" class="yui-t2">
+
+<div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+ <h1>Facturas</h1>
+ [% IF ( do_search ) %] [% IF invoices %] <table id="resultst">
+ <thead>
+ <tr>
+ <th>Factura Nro.:  </th>
+ <th>Proveedor</th>
+ <th>Fecha de facturación:</th>
+ <th>Biblios Recibidos </th>
+ <th>Ejemplares recibidos </th>
+ <th>Estado</th>
+ <th>&nbsp;</th>
+ </tr>
+ </thead>
+ <tbody>
+ [% FOREACH invoice IN invoices %] <tr>
+ <td><a href="/cgi-bin/koha/acqui/invoice.pl?invoiceid=[% invoice.invoiceid %]">[% invoice.invoicenumber %]</a></td>
+ <td><a href="/cgi-bin/koha/acqui/supplier.pl?booksellerid=[% invoice.booksellerid %]">[% invoice.suppliername %]</a></td>
+ <td>
+ [% IF invoice.billingdate %] [% invoice.billingdate | $KohaDates %] [% END %] </td>
+ <td>[% invoice.receivedbiblios %]</td>
+ <td>[% invoice.receiveditems %]</td>
+ <td>
+ [% IF invoice.closedate %] Cerrado en [% invoice.closedate | $KohaDates %] [% ELSE %] Abierto [% END %] </td>
+ <td>
+ <a href="/cgi-bin/koha/acqui/invoice.pl?invoiceid=[% invoice.invoiceid %]">Detalle</a> / [% IF invoice.closedate %] <a href="invoice.pl?op=reopen&amp;invoiceid=[% invoice.invoiceid %]&amp;referer=/cgi-bin/koha/acqui/invoices.pl%3Fop=do_search%26invoicenumber=[% invoicenumber %]%26supplier=[% booksellerid %]%26billingdatefrom=[% billingdatefrom %]%26billingdateto=[% billingdateto %]%26isbneanissn=[% isbneanissn %]%26title=[% title %]%26author=[% author %]%26publisher=[% publisher %]%26publicationyear=[% publicationyear %]%26branch=[% branch %]">Reabrir</a>
+ [% ELSE %] <a href="invoice.pl?op=close&amp;invoiceid=[% invoice.invoiceid %]&amp;referer=/cgi-bin/koha/acqui/invoices.pl%3Fop=do_search%26invoicenumber=[% invoicenumber %]%26supplier=[% booksellerid %]%26billingdatefrom=[% billingdatefrom %]%26billingdateto=[% billingdateto %]%26isbneanissn=[% isbneanissn %]%26title=[% title %]%26author=[% author %]%26publisher=[% publisher %]%26publicationyear=[% publicationyear %]%26branch=[% branch %]">Cerrar</a>
+ [% END %] [% UNLESS invoice.receivedbiblios || invoice.receiveditems %] /<a href="invoice.pl?op=delete&amp;invoiceid=[% invoice.invoiceid %]&amp;referer=/cgi-bin/koha/acqui/invoices.pl%3Fop=do_search%26invoicenumber=[% invoicenumber %]%26supplier=[% booksellerid %]%26billingdatefrom=[% billingdatefrom %]%26billingdateto=[% billingdateto %]%26isbneanissn=[% isbneanissn %]%26title=[% title %]%26author=[% author %]%26publisher=[% publisher %]%26publicationyear=[% publicationyear %]%26branch=[% branch %]">Eliminar</a>
+ [% END %] </td>
+ </tr>
+ [% END %] </tbody>
+ </table>
+ [% ELSE %] <p>Lo sentimos pero no hay resultados para tu búsqueda.</p>
+ <p>Buscar era: <ul>
+ [% IF ( invoicenumber ) %] <li>Factura Nro.: [% invoicenumber %]</li>
+ [% END %] [% IF booksellerid %] <li>Proveedor: [% suppliername %]</li>
+ [% END %] [% IF ( billingdatefrom ) %] <li>Fecha factura: [% IF ( billingdateto ) %] Desde [% billingdatefrom %] A [% billingdateto %] [% ELSE %] Tdo desde [% billingdatefrom %] [% END %] </li>
+ [% ELSE %] [% IF ( billingdateto ) %] <li>Fecha factura:Todo hasta [% billingdateto %] </li>
+ [% END %] [% END %] [% IF ( isbneanissn ) %] <li>ISBN/EAN/ISSN: [% isbneanissn %]</li>
+ [% END %] [% IF ( title ) %] <li>Título: [% title %]</li>
+ [% END %] [% IF ( author ) %] <li>Autor: [% author %]</li>
+ [% END %] [% IF ( publisher ) %] <li>Editor: [% publisher %]</li>
+ [% END %] [% IF ( publicationyear ) %] <li>Año de publicación: [% publicationyear %]</li>
+ [% END %] [% IF ( branch ) %] <li>Biblioteca: [% branchname %]</li>
+ [% END %] </ul>
+ </p>
+ [% END %]<!-- invoices -->
+ [% ELSE %]
+ <p>Utilice el buscador de la izquierda para encontrar facturas.</p>
+ [% END %]<!-- do_search -->
+ </div>
+ </div>
+ <div class="yui-b">
+ <form action="" method="get">
+ <fieldset class="brief">
+ <h3>Buscar filtros</h3>
+ <ol>
+ <li>
+ <label for="invoicenumber">Factura Nro.:  </label>
+ <input type="text" id="invoicenumber" name="invoicenumber" value="[% invoicenumber %]" />
+ </li>
+ <li>
+ <label for="supplier">Proveedor:</label>
+ <select id="supplier" name="supplierid">
+ <option value="">Todo</option>
+ [% FOREACH supplier IN suppliers_loop %] [% IF ( supplier.selected ) %] <option selected="selected" value="[% supplier.booksellerid %]">[% supplier.suppliername %]</option>
+ [% ELSE %] <option value="[% supplier.booksellerid %]">[% supplier.suppliername %]</option>
+ [% END %] [% END %] </select>
+ </li>
+ <li>
+ <fieldset class="brief">
+ <legend>Fecha del envío</legend>
+ <ol>
+ <li>
+ <label for="shipmentdatefrom">Desde:</label>
+ <input type="text" id="shipmentdatefrom" name="shipmentdatefrom" size="10" value="[% shipmentdatefrom %]" class="datepicker" />
+ </li>
+ <li>
+ <label for="shipmentdateto">Hasta:</label>
+ <input type="text" id="shipmentdateto" name="shipmentdateto" size="10" value="[% shipmentdateto %]" class="datepicker" />
+ </li>
+ </ol>
+ </fieldset>
+ </li>
+ <li>
+ <fieldset class="brief">
+ <legend>Fecha de facturación:</legend>
+ <ol>
+ <li>
+ <label for="billingdatefrom">Desde:</label>
+ <input type="text" id="billingdatefrom" name="billingdatefrom" size="10" value="[% billingdatefrom %]" class="datepicker" />
+ </li>
+ <li>
+ <label for="billingdateto">Hasta:</label>
+ <input type="text" id="billingdateto" name="billingdateto" size="10" value="[% billingdateto %]" class="datepicker" />
+ </li>
+ </ol>
+ </fieldset>
+ </li>
+ <li>
+ <label for="isbneanissn">ISBN / EAN / ISSN:</label>
+ <input type="text" id="isbneanissn" name="isbneanissn" value="[% isbneanissn %]" />
+ </li>
+ <li>
+ <label for="title">Título:</label>
+ <input type="text" id="title" name="title" value="[% title %]" />
+ </li>
+ <li>
+ <label for="author">Autor:</label>
+ <input type="text" id="author" name="author" value="[% author %]" />
+ </li>
+ <li>
+ <label for="publisher">Editor:</label>
+ <input type="text" id="publisher" name="publisher" value="[% publisher %]" />
+ </li>
+ <li>
+ <label for="publicationyear">Año de publicación:</label>
+ <input type="text" id="publicationyear" name="publicationyear" value="[% publicationyear %]" />
+ </li>
+ <li>
+ <label for="branch">Biblioteca:</label>
+ <select id="branch" name="branch">
+ <option value="">Todo</option>
+ [% FOREACH branch IN branches_loop %] [% IF ( branch.selected ) %] <option selected="selected" value="[% branch.branchcode %]">[% branch.branchname %]</option>
+ [% ELSE %] <option value="[% branch.branchcode %]">[% branch.branchname %]</option>
+ [% END %] [% END %] </select>
+ </li>
+ </ol>
+ <fieldset class="action">
+ <input value="Buscar" type="submit" />
+ </fieldset>
+ </fieldset>
+ <input type="hidden" name="op" id="op" value="do_search" />
+ </form>
+ [% INCLUDE 'acquisitions-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

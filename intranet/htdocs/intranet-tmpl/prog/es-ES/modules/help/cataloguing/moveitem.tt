@@ -1,0 +1,13 @@
+[% INCLUDE 'help-top.inc' %] <h1>Moviendo ítems</h1>
+
+<p>Los ítems se pueden mover de un registro bibliográfico a otro usando la opción 'Adjuntar ítem'</p>
+
+<p>Visite el registro bibliográfico al cual desea adjuntar el ítem y seleccione 'Adjuntar ítem' desde el menú 'Editar'.</p>
+
+<p>Introduzca el código de barras del ítem a ser movido y haga clic en 'Elegir'</p>
+
+<p>Si desea mover todos los ítems a un nuevo registro creando un solo registro bibliográfico puede utilizar la herramienta 'Combinar registros' en su lugar.</p>
+
+<p><strong>Ver la documentación completa para Mover Ítems en el <a href="http://es.koha-community.org/manual/3.12/es/catitems.html#moveitemrec">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,32 @@
+[% INCLUDE 'help-top.inc' %] <h1>Catalogación</h1>
+
+<p>Antes de iniciar la catalogación en Koha va a querer hacer alguna configuración básica. Consulte la Lista de verificación de la aplicación para obtener una lista completa. Lo más importante e asegurarse de que las plantillas  de catalogación son definidas según lo deseado. Desde el módulo de catalogación no se pueden añadir o eliminar campos y subcampos, por eso,  sus plantillas de catalogación  deben estar listas antes de empezar a catalogar.</p>
+
+<p>Cómo agrega un nuevo registro bibliográfico </p>
+
+<p>Los registros se pueden agregar introduciéndolos en Koha o copiando la catalogación. Si desea un catalogar usando una plantilla en blanco</p>
+
+<ul>
+ <li>Haga clic en 'Nuevo registro'  </li>
+ <li>Seleccione la plantilla de catalogación en que desea basar su registro</li>
+</ul>
+
+<p>Si usted desea catalogar un registro basado en un registro existente en otra biblioteca</p>
+
+<ul>
+ <li>Haga clic en 'Búsqueda Z39.50'  </li>
+ <li>Buscar el ítem que desea catalogar  </li>
+ <li>Sugerencia: Si no se encuentran resultados, trate de buscar menos campos, no todos los servidores Z39.50 puede buscar en todos los campos.</li>
+ <li>Los servidores Z39.50 se pueden cambiar en el área administrativa. </li>
+ <li>Desde los resultados puede ver la vista MARC o vista de tarjeta de los registros o decidir importarlos dentro de Koha  <ul>
+ <li>Además del enlace de 'Importar' a la derecha de cada título, puede hacer clic en el título que le interesa y aparecerá un menú con enlaces para ver el registro e importarlo </li>
+</ul>
+</li>
+ <li>Si no encuentra el título que necesita en sus resultados de búsqueda Z39.50 puede hacer clic en el botón 'Intentar otra búsqueda' abajo a la izquierda de sus resultados </li>
+</ul>
+
+<p>Una vez que haya abierto una hoja de trabajo en blanco o importado un registro a través de Z39.50 se le presentará una forma para continuar la catalogación</p>
+
+<p><strong>Ver la documentación completa para Catalogación en el <a href="http://es.koha-community.org/manual/3.12/es/cataloging.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,96 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Circulación &rsaquo; Tasa de reservas</title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+<script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+[% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+     $(document).ready(function() {
+        $(".ratiolimit").click(function () {
+            $("#ratio").val($(this).html());
+        });
+        $(".ratiolimit").hover(
+            function () { $(this).toggleClass("ulined") },
+            function () { $(this).toggleClass("ulined") }
+        );
+        $("#holdst").dataTable($.extend(true, {}, dataTablesDefaults, {
+            "aoColumnDefs": [
+                { "aTargets": [ 8 ], "sType": "natural" }
+            ],
+            "aLengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
+            "iDisplayLength": 20,
+            "sPaginationType": "four_button"
+        }));
+     });
+//]]>
+</script>
+<style type="text/css">
+    .sql { display: none; }
+    .ulined { text-decoration: underline; }
+    .ratiolimit { color: blue; cursor: pointer; }
+</style>
+</head>
+<body id="circ_reserveratios" class="circ">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'circ-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/circ/circulation-home.pl">Circulación</a> &rsaquo; Tasa de reservas </div>
+
+<div id="doc3" class="yui-t2">
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+<h1>Tasa de reservas para calcular ítems necesarios</h1>
+ <h3>Calculado sobre [% todaysdate %]. De [% from %] a [% to %]</h3>
+<p>Estos ítem tienen una tasa de reserva &ge; [% ratio %].</p>
+<div class="sql">[% sql %]</div>
+
+[% IF ( reserveloop ) %] <table id="holdst">
+ <thead>
+ <tr>
+ <th>Reservas</th>
+ <th>Ítems</th>
+ <th>Tasa de reservas</th>
+ <th>Título</th>
+ <th>Bibliotecas de los ítems</th>
+ <th>Ubicación</th>
+ <th>Tipo de ítem </th>
+ <th>Signaturas topográficas</th>
+ <th>Ítems necesarios </th>
+ </tr>
+ </thead>
+ <tbody>
+ [% FOREACH reserveloo IN reserveloop %] <tr>
+ <td><p>[% reserveloo.reservecount %]</p></td>
+ <td><p>[% reserveloo.itemcount %]</p></td>
+ <td><p class="ratiolimit">[% reserveloo.thisratio %]</p></td>
+ <td> [% INCLUDE 'biblio-default-view.inc' biblionumber = reserveloo.biblionumber %][% reserveloo.title |html %] [% IF ( reserveloo.subtitle ) %][% FOREACH subtitl IN reserveloo.subtitle %][% subtitl.subfield %][% END %][% END %]</a>[% IF ( reserveloo.author ) %] por [% reserveloo.author %][% END %] </td>
+ <td><p>[% reserveloo.listbranch %]</p></td>
+ <td><p>[% reserveloo.location %]</p></td>
+ <td><p>[% reserveloo.itype %]</p></td>
+ <td><p>[% reserveloo.listcall %]</p></td>
+ <td>[% IF ( reserveloo.thisratio_atleast1 ) %]<p><b>[% reserveloo.ratiocalc %] a ordenar</b></p>[% END %]</td>
+ </tr>
+ [% END %] </tbody>
+ </table>
+ [% ELSE %] <b>No se encontraron ítems</b>
+ [% END %] </div>
+</div>
+<div class="yui-b">
+<form action="/cgi-bin/koha/circ/reserveratios.pl" method="post" >
+<fieldset class="brief">
+<h4>Refinar resultados:</h4>
+<ol><li><label for="ratio">
+ Tasa de reservas: </label>
+<input type="text" size="5" id="ratio" name="ratio" value="[% ratio %]" /></li>
+<li><label for="from">
+ Fecha de Inicio: </label>
+<input type="text" size="10" id="from" name="from" value="[% from %]" class="datepickerfrom" />
+</li>
+<li><label for="to">
+ Fecha final: </label>
+<input size="10" id="to" name="to" value="[% to %]" type="text" class="datepickerto" />
+</li></ol>
+(inclusive) <fieldset class="action"><input value="Ir" type="submit" class="submit" /></fieldset>
+</fieldset>
+</form>
+
+</div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

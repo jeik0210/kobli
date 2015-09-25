@@ -1,0 +1,56 @@
+--- 
+web_services.pref: 
+  ILS-DI: 
+    - 
+      - 
+        choices: 
+          "": Deshabilitar
+          1: Habilitar
+        pref: ILS-DI
+      - los servicios ILS-DI para usuarios del OPAC
+    - 
+      - 
+        class: Text
+        pref: ILS-DI:AuthorizedIPs
+      - direcciones IP autorizadas a utilizar los servicios ILS-DI
+  OAI-PMH: 
+    - 
+      - 
+        choices: 
+          "": Deshabilite
+          1: Habilite
+        pref: OAI-PMH
+      - " el servidor."
+      - <a href="http://www.openarchives.org/pmh/">OAI-PMH</a> de Koha
+    - 
+      - Identificar registros en este sitio con el prefijo
+      - 
+        pref: OAI-PMH:archiveID
+      - ": ."
+    - 
+      - Solo devolver
+      - 
+        class: integer
+        pref: OAI-PMH:MaxCount
+      - registros a la vez en respuesta a una consulta ListRecords o ListIdentifiers.
+    - 
+      - 
+        YAML OAI Koha server configuration file: ~
+      - 
+        class: file
+        pref: OAI-PMH:ConfFile
+      - . If empty, Koha OAI Server operates in normal mode, otherwise it operates in extended mode. In extended mode, it's possible to parameter other formats than marcxml or Dublin Core. OAI-PMH:ConfFile specify a YAML configuration file which list available metadata formats and XSL file used to create them from marcxml records.
+    - 
+      - 
+        choices: 
+          "": Deshabilitar
+          1: Habilitar
+        pref: OAI-PMH:AutoUpdateSets
+      - "actualizar autom\xC3\xA1ticamente los ajustes de OAI-PMH cuando un registro bibliogr\xC3\xA1fico es creado o actualizado"
+  web_services.pref Informes: 
+    - 
+      - "S\xC3\xB3lo devolver"
+      - 
+        class: integer
+        pref: SvcMaxReportRows
+      - "serie de un informe requerido a trav\xC3\xA9s del servicio web de informes."

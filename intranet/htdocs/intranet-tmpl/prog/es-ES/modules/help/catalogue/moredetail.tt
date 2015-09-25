@@ -1,0 +1,21 @@
+[% INCLUDE 'help-top.inc' %] <h1>Detalles del Ítem</h1>
+
+<p>Esta página contiene información sobre todos los ítems conectados a un registro.</p>
+
+<h2>Estados de Actualización del ítem</h2>
+
+<p>Con frecuencia, el personal necesita cambiar el estado de un ítem a Perdido o Dañado. Esto no requiere que se edite el registro del ítem entero. En lugar de seleccionar el código de barras del ítem en el resumen de préstamo o en el historial de entrega, podrá indicarlo en el resumen del ítem. También puede obtener el resumen del ítem seleccionanado en la tabla de Ítems en la parte izquierda de la página bib de detalles. </p>
+
+<p>Desde esta vista puede marcar un ítem perdido, eligiendo desde la lista deplegable y seleccionando el botón  'Configuración Estado' un estado perdido.</p>
+
+<p>También podrá marcar un ítem como dañado eligiendo un estado de dañado desde la desactivación y seleccionando el botón de 'Configuración Estado'</p>
+
+<h2>Historial Específico de Circulación de Ítem</h2>
+
+<p>Cada registro bibliográfico mantiene un historial de circulación (con o sin la información de los usuarios dependiendo de su configuración), pero cada ítem tiene también su página de historial propio. Para verla, haga clic en la pestaña 'Ítems' a la izquierda del registro que está viendo.</p>
+
+<p>Bajo el encabezado 'Historia' hay un enlace a 'Ver historial de préstamos del ítem', haciendo clic le mostrará el historial del ítem el cual se ve levemente diferente de la página del historial de registros bibliográficos.</p>
+
+<p><strong>Ver la documentación completa para Registros de Ítems en el <a href="http://es.koha-community.org/manual/3.12/es/catitems.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

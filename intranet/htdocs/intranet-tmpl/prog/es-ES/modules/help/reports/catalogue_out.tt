@@ -1,0 +1,11 @@
+[% INCLUDE 'help-top.inc' %] <h1>Ítems nunca prestados</h1>
+
+<p>Este informe mostrará los ítems de su colección que nunca se han prestado.</p>
+
+<p>Si elige mostrar en el navegador sus resultados se verán en la pantalla.</p>
+
+<p>También puede elegir exportar a un archivo que pueda manipular según sus necesidades.</p>
+
+<p><strong>Vea la documentación completa de Informes de Ítems sin préstamos en el <a href="http://es.koha-community.org/manual/3.12/es/statsreports.html#itemnocheckouts">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

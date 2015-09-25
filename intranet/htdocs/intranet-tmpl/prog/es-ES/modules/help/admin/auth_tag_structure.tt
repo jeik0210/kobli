@@ -1,0 +1,22 @@
+[% INCLUDE 'help-top.inc' %] <h1>Etiquetas de Registros de Autoridad</h1>
+
+<p>Para agregar un campo a una Hoja de trabajo de Autoridad, seleccionar en el botón 'Nuevo campo' en parte superior de la definición la Hoja de trabajo de Autoridad. Se abrirá un formulario en blanco para introducir los datos de campo MARC</p>
+
+<p>Introduzca la información correspondiente a su nueva etiqueta:</p>
+
+<ul>
+ <li> 'Tag' es el número de campo MARC.</li>
+ <li> 'Label for lib' es el texto que aparecerá en la interfaz del personal en el módulo de catalogación</li>
+ <li> 'Label for OPAC' es el texto que aparecerá en el OPACcon la vista versión MARC del registro.</li>
+ <li>Si este campo se puede repetir, marcar la caja 'Repetible'.</li>
+ <li>Si este campo es obligatorio, marcar la caja 'Obligatorio'.</li>
+ <li>Si desea que este campo sea un desplegable con un número limitado de respuestas posibles, elija quelista de  'Valor autorizado' desea utilizar.</li>
+</ul>
+
+<p>Cuando haya terminado, seleccione  'Guardar cambios' y se le mostrará un nuevo campo.</p>
+
+<p>A la derecha de un nuevo campo está un enlace a 'Subcampos'. Necesitará agregar subcampos antes que esta etiqueta aparezca en su editor de MARC.</p>
+
+<p><strong>Ver la documentación completa para Autoridades en el <a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#authoritiesadmin">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

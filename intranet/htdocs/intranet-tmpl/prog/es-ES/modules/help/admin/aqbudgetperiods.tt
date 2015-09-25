@@ -1,0 +1,37 @@
+[% INCLUDE 'help-top.inc' %] <h1>Presupuestos</h1>
+
+<p>Presupuestos son usados para seguir el valor de la cuenta relacionada con adquisiciones. Un ejemplo sería crear un presupuesto para el año en curso ydespués  segmentarlo en fondos para las diferentes áreas de la biblioteca.</p>
+
+<p>Durante la visita administración del presupuesto principal, usted verá dos pestañas, una para activos y uno de los presupuestos inactivos.</p>
+
+<h2>Agregar presupuesto</h2>
+
+<p>Los presupuestos se pueden crear desde cero o duplicar el presupuesto del año anterior.</p>
+
+<p>Para duplicar el presupuesto respecto al año anterior, haga clic en el vínculo del nombre del presupuesto de la lista de los presupuestos.</p>
+
+<p>En la lista en pantalla el desglose del presupuesto, haga clic en el botón Editar en la parte superior y seleccione Duplicar presupuesto.</p>
+
+<p>Se le presentará con un formulario donde simplemente necesita introducir la nueva fecha de inicio y fin y guardar el presupuesto.</p>
+
+<p>Esta opción duplicar su presupuesto y  todos los fondos asociados con ese presupuesto, de modo que puede volver a utilizar los presupuestos y fondos de año en año.</p>
+
+<p>Si usted no ha utilizado antes para la adquisición de Koha entonces usted tendrá que comenzar de nuevo con un nuevo presupuesto. Para agregar un nuevo presupuesto haga clic en el botón "Nuevo presupuesto".</p>
+
+<ul>
+ <li>Seleccione el período de tiempo a que se aplica este presupuesto, si se trata de un año académico, un año fiscal, trimestre, u otra unidad de tiempo. </li>
+
+ <li>La descripción debe ser algo que le ayude a identificar el presupuesto con el pedido</li>
+
+ <li>En la caja de cantidad no utilice ningún símbolo, simplemente introduzca la cantidad del presupuesto con números y decimales.</li>
+
+ <li>Definiendo un presupuesto como 'Activo' lo hace utilizable para generar órdenes en el módulo de adquisiciones, aún si la orden se genera a posteriori de la fecha de final del presupuesto. Esto le permite registrar órdenes que fueron generadas en el período presupuestario previo. </li>
+
+ <li>Bloquear un presupuesto significa que los fondos no podrán ser modificados por el personal</li>
+</ul>
+
+<p>Una vez que haya editado, seleccionar el botón 'Guardar cambios'. Será conducido a una lista de sus presupuestos existentes.</p>
+
+<p><strong>Ver la documentación completa para Presupuestos en el <a href="http://es.koha-community.org/manual/3.12/es/acqadmin.html#budgetplanning">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

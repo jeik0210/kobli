@@ -1,0 +1,57 @@
+--- 
+acquisitions.pref: 
+  "Impresi\xC3\xB3n": 
+    - 
+      - Usar
+      - 
+        pref: OrderPdfFormat
+      - cuando imprima grupos de cestas.
+  "Pol\xC3\xADtica": 
+    - 
+      - "Crear un \xC3\xADtem cuando"
+      - 
+        choices: 
+          cataloguing: catalogue un registro.
+          ordering: realice una orden de compra.
+          receiving: reciba una orden de compra.
+        pref: AcqCreateItem
+    - 
+      - "Las siguientes<a href='http://schema.koha-community.org/tables/items.html' target='blank'>columnas de la base de dato</a> deben ser \xC3\xBAnicas en un \xC3\xADtem"
+      - 
+        pref: UniqueItemFields
+      - (separado por un espacio)
+    - 
+      - Cuando cierres o reabra una cesta,
+      - 
+        choices: 
+          1: "siempre pedir confirmaci\xC3\xB3n."
+          2: "no pedir confirmaci\xC3\xB3n."
+        default: 1
+        pref: BasketConfirmations
+    - 
+      - Mostrar cestas
+      - 
+        choices: 
+          all: en sistema, a pesar del propietario.
+          branch: de miembros del personal de la biblioteca
+          user: "creadas por miembros del personal de administraci\xC3\xB3n."
+        pref: AcqViewBaskets
+    - 
+      - Mostrar monedas utilizando el siguiente formato
+      - 
+        choices: 
+          FR: 360 000,00 (FR)
+          US: 360,000.00 (US)
+        pref: CurrencyFormat
+    - 
+      - Las tasas de incumplimiento de impuestos son
+      - 
+        pref: gist
+      - "(introducir en forma num\xC3\xA9rica, 0.12 para 12%. Primero por defecto.Si quieres m\xC3\xA1s de 1 valor, por favor separar con |)"
+    - 
+      - 
+        choices: 
+          "": No avisar
+          1: Avisar
+        pref: AcqWarnOnDuplicateInvoice
+      - "cuando el bibliotecario tratar de crear una factura con un n\xC3\xBAmero duplicado. "

@@ -1,0 +1,172 @@
+ [% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Herramientas &rsaquo; Creador de carnets de usuarios &rsaquo; Administrar lotes de carnets de usuarios</title>
+ [% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'greybox.inc' %] <script type="text/javascript">
+        //<![CDATA[
+           function DeleteConfirm() {
+                var msg = _("¿Está seguro de querer borrar el lote?") + " [% batch_id %]?";
+                var answer = confirm(msg);
+                if (answer) {
+                    window.location = "/cgi-bin/koha/patroncards/manage.pl?op=delete&amp;card_element=batch&amp;element_id=[% batch_id %]";
+                }
+                else {
+                    return; // abort delete
+                }
+            };
+            function Remove() {
+                items = new Array;
+                item_num = new Array;
+                if(document.items.action.length > 0) {
+                    for (var i=0; i < document.items.action.length; i++) {
+                        if (document.items.action[i].checked) {
+                            items.push("label_id=" +  document.items.action[i].value);
+                            item_num.push(i+1);
+                        }
+                    }
+                    if (items.length < 1) {
+                        alert(_("Por favor, seleccione al menos un ítem para borrar."));
+                        return;     // no item selected
+                    }
+                    getstr = items.join("&");
+                    item_msg = item_num.join(", ");
+                    var msg = "Are you sure you want to remove card number(s): " + item_msg + " from this batch?"
+                }
+                else {
+                    alert(_("Por favor, seleccione al menos una etiqueta para borrar."));
+                    return;     // no item selected
+                }
+                var answer = confirm(msg);
+                if (answer) {
+                    window.location = "/cgi-bin/koha/patroncards/edit-batch.pl?op=remove&amp;batch_id=[% batch_id %]&amp;" + getstr;
+                }
+                else {
+                    return; // abort delete
+                }
+            };
+            function Add() {
+                window.open("/cgi-bin/koha/patroncards/members-search.pl?batch_id=[% batch_id %]",'FindABibIndex','width=875,height=400,toolbar=no,scrollbars=yes');
+            };
+            function DeDuplicate() {
+                window.location = "/cgi-bin/koha/patroncards/edit-batch.pl?op=de_duplicate&amp;batch_id=[% batch_id %]";
+            };
+            function Xport(mode) {
+                if (mode == 'label') {
+                    patroncards= new Array;
+                    if(document.items.action.length > 0) {
+                        for (var i=0; i < document.items.action.length; i++) {
+                            if (document.items.action[i].checked) {
+                                patroncards.push("label_id=" +  document.items.action[i].value);
+                            }
+                        }
+                        if (patroncards.length < 1) {
+                            alert(_("Por favor, seleccione al menos un carnet para exportar."));
+                            return;     // no batch selected
+                        }
+                        getstr = patroncards.join("&");
+                    }
+                    else if (document.items.action.checked) {
+                        getstr = document.items.action.value;
+                    }
+                    else {
+                        alert(_("Por favor, seleccione al menos un carnet para exportar."));
+                        return;     // no batch selected
+                    }
+                    return GB_showCenter(_("Exportar etiquetas"), "/cgi-bin/koha/patroncards/print.pl?batch_id=[% batch_id %]&" + getstr, 700, 800);
+                }
+                else if (mode == 'batch') {
+                    return GB_showCenter(_("Exportar etiquetas"), "/cgi-bin/koha/patroncards/print.pl?batch_id=[% batch_id %]", 700, 800);
+                }
+                else {
+                    // some pass-thru error trapping just in case...
+                }
+            };
+           function selected_layout() {
+                if (document.items.action.length) {
+                for (i=0;i<document.items.action.length;i++){
+                    if (document.items.action[i].checked==true){
+                        return(document.items.action[i].value);
+                    }
+                };
+                }
+                else {
+                    if (document.items.action.checked){
+                        return(document.items.action.value);
+                    }
+                };
+                alert(_("Por favor, seleccione al menos un ítem."));
+                return (-1);
+            };
+
+         $(document).ready(function() {
+            $("#additems").click(function(){
+                Add();
+                return false;
+            });
+            $("#removeitems").click(function(){
+                Remove();
+                return false;
+            });
+            $("#deletebatch").click(function(){
+                DeleteConfirm();
+                return false;
+            });
+            $("#deduplicate").click(function(){
+                DeDuplicate();
+                return false;
+            });
+            $("#exportitems").click(function(){
+                Xport('label');
+                return false;
+            });
+            $("#exportbatch").click(function(){
+                Xport('batch');
+                return false;
+            });
+         });
+        //]]>
+    </script>
+</head>
+<body id="pcard_edit-batch" class="tools pcard">
+ [% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs">
+ <a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/tools/tools-home.pl">Herramientas</a> &rsaquo; <a href="/cgi-bin/koha/patroncards/home.pl">Creador de carnet de usuario</a> &rsaquo; <a href="/cgi-bin/koha/patroncards/manage.pl?card_element=batch">Administrar lotes de carnets de usuario</a> &rsaquo; Administrar lote número [% batch_id %] </div>
+ <div id="doc3" class="yui-t2">
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+ <div id="toolbar" class="btn-toolbar">
+ <a class="btn btn-small" id="additems" href="#">Agregar ítem(s)</a>[% IF ( table_loop ) %] <a class="btn btn-small" id="removeitems" href="#">Eliminar ítem(s)</a>
+ <a class="btn btn-small" id="deletebatch" href="#">Eliminar lote</a>
+ <a class="btn btn-small" id="deduplicate" href="#">Eliminar duplicados</a>
+ <a class="btn btn-small" id="exportitems" href="#">Exportar ítem(s)</a>
+ <a class="btn btn-small" id="exportbatch" href="#">Exportar lote</a>[% END %] </div>
+
+
+ [% INCLUDE 'error-messages.inc' %] <div class="yui-g">
+ <div class="yui-u first" id="manage-patroncard-batches">
+ <div class="hint">Biblioteca actual: [% LoginBranchname %]</div>
+ [% IF ( table_loop ) %] <form name="items" class="checkboxed">
+ <h2>Los ítems en el lote [% batch_id %]</h2>
+ <table>
+ [% FOREACH table_loo IN table_loop %] [% IF ( table_loo.header_fields ) %] <tr>
+ [% FOREACH header_field IN table_loo.header_fields %] <th>[% header_field.field_label %]</th>
+ [% END %] </tr>
+ [% ELSE %] <tr>
+ [% FOREACH text_field IN table_loo.text_fields %] [% IF ( text_field.select_field ) %] <td align="center"><input type="checkbox" name="action" value="[% text_field.field_value %]"></td>
+ [% ELSE %] <td>[% text_field.field_value %]</td>
+ [% END %] [% END %] </tr>
+ [% END %] [% END %] </table>
+ </form>
+ [% ELSE %] <div class="dialog message"><h4>Aún no hay ítems en lote [% batch_id %]</h4>
+ <p>Utilice la barra de herramientas de arriba para agregar ítems.</p></div>
+ [% END %] </div>
+ [% IF ( duplicate_message ) %] <div class="yui-u">
+ <div class="dialog message">
+ <strong>[% duplicate_count %] ítems duplicados encontrados</strong> y se retirarán del proceso de lotes [% batch_id %]. </div>
+ </div>
+ [% END %] </div>
+ </div>
+ </div>
+ <div class="yui-b">
+ [% INCLUDE 'patroncards-menu.inc' %] </div>
+ </div>
+ </div>
+ [% INCLUDE 'intranet-bottom.inc' %] 

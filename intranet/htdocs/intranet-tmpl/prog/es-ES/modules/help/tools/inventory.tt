@@ -1,0 +1,19 @@
+[% INCLUDE 'help-top.inc' %] <h1>Inventario/existencias</h1>
+
+<p>La herramienta de inventario de Koha se puede utilizar en una de dos maneras, la primera es mediante la impresión de una lista del contenido de las estantería donde usted puede marcar los ítems faltantes. La segunda es hacer un archivo de texto con códigos de barras obtenidos mediante un lector portátil y luego subirlo a Koha para ver que ítems faltan de las estanterías.</p>
+
+<p>Si no es posible usar el escáner de códigos de barras en la planta de la biblioteca, la primera opción disponible es generar una lista de estanterías sobre la base de criterios que se introduzcan.</p>
+
+<p>Seleccione la biblioteca, la ubicación estanterías, rango de la signatura, el estado del ítem y cuando el ítem fue visto por última vez para generar una lista de estantería que pueda imprimir para utilizar mientras camina alrededor de la biblioteca y comprueba su colección</p>
+
+<p>También puede exportar la lista a un archivo CSV para modificarla con una aplicación en su ordenador. Simplemente marque la casilla junto a 'Exportar a archivo csv' para generar este archivo.</p>
+
+<p>Una vez que se han encontrado los ítems en sus estanterías puede volver a esta lista y desmarcar los ítems para que el sistema se actualice de tal forma que sea hoy la fecha de última vez visto.</p>
+
+<p>Si usted tiene un escáner portátil (o un ordenador portátil y un escáner USB) se puede caminar a través de la biblioteca con el escáner en la mano y escanear los códigos de barras. Una vez terminado se puede cargar el archivo de texto generado por el escáner en el Koha</p>
+
+<p>Elija el archivo de texto y la fecha en que desea marcar todo el tiempo como se ven y haz clic en 'Enviar.'</p>
+
+<p><strong>Vea la documentación completa para Inventario en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#inventory">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

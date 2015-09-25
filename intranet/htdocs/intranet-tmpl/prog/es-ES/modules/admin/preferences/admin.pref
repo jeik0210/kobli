@@ -1,0 +1,129 @@
+--- 
+admin.pref: 
+  "Autenticaci\xC3\xB3n CAS": 
+    - 
+      - 
+        choices: 
+          "": No usar
+          1: Usar
+        default: 0
+        pref: casAuthentication
+      - "CAS para autenticaci\xC3\xB3n de acceso."
+    - 
+      - 
+        choices: 
+          "": "No cerrar sesi\xC3\xB3n"
+          1: "Cerrar sesi\xC3\xB3n"
+        default: 0
+        pref: casLogout
+      - de CAS cuando abandone Koha.
+    - 
+      - "El servidor de autenticaci\xC3\xB3n CAS puede encontrase en"
+      - 
+        pref: casServerUrl
+    - 
+      - Usar
+      - 
+        choices: 
+          Common Name: "el Nombre Com\xC3\xBAn"
+          None: "ning\xC3\xBAn"
+          emailAddress: "la direcci\xC3\xB3n"
+        default: None
+        pref: AllowPkiAuth
+      - "campo para el certificado de autenticaci\xC3\xB3n de cliente SSL"
+  Opciones de acceso: 
+    - 
+      - "Cerrar sesi\xC3\xB3n autom\xC3\xA1ticamente despu\xC3\xA9s de"
+      - 
+        class: integer
+        pref: timeout
+      - "segundos de inactividad. A\xC3\xB1adir \"d\" cuando especifiquemos d\xC3\xADas, e.j., 1d siginifica que caduca en un d\xC3\xADa."
+    - 
+      - 
+        choices: 
+          "": No requerir
+          1: Requerir
+        default: 0
+        pref: AutoLocation
+      - que el personal acceda desde un ordenador en el rango de direcciones IP <a href="/cgi-bin/koha/admin/branches.pl">especificada por su biblioteca</a> (si hubiera).
+    - 
+      - "Almacena informaci\xC3\xB3n de sesiones autenticadas"
+      - 
+        choices: 
+          Pg: en la base de datos PostgreSQL (no soportada).
+          memcached: en un servidor memcached.
+          mysql: en la base de datos MySQL.
+          tmp: como archivos temporales.
+        default: mysql
+        pref: SessionStorage
+    - 
+      - 
+        choices: 
+          "": No prevenir
+          1: Prevenir
+        default: 0
+        pref: IndependentBranches
+      - "al personal (pero no superbibliotecarios) a la hora de modificar objetos (reservas, \xC3\xADtems, usuarios, etc.) que pertenecen a otra bibliotecas."
+  Opciones de interfaz: 
+    - 
+      - Usar
+      - 
+        class: email
+        pref: KohaAdminEmailAddress
+      - "como direcci\xC3\xB3n de email para el administrador de Koha. (Esta direcci\xC3\xB3n es la predeterminada en el From: para emails a menos que el bibliotecario tenga una particular, siendo \xC3\xA9sta referencia cuando ocurra un error interno)."
+    - 
+      - Mostrar
+      - 
+        choices: 
+          0: ninguna
+          1: alguna
+          2: mucha
+        default: 0
+        pref: DebugLevel
+      - "informaci\xC3\xB3n de depuraci\xC3\xB3n en el navegador cuando ocurre un error interno."
+    - 
+      - 
+        choices: 
+          "": Mostrar
+          1: No mostrar
+        default: 0
+        pref: noItemTypeImages
+      - "iconos de tipo de \xC3\xADtem en el cat\xC3\xA1logo."
+    - 
+      - Separar las columnas de un informe exportado con
+      - 
+        choices: 
+          "#": "'s"
+          ",": comas
+          /: barras
+          ;: punto y coma
+          \: barras invertidas
+          tabulation: tabulaciones
+        default: ","
+        pref: delimiter
+      - por defecto.
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: virtualshelves
+      - al personal y usuarios crear y ver listas almacenadas de libros.
+  "admin.pref Motor de b\xC3\xBAqueda": 
+    - 
+      - 
+        choices: 
+          Solr: Solr
+          Zebra: Zebra
+        default: Zebra
+        pref: SearchEngine
+      - "es el motor de b\xC3\xBAsqueda usado."
+  admin.pref Mozilla Persona: 
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        default: 0
+        pref: Persona
+      - Mozilla persona acceder

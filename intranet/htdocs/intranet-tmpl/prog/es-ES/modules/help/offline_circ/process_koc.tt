@@ -1,0 +1,19 @@
+[% INCLUDE 'help-top.inc' %] <h1>Cargar archivo de circulación offline (*.koc)</h1>
+
+<p>Offline Circulation Utility puede ser descargada en:<a href="http://kylehall.info/index.php/projects/koha/koha-offline-circulation/" target="_top">http://kylehall.info/index.php/projects/koha/koha-offline-circulation/</a></p>
+
+<p>El herramienta de circulación offline para Windows genera un archivo KOC y se puede volver a cargar en Koha cuando el sistema se recupere.</p>
+
+<p>En el menú de circulación hacer clicj en "Subir archivo de circulación offline (.koc)'</p>
+
+<p>Busque en su ordenador el archivo *.koc</p>
+
+<p>Una vez el archivo se ha catgado, hacer click en el proceso del archivo</p>
+
+<p>Cuando esta operación se complete se podrá cargar otro archivo o manejar las acciones de circulación offline.</p>
+
+<p>También se pueden manejar las acciones de circulación pendientes desde Circulación > Acciones de circulación offline pendientes</p>
+
+<p><strong>Ver la documentación completa para la carga del archivo de circulación offline en el <a href="http://es.koha-community.org/manual/3.12/es/offlinecirc.html#uploadofflinecirc">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,47 @@
+[% INCLUDE 'help-top.inc' %] <h1>Regla de Coincidencia de Registro</h1>
+
+<p>Las reglas de registros coincidentes se utilizan en la importación de registros MARC en Koha.</p>
+
+<p>Las reglas que se configuran aquí serán referenciadas en Preparar registros MARC para la importación.</p>
+
+<p>Para crear una nueva regla de coincidencia:</p>
+
+<ul>
+ <li>Seleccionar 'Nueva Regla de oincidencia de Registro' <ul>
+ <li>Seleccione un nombre único e ingréselo en el campo 'Código de regla de coincidencia'</li>
+ <li>'Descripción' puede ser cualquier cosa que deje en claro qué regla está eligiendo</li>
+ <li>'Límite de coincidencia' - El total de 'puntos' que debe sumar un registro para considerarse una 'coincidencia'</li>
+ <li>Los puntos de coincidencia se establecen para determinar cuales campos deben coincidir</li>
+ <li>'Índice de búsqueda' puede ser encontrado buscando en el archivo de su sistema ccl.properties el cual dice al indexador de Zebra que datos buscar en los datos MARC".</li>
+ <li>'Puntaje' - La cantidad de 'puntos' que vale la coincidencia en este campo. Si la suma de cada puntaje es superior al límite de coincidencia, el registro entrante se considera una coincidencia de un registro existente</li>
+ <li>Introduzca la etiqueta MARC que desee coincidir en el campo 'Etiqueta'</li>
+ <li>Introduzca el subcampo de etiqueta MARC que desee coincidir en el campo 'Subcampo'</li>
+ <li>'Offset' - Para usar en campos de control, 001-009</li>
+ <li>'Longitud' - Para usar en campos de control, 001-009</li>
+ <li>Koha sólo tiene una "regla de normalización" que elimina los caracteres adicionales, tales como comas y puntos y comas. El valor que introduzca en este campo es irrelevante para el proceso de normalización.</li>
+ <li>'Chequeos de coincidencia requeridos' - ??</li>
+</ul>
+</li>
+</ul>
+
+<h2>Ejemplo de Regla de Coincidencia de Registros: Número de Control</h2>
+
+<ul>
+ <li>Umbral de coincidencia: 100</li>
+ <li>Puntos de coincidencia (solo uno):</li>
+ <li>Buscar en el índice: número de control</li>
+ <li>Puntaje: 101</li>
+ <li>Campo: 001 <ul>
+ <li>este campo es para el número de control asignado por la organización que crea, usa o distribuye el registro</li>
+</ul>
+</li>
+ <li>Subcampos: un</li>
+ <li>Offset: 0</li>
+ <li>Longitud: 0</li>
+ <li>Regla de normalización: número de control</li>
+ <li>Verificación de Coincidencia Requerido: ninguno (eliminar el que está en blanco)</li>
+</ul>
+
+<p><strong>Ver la documentación completa de Reglas de coincidencia de registros en el <a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#recordmatchingrules">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

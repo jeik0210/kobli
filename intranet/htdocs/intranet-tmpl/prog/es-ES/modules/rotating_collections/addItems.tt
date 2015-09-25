@@ -1,0 +1,65 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Herramientas &rsaquo; Colecciones rotativas &rsaquo; Agregar/eliminar ítems</title>
+[% INCLUDE 'doc-head-close.inc' %] </head>
+<body>
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/tools/tools-home.pl">Herramientas</a> &rsaquo; <a href="/cgi-bin/koha/rotating_collections/rotatingCollections.pl">Colecciones rotativas</a> &rsaquo; Agregar/Eliminar ítems</div>
+
+<div id="doc3">
+<div id="bd">
+ <div class="yui-gb">
+
+ <h1>Colecciones rotativas: Agregar/Eliminar ítems</h1>
+
+ <div>
+ <br />
+ [% IF ( previousActionAdd ) %] [% IF ( addSuccess ) %] <div>El ítem con el código de barras '[% addedBarcode %]' se agregó con éxito!</div>
+ [% ELSE %] <div>No se pudo agregar el ítem con código de barras '[% addedBarcode %]'!</div>
+ <div>Razón: <strong>[% failureMessage %]</strong></div>
+ [% END %] [% END %] [% IF ( previousActionRemove ) %] [% IF ( removeSuccess ) %] <div>El ítem con código de barras '[% addedBarcode %]' se ha eliminado exitosamente!</div>
+ [% ELSE %] <div>No se pudo remover el artículo con código de barras '[% removedBarcode %]'!</div>
+ <div>Razón: <strong>[% failureMessage %]</strong></div>
+ [% END %] [% END %] <h3>Agregar ítem a <i>[% colTitle %]</i></h3>
+ </div>
+
+ <div>
+ <form action="addItems.pl" method="post">
+ <table>
+ <tr>
+ <th><label for="barcode">Código de barras: </label></td>
+ <td><input type="text" id="barcode" name="barcode" /></td>
+ <td>
+ [% IF ( removeChecked ) %]<input type="checkbox" name="removeItem" checked="checked" />
+ [% ELSE %]<input type="checkbox" name="removeItem" />[% END %] <label for="removeItem">Eliminar ítem de la colección</label>
+ </td>
+ </tr>
+
+ <input type="hidden" id="colId" name="colId" value="[% colId %]" />
+ <input type="hidden" name="action" value="addItem" />
+ <tr><td align="right" colspan="99"><input value="Enviar" type="submit" /></td></tr>
+ </table>
+ </form>
+ </div>
+
+ <div>
+ <h2>Ítems de esta colección</h2>
+ [% IF ( collectionItemsLoop ) %] <table>
+ <tr>
+ <th>Título</th>
+ <th>Signatura</th>
+ <th>Código de barras</th>
+ </tr>
+ [% FOREACH collectionItemsLoo IN collectionItemsLoop %] <tr>
+ <td>[% collectionItemsLoo.title |html %]</td>
+ <td>[% collectionItemsLoo.itemcallnumber %]</td>
+ <td>[% collectionItemsLoo.barcode %]</td>
+ </tr>
+ [% END %] </table>
+ [% ELSE %] No hay ítems en esta colección. [% END %] </div>
+
+ <div>
+ <br/>
+ <input value="Volver a Colecciones Rotativas" type="button" onclick="window.location.href='rotatingCollections.pl'">
+ </div>
+
+</div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

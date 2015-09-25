@@ -1,0 +1,16 @@
+[% INCLUDE 'help-top.inc' %] <h1>Crear factura manual</h1>
+
+<p>Para precios que no se asignan automáticamente, se puede crear una factura manual</p>
+<ul>
+ <li>Primero seleccione el tipo de factura que quiere crear <ul>
+ <li>Para agregar valores adicionales al tipo de factura manual del menú desplegable, añadirlos al valor autorizado MANUAL_INV</li>
+</ul>
+</li>
+ <li>Si la tasa está asociada con un ítem, puede introducir su código de barras para que la linea muestre un enlace a ese ítem</li>
+ <li>El campo de descripción es donde se entra la descripción de la carga</li>
+ <li>En la caja de cantidad no utilice ningún símbolo de moneda, solo números y decimales.</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Creación de pedidos manuales en el <a href="http://es.koha-community.org/manual/3.12/es/patroninformation.html#patronfines">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

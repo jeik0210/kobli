@@ -1,0 +1,16 @@
+[% INCLUDE 'help-top.inc' %] <h1>Pedido desde una Fuente Externa</h1>
+
+<p>Si desea buscar en otras bibliotecas para comprar un ítem, puede usar la opción 'De una fuente externa',  que le permitirá hacer un pedido a partir de un registro MARC encontrado por una búsqueda Z39.50.</p>
+
+<ul>
+ <li>Desde los resultados, seleccionar el enlace Orden al lado de cada ítem que desee adquirir.</li>
+ <li>Si el ítem que usted está pidiendo de una fuente externa parece que podría ser un duplicado, Koha le advertirá y le dará opciones sobre cómo proceder.<ul>
+ <li>Desde la advertencia, puede elegir ordenar otra copia de un registro existente, crear uno nuevo o cancelar su orden de este ítem.</li>
+</ul>
+</li>
+ <li>En el formulario de pedido que aparece, no será posible editar los detalles del catálogo</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Órdenes de compra en el <a href="http://es.koha-community.org/manual/3.12/es/placingacqorder.html#createacqbasket">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,24 @@
+[% INCLUDE 'help-top.inc' %] <h1>Noticias</h1>
+
+<p>El módulo de noticias Koha permite a los bibliotecarios enviar noticias al OPAC, a la interfaz administrativa y a los recibos de circulación.</p>
+
+<p>Para agregar noticias tanto al OPAC, interfaz administrativa o recibo de circulación:</p>
+
+<ul>
+ <li>Haga clic en 'Nueva entrada' <ul>
+ <li>En 'Mostrar en' seleccione si muestra la noticia en el OPAC, recibo (de circulación) o en la interfaz de administrativa (Staff).</li>
+ <li>Elija un título para su entrada</li>
+ <li>Con los campos de fecha de publicación y caducidad se puede controlar el tiempo que el ítem aparece</li>
+ <li>'Aparece en posición' le permite decidir en que orden aparecen sus nuevos ítems</li>
+ <li>El cuadro 'Noticias' permite el uso de HTML para el formato de su noticia</li>
+</ul>
+</li>
+ <li>Después de rellenar todos los campos, seleccionar 'Enviar'</li>
+ <li>Las noticias en el OPAC aparecerá por encima de la OpacMainUserBlock</li>
+ <li>Las noticias en la interfaz del personal van a aparecer en el extremo izquierdo de la pantalla</li>
+ <li>Las noticias en los recibos de circulación aparecerán bajo los ítems prestados</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Noticias en el <a href="http://es.koha-community.org/manual/3.12/es/tools.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

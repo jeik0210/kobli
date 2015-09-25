@@ -1,0 +1,53 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Circulación</title>
+[% INCLUDE 'doc-head-close.inc' %] </head>
+<body id="circ_circulation-home" class="circ">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'circ-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; Circulación</div>
+
+<div id="doc" class="yui-t7">
+ 
+ <div id="bd">
+ <div class="yui-g"> 
+
+<h1>Circulación</h1>
+
+<div class="yui-u first"> 
+ <ul>
+ <li><a href="/cgi-bin/koha/circ/circulation.pl">Préstamo</a></li>
+ <li><a href="/cgi-bin/koha/circ/returns.pl">Devolución</a></li>
+ [% IF ( display_transfer ) %] <li><a href="/cgi-bin/koha/circ/branchtransfers.pl">Transferencia</a></li>
+ [% END %] [% IF ( AutoLocation ) %][% ELSE %][% IF ( IndependentBranches ) %][% ELSE %]<li><a href="/cgi-bin/koha/circ/selectbranchprinter.pl">Seleccionar Biblioteca</a></li>[% END %][% END %] [% IF ( fast_cataloging ) %] [% IF ( CAN_user_editcatalogue_fast_cataloging ) %] <li><a href="/cgi-bin/koha/cataloguing/addbiblio.pl?frameworkcode=FA">Catalogación rápida</a></li>
+ [% END %] [% END %] </ul>
+ </div>
+
+ <div class="yui-u">
+ 
+<h5>Informes de circulación</h5>
+<ul>
+ <li> <a href="/cgi-bin/koha/circ/view_holdsqueue.pl" title="cola de reservas">Cola de reservas</a></li>
+ <li> <a href="/cgi-bin/koha/circ/pendingreserves.pl" title="reservas para retirar de los estantes">Reservas a preparar</a></li>
+ <li> <a href="/cgi-bin/koha/circ/waitingreserves.pl" title="reservas a la espera de ser retiradas">Reservas a retirar</a></li>
+ <li> <a href="/cgi-bin/koha/circ/reserveratios.pl">Proporción de reservas</a></li>
+ <li> <a href="/cgi-bin/koha/circ/transferstoreceive.pl" title="transferido para ser recibido en su biblioteca">Transferencias a recibir</a></li>
+ [% IF ( CAN_user_circulate_overdues_report ) %]<li> <a href="/cgi-bin/koha/circ/overdue.pl">Retrasos</a>
+ - <b>Advertencia:</b> Este informe consume muchos recursos en sistema con gran cantidad de ejemplares retrasados.</li>[% END %] <li> <a href="/cgi-bin/koha/circ/branchoverdues.pl">Retrasos con multas</a> - Limitados a su biblioteca. Vea la ayuda del informe para más detalles.</li>
+<!-- <li> <a href="/cgi-bin/koha/circ/stats.pl?time=yesterday">Daily reconciliation</a></li> -->
+</ul>
+ 
+ </div>
+
+
+ <div class="yui-u">
+ <h5>Circulación fuera de línea</h5>
+ <ul>
+ <li><a href="/cgi-bin/koha/offline_circ/process_koc.pl">Cargar archivo de circulación offline (.koc)</a></li>
+ <li><a href="/cgi-bin/koha/offline_circ/list.pl">Hay acciones de circulación offline pendientes</a>
+ <ul>
+ <li><a href="http://kylehall.info/index.php/projects/koha/koha-offline-circulation/">Conseguir la aplicación de escritorio</a></li>
+ <li><a href="https://addons.mozilla.org/[% lang %]/firefox/addon/koct/">Conseguir el add-on de Firefox</a></li>
+ </ul>
+ </ul>
+ </div>
+</div>
+</div>
+
+[% INCLUDE 'intranet-bottom.inc' %] 

@@ -1,0 +1,21 @@
+[% INCLUDE 'help-top.inc' %] <h1>Ciudades y Pueblos</h1>
+
+<p>Para estandarizar el acceso de usuarios, puede definir ciudades o pueblos dentro de su región, para que cuando los nuevos usuarios sean agregados, los bibliotecarios simplemente seleccionarán la ciudad de una lista en lugar de tener que tipear la ciudad y el código postal.</p>
+
+<h2>Añadir una ciudad</h2>
+
+<p>Para agregar un ciudad nueva, haga clic en el botón 'Nueva ciudad' en la parte superior de la página y escriba el nombre de la ciudad, estado/provincia y código postal.</p>
+
+<p>Una vez que hace clic en Enviar, la ciudad se guardará y aparecerá en la página de Ciudades y pueblos.</p>
+
+<p>Las ciudades pueden ser modificadas o eliminadas en cualquier momento.</p>
+
+<h2>Ver Ciudades donde el Usuario Agrega el  Formulario</h2>
+
+<p>Si ha definido ciudades locales utilizando el formulario de 'Nueva Ciudad', cuando agregue o edite un registro de usuario verá las ciudades en un menú desplegable para seleccionarlas facilmente.</p>
+
+<p>Esto permitirá facilitar la entrada de las ciudades en el registro de usuario sin correr el riesgo potencial de errores tipográficos o códigos postales equivocados.</p>
+
+<p><strong>Ver la documentación completa para Ciudades y Pueblos en el <a href="http://es.koha-community.org/manual/3.12/es/patscirc.html#citytowns">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

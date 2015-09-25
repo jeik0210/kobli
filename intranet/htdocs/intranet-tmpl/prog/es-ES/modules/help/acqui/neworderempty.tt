@@ -1,0 +1,11 @@
+[% INCLUDE 'help-top.inc' %] <h1>Pedido desde un Nuevo Registro Vacío</h1>
+
+<p>Para crear una orden desde un registro que no se encuentra, elija 'Desde un registro nuevo (vacío).'</p>
+
+<ul>
+ <li>Se le presentará con un formulario en blanco para rellenar todos los datos necesarios sobre el ítem.</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Órdenes de compra en el <a href="http://es.koha-community.org/manual/3.12/es/placingacqorder.html#createacqbasket">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,60 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Usuarios &rsaquo; [% IF ( unknowuser ) %] El usuario no existe [% ELSE %] Estadísticos para[% INCLUDE 'patron-title.inc' %] [% END %] </title>
+<link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+[% INCLUDE 'doc-head-close.inc' %] <script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+[% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+[% INCLUDE 'calendar.inc' %] <script type="text/javascript">
+    $(document).ready(function() {
+        $("#statistics").dataTable($.extend(true, {}, dataTablesDefaults, {
+            "sDom": 't',
+            "bPaginate": false
+        }));
+    });
+</script>
+</head>
+
+<body>
+[% INCLUDE 'header.inc' %] [% INCLUDE 'patron-search.inc' %] <div id="breadcrumbs">
+ <a href="/cgi-bin/koha/mainpage.pl">Inicio</a>
+&rsaquo; <a href="/cgi-bin/koha/members/members-home.pl">Usuarios</a>
+&rsaquo; [% IF ( unknowuser ) %]El usuario no existe[% ELSE %]Detalles de usuario para [% firstname %][% surname %] ([% cardnumber %])[% END %]  </div>
+
+<div id="doc3" class="yui-t1">
+
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+ [% INCLUDE 'members-toolbar.inc' %] <h3>Estadísticas por [% UNLESS ( I ) %][% title %] [% firstname %] [% END %] [% surname %] ([% cardnumber %])</h3>
+ [% IF ( datas.size ) %] <table id="statistics">
+ <thead>
+ <tr>
+ [% FOREACH cn IN column_names %] <th>
+ [% SWITCH cn %][% CASE 'itype' %]Tipo de ítem [% CASE 'ccode' %]Código de la colección [% CASE 'location' %]Ubicación en estantería [% CASE 'homebranch' %] Biblioteca Origen [% CASE 'holdingbranch' %] Biblioteca propietaria [% CASE %] [% cn %] [% END %] </th>
+ [% END %] <th>Total de préstamos a fecha de ayer</th>
+ <th>Préstamos de hoy</th>
+ <th>Notificaciones de hoy </th>
+ <th>Total de préstamos: </th>
+ </tr>
+ </thead>
+
+ <tbody>
+ [% FOREACH r IN datas %] <tr>
+ [% FOREACH c IN r %] <td>[% c %]</td>
+ [% END %] </tr>
+ [% END %] </tbody>
+ <tfoot>
+ <tr>
+ <td colspan="[% length_keys %]">TOTAL</td>
+ <td>[% count_total_precedent_state %]</td>
+ <td>[% count_total_issues %]</td>
+ <td>[% count_total_issues_returned %]</td>
+ <td>[% count_total_actual_state %]</td>
+ </tr>
+ </tfoot>
+ </table>
+ [% ELSE %] <div class="dialog message">No hay estadísticas para este registro.</div>
+ [% END %] </div>
+ </div>
+<div class="yui-b">
+[% INCLUDE 'circ-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

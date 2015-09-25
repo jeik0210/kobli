@@ -1,0 +1,49 @@
+[% INCLUDE 'help-top.inc' %] <h1>Proveedores</h1>
+
+<p>Antes de introducir una orden, deberá introducir primero al menos un proveedor.</p>
+
+<h2>Agregar un proveedor </h2>
+
+<p>Para agregar un proveedor, seleccionar en el botón 'Nuevo Proveedor' en la página de Adquisiciones.</p>
+
+<p>El formulario para agregar el proveedor está dividido en tres partes:</p>
+
+<ul>
+ <li>La primera sección es para  información básica sobre el proveedor.<ul>
+ <li>De estos campos, sólo el nombre del proveedor es necesario. El resto de la información debe ser añadida para ayudar con la generación de cartas de reclamos y facturas.</li>
+</ul>
+</li>
+ <li>La segunda sección es para información acerca de su contacto en la oficina del Proveedor <ul>
+ <li>Ninguno de estos campos son obligatorios.  Sólo deberán ser rellenados si se desea realizar un seguimiento de la información de su contacto dentro de Koha.</li>
+</ul>
+</li>
+ <li>El última sección es para los datos de facturación:<ul>
+ <li>Para poder hacer un pedido a un proveedor,  debe ponerlas en 'Activar'.</li>
+ <li>Para  Lista de Precios y Precios de Factura, seleccione su moneda.<ul>
+ <li>Currencies  se asignan en el área de Currencies &amp; Exchange Rates</li>
+</ul>
+</li>
+ <li>Si su biblioteca carga impuestos, marque su Número de Impuesto como registrado.</li>
+ <li>Nota: si su lista de precios y/o facturas, incluye impuestos.</li>
+ <li>Si el vendedor ofrece un descuento, este se introducirá en el campo 'Descuento'.<ul>
+ <li>Usted pueda acceder descuentos específicos del ítem al hacer un pedido</li>
+</ul>
+</li>
+ <li>Introducir su tasa de impuestos si su biblioteca se carga impuestos sobre pedidos</li>
+ <li>Si usted sabe cuanto tiempo suele tardar el pedido de este proveedor, puede introducir toempo de entrega. Esto permite que koha estime cuando llegaran los pedidos a la biblioteca segun el informe de pedido de retraso.</li>
+ <li>Las notas son para uso interno. </li>
+</ul>
+</li>
+</ul>
+
+<h2>Ver/Editar un proveedor</h2>
+
+<p>Para ver la página de información de un proveedor, tiene que buscar el proveedor en la página principal de Adquisiciones. Puede hacer la búsqueda a partir de cualquier parte del nombre del proveedor. Desde  los resultados, seleccionar en el nombrede el proveedor que desea ver o editar.</p>
+
+<p>Para realizar cambios al vendedor o proveedor, simplemente haga clic en el botón "Editar"</p>
+
+<p>Si el proveedor no ha adjuntado cestas que se le atribuye, un botón 'Borrar' será visible, permitiendo borrar el proveedor.</p>
+
+<p><strong>Ver la documentación completa para administración de proveedores en el <a href="http://es.koha-community.org/manual/3.12/es/acqvendors.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

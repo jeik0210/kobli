@@ -1,0 +1,17 @@
+[% INCLUDE 'help-top.inc' %] <h1>Buscar en adquisiciones </h1>
+
+<p>En la parte superior de la páginas de Adquisiciones, hay una caja de búsqueda rápida donde podrá buscar un Vendor Search o un Order Search. </p>
+
+<p>En la Búsqueda de Proveedores, puede introducir cualquier parte del nombre del proveedor para obtener resultados. </p>
+
+<p>Usando la Búsqueda de Pedidos, puede buscar ítems que se han ordenado con o sin el proveedor.</p>
+
+<p>Puede introducir información en uno o ambos campos y puede introducir cualquier parte del título y/o nombre de proveedor.</p>
+
+<p>Seleccionar el signo más ,a la derecha de la caja de búsqueda de Proveedor, se desplegará  y le permitirá buscar por campos adicionales.</p>
+
+<p>Seleccionar Búsqueda avanzadac, a la derecha del botón de búsqueda, le presentará todas las opciones de búsqueda disponibles.</p>
+
+<p><strong>Ver la documentación completa para Búsqueda de Adquisiciones en el <a href="http://es.koha-community.org/manual/3.12/es/acqsearch.html">manual</a> (en línea).</strong></p>
+ 
+[% INCLUDE 'help-bottom.inc' %] 

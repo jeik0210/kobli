@@ -1,0 +1,45 @@
+[% USE KohaDates %] [% INCLUDE 'doc-head-open.inc' %] <link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+[% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+<script type="text/javascript" src="[% themelang %]/js/acq.js"></script>
+
+<title>
+ Histórico &rsaquo; de adquisiones &rsaquo; por biblioteca</title>
+
+
+</head>
+
+<body id="acqui_history" class="acqui">
+
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'budgets-admin-search.inc' %]
+
+<!-- ################################################################################# -->
+<!-- BREADCRUMBS -->
+<!-- ################################################################################# -->
+
+<div id="breadcrumbs">
+ <a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/acqui/acqui-home.pl">Adquisiciones</a> &rsaquo; Histórico de adquisiciones por biblioteca</div>
+
+<div id="doc3" class="yui-t2">
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+ <h2>Histórico de adquisiciones por biblioteca</h2>
+
+ [% IF ( library ) %] <p>El número total de adquisiciones en la biblioteca [% library %] es [% unlimited_total %]</p>
+ [% ELSE %] <p>El número total de adquisiciones en esta biblioteca es [% unlimited_total %]</p>
+ [% END %] [% IF ( unlimited_total ) %] <div class="pages">[% pagination_bar %]</div>
+ <table>
+ <tr>[% FOREACH header_ro IN header_row %]<th>[% header_ro.cell %]</th>[% END %]</tr>
+ [% FOREACH result IN results %] <tr>
+ [% FOREACH cell IN result.cells %]<td>[% cell.cell %]</td>[% END %] </tr>
+ [% END %] </table> 
+ [% END %] </div>
+ </div>
+ <div class="yui-b">
+ [% INCLUDE 'acquisitions-menu.inc' %] </div>
+ </div>
+
+[% INCLUDE 'intranet-bottom.inc' %] 

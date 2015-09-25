@@ -1,0 +1,13 @@
+[% INCLUDE 'help-top.inc' %] <h1>Transporte matriz de costos</h1>
+
+<p>La matriz de costes de transporte permite un sistema de biblioteca de definir los costos relativos para transportar los libros a la otra. Para que el sistema para utilizar esta matriz, primero debe establecer la preferencia UseTransportCostMatrix en 'Usar'</p>
+
+<p>Los costos son valores decimales entre un valor máximo arbitrario (por ejemplo 1 o 100) y 0 que es el mínimo (no) el costo. Por ejemplo, es posible que utilices la distancia entre cada biblioteca en millas como su "costo", si eso reflejaría con precisión el costo de su transferencia. Tal vez las oficinas de correos sería una mejor medida. Las bibliotecas que comparten una oficina de correos tendrá un costo de 1, las oficinas de correos adyacentes tendría un coste de 2, etc</p>
+
+<p>Para introducir en los costos de transporte, simplemente haga clic en la celda que desea modificar, desmarque la casilla "Desactivar" e introduzca su "costo"</p>
+
+<p>Después de entrar en su costo, pulsa 'Enter' en el teclado o haga clic en el botón 'Guardar' en la parte inferior de la matriz para guardar los cambios.</p>
+
+<p><strong>Ver la documentación completa para la matriz de costes de transporte en el  <a href="http://es.koha-community.org/manual/3.12/es/patscirc.html#transportcostmatrix">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

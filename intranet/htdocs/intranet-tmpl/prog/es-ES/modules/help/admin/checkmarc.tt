@@ -1,0 +1,9 @@
+[% INCLUDE 'help-top.inc' %] <h1>Prueba de la Hoja de Trabajo Bibliográficos MARC</h1>
+
+<p>Esta herramienta comprueba estructura de MARC en su hojas de trabajo.</p>
+
+<p>Si modifica su Hoja de trabajo Bibliográfica  MARC, se recomienda que utilice esta herramienta para verificar errores en su definición.</p>
+
+<p><strong>Ver la documentación completa para el Test de la plantillas de catalogación bibliográficas MARC en el<a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#marcbibframeworkstest">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

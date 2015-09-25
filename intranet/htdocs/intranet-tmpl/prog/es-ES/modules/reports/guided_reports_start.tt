@@ -1,0 +1,807 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Informes &rsaquo; Asistente de informes guiados [% IF ( saved1 ) %]&rsaquo; Informes guardados [% ELSIF ( create ) %]&rsaquo; Crear desde SQL [% ELSIF ( showsql ) %]&rsaquo; Informes guardados &rsaquo; Vista SQL [% ELSIF ( execute ) %]&rsaquo; Informes guardados &rsaquo; [% name %] Informe [% ELSIF ( buildx ) %]&rsaquo; Hacer un informe, paso [% buildx %] de 6: [% IF ( build1 ) %]Elegir un módulo [% ELSIF ( build2 ) %]Elegir un tipo de informe [% ELSIF ( build3 ) %]Elegir columnas a mostrar [% ELSIF ( build4 ) %]Elegir criterios para limitar en [% ELSIF ( build5 ) %]Elegir columnas para hacer totales [% ELSIF ( build6 ) %]Elegir como ordenará el informe [% END %] [% END %] </title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <style type="text/css">
+    #sql { width: 90%; height: 9em;}
+</style>
+[% IF ( saved1 ) %] <link rel="stylesheet" type="text/css" href="[% themelang %]/css/datatables.css" />
+<script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+[% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% themelang %]/js/datatables.js"></script>
+[% END %] <script type="text/javascript">
+//<![CDATA[
+[% IF (dateformat == 'metric' && saved1) %]
+dt_add_type_uk_date();
+[% END %]
+var group_subgroups = {};
+[% FOREACH group IN groups_with_subgroups %]
+    var gid = "[% group.id %]"
+    group_subgroups[gid] = new Array();
+    [% FOREACH subgroup IN group.subgroups %]
+        var sgid = "[% subgroup.id %]";
+        var sgname = "[% subgroup.name %]";
+        group_subgroups[gid].push([sgid, sgname]);
+    [% END %]
+[% END %]
+
+function load_group_subgroups () {
+    var group = $("#group_select").val();
+    var sg = $("#subgroup");
+    $(sg).find('option[value!=""]').each(function() {
+        $(this).remove();
+    });
+    $(sg).hide();
+    if (group) {
+        var select = $(sg).find('select')[0];
+        $.each( group_subgroups[group], function(index, value) {
+            $('<option value="' + value[0] + '">' + value[1] + '</option>').appendTo(select);
+        } );
+        $("#subgroup, #subgroup *").show();
+    }
+}
+
+$(document).ready(function(){
+
+[% IF (saved1) %]
+    [% IF (dateformat == "metric") %]
+        dt_add_type_uk_date();
+    [% END %]
+    var rtable = $("#table_reports").dataTable($.extend(true, {}, dataTablesDefaults, {
+        'bAutoWidth': false,
+        'sDom': 't<"bottom pager"ilpf>',
+        'sPaginationType': 'four_button',
+        'aLengthMenu': [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
+        'iDisplayLength': 20,
+        'aaSorting': [[ 1, "asc" ]],
+        'aoColumnDefs': [
+            { 'bSortable': false, 'bSearchable':false, 'aTargets': [0, -1, -2, -3, -4] },
+            { 'bSearchable': false, 'aTargets': [3, 4] },
+            { "aTargets": [ 1, 2 ], "sType": "natural"  }
+        ],
+        'oLanguage': {
+            'sZeroRecords': _("No se encontraron registros coincidentes")
+        }
+    }));
+
+    var rtabs = $("#tabs").tabs();
+    rtabs.bind("tabsshow", function(e, ui) {
+        $("#subgroup_filter option").each(function() {
+            if($(this).val().length > 0) {
+                $(this).remove();
+            }
+        });
+        rtable.fnFilter('', 4);
+        rtable.fnFilter('', 5);
+        rtable.fnSetColumnVis(4, true);
+        rtable.fnSetColumnVis(5, true);
+
+        var g_id = $(ui.tab).attr('id')
+        var g_name = $(ui.tab).text();
+        if (g_id && g_id.length > 0) {
+            rtable.fnFilter('^' + g_name + '$', 4, true, true, true, false);
+            rtable.fnSetColumnVis(4, false);
+            for(var i in group_subgroups[g_id]) {
+                $("#subgroup_filter").append(
+                    '<option value="' + group_subgroups[g_id][i][0] + '">'
+                    + group_subgroups[g_id][i][1] + '</option>'
+                );
+            }
+            $("#subgroup_filter_block").show();
+        } else {
+            $("#subgroup_filter_block").hide();
+        }
+    });
+    $("#subgroup_filter_block").hide();
+
+    $("#subgroup_filter").change(function() {
+        var selected = $(this).find('option:selected');
+        var sg_id = $(selected).val();
+        var sg_name = $(selected).text();
+        if (sg_id.length > 0) {
+            rtable.fnFilter('^' + sg_name + '$', 4, true, true, true, false);
+            rtable.fnSetColumnVis(4, false);
+        } else {
+            rtable.fnFilter('', 4);
+            rtable.fnSetColumnVis(4, true);
+        }
+    });
+
+    $("#reports_form").submit(function(){
+        var checkedItems = $("input[name=ids]:checked");
+        if ($(checkedItems).size() == 0) {
+            alert(_("Seleccione una o más informes para eliminar "));
+            return false;
+        }
+        $(checkedItems).parents('tr').addClass("warn");
+        if( confirm(_("¿Está seguro de querer eliminar los informes seleccionados?")) ) {
+            return true;
+        } else {
+            $(checkedItems).parents('tr').removeClass("warn");
+            return false;
+        }
+    });
+[% END %]
+
+[% IF ( showsql ) %]
+    $("#sql").focus(function() {
+        $(this).select();
+    });
+[% END %]
+[% IF ( saved1 ) %]
+    $(".confirmdelete").click(function(){
+        $(this).parents('tr').attr("class","warn");
+        if(confirm(_("¿Está seguro de querer borrar este informe guardado? "))){
+            return true;
+        } else {
+            $(this).parents('tr').attr("class","");
+            return false;
+        }
+    });
+[% END %]
+  // redefine the datepicker's default because reports require ISO
+  // http://jqueryui.com/demos/datepicker/#option-dateFormat
+  $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+
+[% IF (create || editsql || save) %]
+    $("#select_group").change(function() {
+        if($(this).attr('checked')) {
+            $("#group_input").attr('disabled', 'disabled');
+            $("#groupdesc_input").attr('disabled', 'disabled');
+            $("#group_select").attr('disabled', false);
+            if ($("#group_select").val().length > 0) {
+                $("#select_subgroup").attr('checked', 'checked');
+                $("#select_subgroup").change();
+                $("#subgroup, #subgroup *").show();
+            } else {
+                $("#subgroup").hide();
+            }
+        }
+    });
+    $("#create_group").change(function() {
+        if($(this).attr('checked')) {
+            $("#group_input").attr('disabled', false);
+            $("#groupdesc_input").attr('disabled', false);
+            $("#group_select").attr('disabled', 'disabled');
+            $("#create_subgroup").attr('checked', 'checked').change();
+            $("#subgroup_select").hide();
+            $("#subgroup input[type='radio']").hide();
+            $("#subgroup label[for]").hide();
+            $("#subgroup_input").show();
+            $("#subgroupdesc_input").show();
+            $("#subgroup").show();
+        }
+    });
+    $("#select_subgroup").change(function() {
+        if($(this).attr('checked')) {
+            $("#subgroup_select").attr('disabled', false);
+            $("#subgroup_input").attr('disabled', 'disabled');
+            $("#subgroupdesc_input").attr('disabled', 'disabled');
+        }
+    });
+    $("#create_subgroup").change(function() {
+        if($(this).attr('checked')) {
+            $("#subgroup_input").attr('disabled', false);
+            $("#subgroupdesc_input").attr('disabled', false);
+            $("#subgroup_select").attr('disabled', 'disabled');
+        }
+    });
+    $("#select_group").change();
+    $("#select_subgroup").change();
+[% END %]
+});
+//]]>
+</script>
+</head>
+<body id="rep_guided_reports_start" class="rep">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'circ-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a>
+&rsaquo; <a href="/cgi-bin/koha/reports/reports-home.pl">Informes</a>
+&rsaquo; <a href="/cgi-bin/koha/reports/guided_reports.pl">Asistente de informes guiados</a>
+&rsaquo; [% IF ( saved1 ) %]Informes guardados [% ELSIF ( create ) %]Crear usando SQL [% ELSIF ( showsql ) %]<a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved">Informes guardados</a> &rsaquo; Vista SQL [% ELSIF ( execute ) %]<a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved">Informes guardados</a> &rsaquo; <em>[% name %]</em> Informe [% ELSIF ( buildx ) %]<a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Build%20new">Crear un informe</a> &rsaquo; Paso [% buildx %] de 6: [% IF ( build1 ) %]Elegir un módulo [% ELSIF ( build2 ) %]Elegir un tipo de informe [% ELSIF ( build3 ) %]Seleccionar columnas para mostrar [% ELSIF ( build4 ) %]Seleccionar criterio para limitar en [% ELSIF ( build5 ) %]Elegir columnas para total [% ELSIF ( build6 ) %]Elegir como desea ordenar el informe [% END %] [% END %] </div>
+
+<div id="doc3" class="yui-t1">
+<div id="bd">
+<div id="yui-main">
+ <div class="yui-b">
+ [% INCLUDE "reports-toolbar.inc" %] [% IF ( start ) %] <h2>Informes guiados</h2>
+ <p>Use informes guiados para crear informes no estándar. Esta función tiene por objeto proporcionar un nivel intermedio entre los informes "enlatados" y los informes producidos a través de consultas SQL.</p>
+
+ <h3>Crear y ejecutar informes</h3>
+ [% IF ( CAN_user_reports_create_reports ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl">
+ <input type="hidden" name="phase" value="Build new" />
+ <input value="Crear nuevo" name="submit" type="submit" />
+ </form>
+ [% END %] [% IF ( CAN_user_reports_execute_reports ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl">
+ <input type="hidden" name="phase" value="Use saved"/>
+ <input value="Use guardados" name="submit" type="submit" />
+ </form>
+ [% END %] [% IF ( CAN_user_reports_create_reports ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl">
+ <input type="hidden" name="phase" value="Create report from SQL"/>
+ <input value="Crear informe con SQL" name="submit" type="submit" />
+ </form>
+ [% END %] <h3>Diccionario de informes</h3>
+<p>Use el diccionario de informes personalizados para definir los criterios a utilizar en sus informes</p>
+<form action="/cgi-bin/koha/reports/dictionary.pl">
+<input type="hidden" name="phase" value="View Dictionary"/>
+<input value="Ver diccionario" name="submit" type="submit" />
+</form>
+[% END %] [% IF ( saved1 ) %] [% IF ( savedreports ) %]<h1>Informes guardados</h1>
+
+<div id="tabs" class="toptabs">
+ <ul>
+ <li><a href="#reports">Todo</a></li>
+ [% FOREACH group IN groups_with_subgroups %] <li><a id="[% group.id %]" href="#reports">[% group.name %]</a></li>
+ [% END %] </ul>
+ <div id="reports">
+ <div id="subgroup_filter_block">
+ <label for="subgroup_filter">Subgrupo:</label>
+ <select id="subgroup_filter">
+ <option value="">Todo</option>
+ </select>
+ </div>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" id="reports_form" method="post">
+<input type="hidden" name="phase" value="Delete Multiple" />
+ <table id="table_reports">
+ <thead>
+ <tr>
+ <th>&nbsp;</th>
+ <th>ID</th>
+ <th>Nombre de informe</th>
+ <th>Tipo</th>
+ <th>Grupo</th>
+ <th>Subgrupo</th>
+ <th>Notas</th>
+ <th>Autor</th>
+ <th>Fecha de creación</th>
+ <th>pública</th>
+ [% IF (usecache) %] <th>Caché expira (sergundos)</th> [% END %] <th>Resultados guardados</th>
+ <th>&nbsp;</th>
+ </tr>
+ </thead>
+ <tbody>
+ [% FOREACH savedreport IN savedreports %] [% UNLESS ( loop.odd ) %]<tr class="odd">[% ELSE %]<tr>[% END %] <td><input type="checkbox" name="ids" value="[% savedreport.id %]" /></td>
+ <td><label for="ids">[% savedreport.id %]</label></td>
+ <td>
+ [% IF ( savedreport.report_name ) %] [% savedreport.report_name %] [% ELSE %] [ sin nombre ] [% END %] </td>
+ <td>[% savedreport.type %]</td>
+ <td>[% savedreport.groupname %]</td>
+ <td>[% savedreport.subgroupname %]</td>
+ <td>[% savedreport.notes %]</td>
+ <td>[% savedreport.borrowersurname %][% IF ( savedreport.borrowerfirstname ) %], [% savedreport.borrowerfirstname %][% END %] ([% savedreport.borrowernumber %])</td>
+ <td>[% savedreport.date_created %]</td>
+ [% IF (savedreport.public) %] <td>Sí</td>
+ [% ELSE %] <td>No</td>
+ [% END %] [% IF (usecache) %] <td>[% savedreport.cache_expiry %]</td> [% END %] <td>[% IF ( savedreport.date_run ) %]<a href="/cgi-bin/koha/reports/guided_reports.pl?phase=retrieve%20results&amp;id=[% savedreport.id %]">[% savedreport.date_run %]</a>[% END %] </td>
+ <td>
+ <div class="dropdown">
+ <a class="btn btn-mini dropdown-toggle" id="reportactions[% savedreport.id %]" role="button" data-toggle="dropdown" href="#">
+ Acciones<b class="caret"></b>
+ </a>
+ <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="reportactions[% savedreport.id %]">
+ <li><a href="/cgi-bin/koha/reports/guided_reports.pl?reports=[% savedreport.id %]&amp;phase=Show%20SQL"><i class="icon-search"></i> Mostrar</a></li>
+ [% IF ( CAN_user_reports_create_reports ) %] <li><a href="/cgi-bin/koha/reports/guided_reports.pl?reports=[% savedreport.id %]&amp;phase=Edit%20SQL"><i class="icon-pencil"></i> Editar</a></li>
+ <li><a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Create report from SQL&sql=[% savedreport.savedsql |uri %]&reportname=[% savedreport.report_name |uri %]&notes=[% savedreport.notes |uri %]" title="Duplicar este informe guardado"><i class="icon-copy"></i> Duplicado</a></li>
+ [% END %] <li><a href="/cgi-bin/koha/reports/guided_reports.pl?reports=[% savedreport.id %]&amp;phase=Run%20this%20report"><i class="icon-play"></i> Ejecutar</a></li>
+ <li><a href="/cgi-bin/koha/tools/scheduler.pl?id=[% savedreport.id %]"><i class="icon-time"></i> Planificación</a></li>
+ [% IF ( CAN_user_reports_create_reports ) %] <li><a href="/cgi-bin/koha/reports/guided_reports.pl?reports=[% savedreport.id %]&phase=Delete%20Saved" class="confirmdelete" title="Borrar este informe guardado"><i class="icon-remove"></i> Eliminar</a></li>
+ [% END %] </ul>
+ </div>
+ </td>
+ </tr>
+ [% END %] </tbody>
+ </table>
+ <fieldset class="action">
+ <input value="Eliminar seleccionados" type="submit" />
+ </fieldset>
+ </form>
+ </div>
+</div>
+[% ELSE %]<div class="dialog message">
+ [% IF (filter_set) %] <h4>Ningún informe guardado coincide con su criterio. </h4>
+ [% IF ( CAN_user_reports_create_reports ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="get">
+ <input type="hidden" name="phase" value="Build new" />
+ <input accesskey="y" value="Crear o generar un nuevo informe" type="submit" class="edit" />
+ </form>
+
+ <form action="/cgi-bin/koha/reports/guided_reports.pl" method="get">
+ <input type="hidden" name="phase" value="Use saved" />
+ <input type="hidden" name="filter_set" value="1" />
+ <input type="hidden" name="filter_keyword" value="" />
+ <input accesskey="n" value="Cancelar filtro" type="submit" class="deny" />
+ </form>
+
+ [% END %] [% ELSE %] <h4>No hay informes guardados. </h4>
+ [% IF ( CAN_user_reports_create_reports ) %] <a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Build%20new">¿Crear o generar un nuevo informe?</a>
+ [% END %] [% END %] </div>
+[% END %] [% END %] [% IF ( build1 ) %] [% IF ( cache_error) %] <div class="dialog alert">
+<b> Por favor cambiar una caché_caducidad inferior a 30 días</b>
+</div>
+[% END %] <h1>Crear un informe</h1>
+<form action="/cgi-bin/koha/reports/guided_reports.pl">
+<fieldset class="rows">
+<legend>Paso 1 de 6: Elija un módulo para ser informado, [% IF (usecache) %] Set cache expiry, [% END %] and cambiar la visibilidad del informe</legend>
+<ol><li><label for="area">Seleccione: </label><select name="area" id="area">
+[% FOREACH area IN areas %] <option value="[% area.id %]">[% area.name %]</option>
+[% END %] </select></li>
+[% IF (public) %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0">No (predeterminado)</option> <option value="1" selected="selected">Sí</option> </select></li>
+[% ELSE %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0" selected="selected">No (predeterminado)</option> <option value="1">Sí</option> </select></li>
+[% END %] [% IF (usecache) %] <li>
+<label for="cache_expiry">Caché de caducidad: </label><input type="text" id="cache_expiry" name="cache_expiry" value="[% cache_expiry %]"></input>
+<select id="cache_expiry_units" name="cache_expiry_units">
+<option value="seconds">Segundo (predeterminado)</option>
+<option value="minutes">Minutos</option>
+<option value="hours">Horas</option>
+<option value="days">Días</option>
+</select>
+</li>[% END %] </ol>
+</fieldset>
+<fieldset class="action">
+<input type="hidden" name="phase" value="Report on this Area" />
+<input value="Siguiente >>" name="submit" type="submit" />
+
+</fieldset>
+</form>
+[% END %] [% IF ( build2 ) %] <h1>Crear un informe</h1>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="area" value="[% area %]" />
+<input type="hidden" name="public" value="[% public %]" />
+<input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+<fieldset class="rows"><legend>Paso 2 de 6: Elija un tipo de informe</legend>
+<ol><li><label for="types">Seleccione: </label>
+ <select id="types" name="types">
+ <option value="1">Tabular</option>
+ <option value="2" disabled="disabled">Resumen</option>
+ <option value="3" disabled="disabled">Matriz</option>
+ </select>
+</li></ol></fieldset>
+
+<fieldset class="action">
+ <input type="hidden" name="phase" value="Choose this type" />
+ <input value="<< Volver" name="back" type="button" onclick="javascript:history.back()" />
+ <input value="Siguiente >>" name="submit" type="submit" />
+</fieldset>
+</form>
+</div>
+<div class="yui-gb"><div class="yui-u first"></div>
+
+<!--- Summary and Matrix reports have not yet been implemented-->
+<!--<div class="yui-u">Summary:
+<img src="[% interface %]/[% theme %]/img/reports-summary-graphic.gif" /></div>
+<div class="yui-u">Matrix:
+<img src="[% interface %]/[% theme %]/img/reports-matrix-graphic.gif" /></div>-->
+
+[% END %]
+
+[% IF ( build3 ) %]
+<h3>Paso 3 de 6: Elija columnas a mostrar</h3>
+<p>Nota: tenga cuidado al seleccionar columnas. Si su elección es demasiado amplia podría dar lugar a un informe muy grande que podría quedar incompleto o hacer más lento su sistema.</p>
+
+<form id="column_submit" action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+ <input type="hidden" name="area" value="[% area %]" />
+ <input type="hidden" name="type" value="[% type %]" />
+ <input type="hidden" name="public" value="[% public %]" />
+ <input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+ <fieldset>
+<div class="yui-g">
+<div class="yui-u first"> <div style="float: left;"><select id="availableColumns" name="oldcolumns2" multiple="multiple" size="25" style="min-width: 200px;height:300px;">
+[% FOREACH column IN columns %] [% IF ( column.table ) %] [% IF ( loop.first ) %] [% ELSE %] </optgroup>
+[% END %] <optgroup label="[% column.table %]">
+[% ELSE %] <option value="[% column.name %]">
+[% IF ( column.description ) %][% column.description %] &nbsp; / &nbsp; [% column.name %] [% ELSE %] [% column.name %] [% END %] </option>
+[% END %] [% END %] </optgroup>
+</select></div>
+<div style="width: 6.3em; float: right; margin-top: 100px"><input value="Agregar" name="Add" style="width:6em;" type="button" class="button" onclick="addColumn()" /><br />
+<input value="<< Borrar" name="delete" style="width: 6em; margin: 1em 0;" type="button" class="button" onclick="delColumn()" /></div>
+</div>
+
+<div class="yui-u">
+<select id="selectedColumns" name="columns" multiple="multiple" size="25" style="width:200px; height:300px;"></select>
+</div>
+</div>
+</fieldset>
+<div class="yui-g">
+<fieldset class="action">
+ <input type="hidden" name="phase" value="Choose these columns" />
+ <input value="<< Volver" name="back" type="button" onclick="javascript:history.back()" />
+ <input value="Siguiente >>" name="submit" type="submit" />
+</fieldset>
+</div>
+</form>
+
+[% END %] [% IF ( build4 ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="post" >
+ <input type="hidden" name="area" value="[% area %]" />
+ <input type="hidden" name="type" value="[% type %]" />
+ <input type="hidden" name="column" value="[% column %]" />
+ <input type="hidden" name="public" value="[% public %]" />
+ <input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+ <fieldset><legend>Paso 4 de 6: Elija un criterio para límite</legend>
+ <table>
+ [% FOREACH criteri IN criteria %] <tr>
+ <td>
+ <input type="checkbox" name="criteria_column" id="[% criteri.name %]" value="[% criteri.name %]" /> 
+ <label for="[% criteri.name %]">[% criteri.description %] </label>
+ </td>
+ [% IF ( criteri.date ) %] <td>
+ <input type="text" size="10" id="[% criteri.name %]_value" name="[% criteri.name %]_value" value="" class="datepicker" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ </td>
+ </tr>
+ [% ELSE %] [% IF ( criteri.textrange ) %] <td>de <input type="text" size="10" id="[% criteri.from %]_value" name="[% criteri.from %]_value" value="" /> a <input type="text" size="10" id="[% criteri.to %]_value" name="[% criteri.to %]_value" value="" />
+ </td>
+ </tr>
+ [% ELSE %] [% IF ( criteri.daterange ) %] <td>de <input type="text" size="10" id="from_[% criteri.name %]_value" name="from_[% criteri.name %]_value" value="" class="datepickerfrom" />
+ a <input type="text" size="10" id="to_[% criteri.name %]_value" name="to_[% criteri.name %]_value" value="" class="datepickerto" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ </td>
+ </tr>
+ [% ELSE %] <td>
+ <select name="[% criteri.name %]_value">
+ [% FOREACH value IN criteri.values %] <option value="[% value.availablevalues %]">[% IF ( value.default ) %]Predeterminado[% ELSE %][% value.availablevalues |html %][% END %]</option>
+ [% END %] </select>
+ </td>
+ </tr>
+ [% END %] [% END %] [% END %] [% END %] </table>
+ </fieldset>
+
+[% IF ( definitions ) %] <fieldset><legend>Definiciones de diccionario</legend>
+<table>
+[% FOREACH definition IN definitions %] <tr><td><input type="checkbox" name="definition" value="[% definition.id %]" /> [% definition.name %]</td></tr>
+[% END %] </table>
+</fieldset>
+[% END %] <fieldset class="action"><input type="hidden" name="phase" value="Choose these criteria" />
+ <input value="<< Volver" name="back" type="button" onclick="javascript:history.back()" />
+ <input value="Siguiente >>" name="submit" type="submit" /> </fieldset>
+</form>
+[% END %] [% IF ( build5 ) %] <h3>Paso 5 de 6: elegir las columnas para hacer el total</h3>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="area" value="[% area %]" />
+<input type="hidden" name="type" value="[% type %]" />
+<input type="hidden" name="column" value="[% column %]" />
+<input type="hidden" name="definition" value="[% definition %]" />
+<input type="hidden" name="criteria" value="[% criteriastring %]" />
+<input type="hidden" name="public" value="[% public %]" />
+<input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+<fieldset><table>
+[% FOREACH total_b IN total_by %] <tr><td><input type="checkbox" name="total_by" id="[% total_b.name %]" value="[% total_b.name %]" /> <label for="[% total_b.name %]">[% total_b.name %]</label></td>
+<td><select name="[% total_b.name %]_tvalue">
+
+[% FOREACH selec IN total_b.select %] <option value="[% selec.value %]">[% selec.value %]</option>
+[% END %] </select>
+
+</td></tr>
+[% END %] </table></fieldset>
+
+<fieldset class="action"><input type="hidden" name="phase" value="Choose these operations" />
+ <input value="<< Volver" name="back" type="button" onclick="javascript:history.back()" />
+ <input value="Siguiente >>" name="submit" type="submit" /></fieldset>
+</form>
+[% END %] [% IF ( build6 ) %] <h3>Paso 6 de 6: elegir como desea que esté ordenado el informe</h3>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="area" value="[% area %]" />
+<input type="hidden" name="type" value="[% type %]" />
+<input type="hidden" name="column" value="[% column %]" />
+<input type="hidden" name="criteria" value="[% criteriastring %]" />
+<input type="hidden" name="definition" value="[% definition %]" />
+<input type="hidden" name="totals" value="[% totals %]" />
+<input type="hidden" name="public" value="[% public %]" />
+<input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+<fieldset><table>[% FOREACH order_b IN order_by %] <tr><td><input type="checkbox" id="[% order_b.name %]" name="order_by" value="[% order_b.name %]" /> <label for="[% order_b.name %]">[% order_b.name %]</label></td><td>
+<select name="[% order_b.name %]_ovalue">
+
+[% FOREACH selec IN order_b.select %] <option value="[% selec.value %]">[% selec.value %]</option>
+[% END %] </select>
+</td></tr>
+
+[% END %] </table></fieldset>
+
+<fieldset class="action">
+<input type="hidden" name="phase" value="Build report" />
+<input value="Finalizar" name="submit" type="submit" /></fieldset>
+</form>
+[% END %] [% IF ( showreport ) %] <h1>Confirmar informe a medida</h1>
+<p>Su informe se generará con la siguiente sentencia SQL.</p>
+<p> 
+[% sql |html %] </p>
+
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="sql" value="[% sql %]" />
+<input type="hidden" name="type" value="[% type %]" />
+<input type="hidden" name="public" value="[% public %]" />
+<input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+<p>Tendrá que guardar el informe antes de que pueda ejecutarlo</p>
+<fieldset class="action"><input type="hidden" name="phase" value="Save" /> 
+<input value="Guardar" name="submit" type="submit" /> </fieldset>
+</form>
+[% END %] [% IF ( save ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="sql" value="[% sql |html %]" />
+<input type="hidden" name="type" value="[% type %]" />
+<input type="hidden" name="area" value="[% area %]" />
+<input type="hidden" name="public" value="[% public %]" />
+<input type="hidden" name="cache_expiry" value="[% cache_expiry %]" />
+<fieldset class="rows">
+<legend>Guardar su informe personalizado</legend>
+<ol>
+ <li><label for="reportname">Nombre de informe: </label><input type="text" id="reportname" name="reportname" /></li>
+ [% PROCESS group_and_subgroup_selection %] <li><label for="notes">Notas:</label> <textarea name="notes" id="notes"></textarea></li>
+</ol></fieldset>
+<fieldset class="action"><input type="hidden" name="phase" value="Save Report" />
+<input value="Guardar informe" name="submit" type="submit" /></fieldset>
+</form>
+[% END %] [% IF ( warn_authval_problem ) %] <form action='/cgi-bin/koha/reports/guided_reports.pl'>
+ <!--Every parameter the user issued is provided as a hidden field for recovery-->
+ <input type='hidden' name='id' value='[% id %]' />
+ <input type='hidden' name='sql' value='[% sql %]' />
+ <input type='hidden' name='reportname' value='[% reportname %]' />
+ <input type='hidden' name='group' value='[% group %]' />
+ <input type='hidden' name='subgroup' value='[% subgroup %]' />
+ <input type='hidden' name='notes' value='[% notes %]' />
+ <input type='hidden' name='cache_expiry' value='[% cache_expiry %]' />
+ <input type='hidden' name='cache_expiry_units' value='[% cache_expiry_units %]' />
+ <input type='hidden' name='public' value='[% public %]' />
+
+ <div class="dialog alert">
+ <h3>Se han encontrado errores mientras se procesaba el informe [% name %]:</h3>
+ [% FOREACH problematic_authval IN problematic_authvals %] <p>
+ <strong>[% problematic_authval.name %]:</strong> Categoría de valor autorizado (<strong>[% problematic_authval.authval %]</strong>) que se ha seleccionado no existe.</p>
+ [% END %]
+ <!-- Save Anyway Form -->
+ <form action='/cgi-bin/koha/reports/guided_reports.pl'>
+ <!--Every parameter the user issued is provided as a hidden field for recovery-->
+ <input type='hidden' name='id' value='[% id %]' />
+ <input type='hidden' name='sql' value='[% sql %]' />
+ <input type='hidden' name='reportname' value='[% reportname %]' />
+ <input type='hidden' name='group' value='[% group %]' />
+ <input type='hidden' name='subgroup' value='[% subgroup %]' />
+ <input type='hidden' name='notes' value='[% notes %]' />
+ <input type='hidden' name='cache_expiry' value='[% cache_expiry %]' />
+ <input type='hidden' name='cache_expiry_units' value='[% cache_expiry_units %]' />
+ <input type='hidden' name='public' value='[% public %]' />
+ [% IF ( phase_update) %] <input type='hidden' name='phase' value='Update SQL' />
+ <input value="Guardar de todos modos" name="save_anyway" type="submit" class="approve" />
+ [% ELSIF ( phase_save) %] <input type='hidden' name='area' value='[% area %]' />
+ <input type='hidden' name='phase' value='Save Report' />
+ <input value="Guardar de todos modos" name="save_anyway" type="submit" class="approve" />
+ [% END %] </form>
+ <!-- Go back to editing -->
+ <form action='/cgi-bin/koha/reports/guided_reports.pl'>
+ <input value="Editar SQL" name="back" type="button" class="deny" onclick="javascript:history.back()" />
+ </form>
+ </div>
+ </form>
+[% END %] [% IF ( enter_params ) %] <form action='/cgi-bin/koha/reports/guided_reports.pl'>
+ <input type='hidden' name='reports' value="[% reports %]" />
+ [% IF ( auth_val_error ) %] <input type='hidden' name='phase' value='Edit SQL' />
+ <div class="dialog alert">
+ <h3>Se han encontrado errores mientras se procesaba el informe [% name %]:</h3>
+ [% FOREACH auth_val_error IN auth_val_errors %] <p>
+ <strong>[% auth_val_error.entry %]:</strong> Categoría de valor autorizado (<strong>[% auth_val_error.auth_val %]</strong>) que se ha seleccionado no existe.</p>
+ [% END %] </div>
+ <fieldset class="action"><input value="Editar SQL" type="submit" /></fieldset>
+ [% ELSE %] <input type='hidden' name='phase' value='Run this report' />
+ <h1>Introduzca los parámetros para el informe [% name %]:</h1>
+ [% IF ( notes ) %]<p>[% notes %]</p>[% END %] <fieldset class="rows">
+ <ol>
+ [% FOREACH sql_param IN sql_params %] [% IF sql_param.input == 'date' %] <li>
+ <label for="date_[% sql_param_entry %][% loop.count %]">[% sql_param.entry %]:</label> <input id="date_[% sql_param_entry %][% loop.count %]" type="text" value="" size="10" name="sql_params" class="datepicker" />
+ </li>
+ [% ELSIF ( sql_param.input == 'text' ) %] <li><label for="sql_params[% loop.count %]">[% sql_param.entry %]: </label><input id="sql_params[% loop.count %]" type="text" name="sql_params" /></li>
+ [% ELSE %] <li><label for="sql_params_[% sql_param.labelid %]">[% sql_param.entry %]:</label> [% sql_param.input %]</li>
+ [% END %] [% END %] </ol>
+ </fieldset>
+ <fieldset class="action"><input value="Ejecutar el informe" type="submit" /></fieldset>
+ [% END %] </form>
+[% END %] [% IF ( execute ) %] <h1>[% name %]</h1>
+[% IF ( notes ) %]<p>[% notes %]</p>[% END %] [% IF ( unlimited_total ) %]<p>En número total de filas que coinciden con la búsqueda (no limitada) es [% unlimited_total %].</p>[% END %] <pre id="sql_output">[% sql |html %]</pre>
+
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="get">
+ <input type="hidden" name="phase" value="Run this report"/>
+ <input type="hidden" name="reports" value="[% report_id %]"/>
+
+ [% FOREACH p IN sql_params %] <input type="hidden" name="sql_params" value="[% p %]"/>
+ [% END %] <label for="limit">Resultados por página :</label>
+ <select name="limit">
+ [% limits = [ 10, 20, 50, 100, 200, 300, 400, 500, 1000 ] %] [% FOREACH l IN limits %] [% IF l == limit %] <option value="[% l %]" selected="selected">[% l %]</option>
+ [% ELSE %] <option value="[% l %]">[% l %]</option>
+ [% END %] [% END %] </select>
+
+ <input value="Actualizar" type="submit" />
+</form>
+
+<div class="pages">[% pagination_bar %]</div>
+[% UNLESS ( errors ) %] <table>
+<tr>[% FOREACH header_ro IN header_row %]<th>[% header_ro.cell %]</th>[% END %]</tr>
+[% FOREACH result IN results %] <tr>
+ [% FOREACH cell IN result.cells %]<td>[% cell.cell %]</td>[% END %] </tr>
+[% END %] </table>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<fieldset class="action">
+<label for="format">Bajar el informe: </label>
+<select name="format" id="format">
+<option value="csv">Texto separado por comas</option>
+<option value="tab">Texto separado por tabulaciones</option>
+</select>
+<input type="hidden" name="sql" value="[% sql |html %]" />
+<input type="hidden" name="phase" value="Export" />
+<input value="Bajar" name="submit" type="submit" /></fieldset>
+</form>
+[% END %] [% END %] [% IF ( create ) %] <script type="text/javascript">
+$(document).ready(function() {
+    load_group_subgroups();
+});
+</script>
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<fieldset class="rows">
+<legend>Crear informe con SQL</legend>
+<ol>
+ <li><label for="reportname">Nombre de informe:</label>
+ [% IF ( reportname ) %]<input type="text" id="reportname" name="reportname" value="[% reportname %]" />
+ [% ELSE %]<input type="text" id="reportname" name="reportname" />[% END %] </li>
+ [% PROCESS group_and_subgroup_selection %] [% IF (public) %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0">No (predeterminado)</option> <option value="1" selected="selected">Sí</option> </select></li>
+[% ELSE %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0" selected="selected">No (predeterminado)</option> <option value="1">Sí</option> </select></li>
+[% END %] [% IF (usecache) %] <li>
+<label for="cache_expiry">Caché de caducidad: </label><input type="text" id="cache_expiry" name="cache_expiry" value="[% cache_expiry %]"></input>
+<select id="cache_expiry_units" name="cache_expiry_units">
+<option value="seconds" selected="selected">Segundo (predeterminado)</option>
+<option value="minutes">Minutos</option>
+<option value="hours">Horas</option>
+<option value="days">Días</option>
+</select>
+</li>[% END %] <li><label for="notes">Notas:</label> <textarea id="notes" name="notes" cols="50" rows="2">[% notes %]</textarea></li>
+ <li><label for="types">Tipo:</label>
+ <select id="types" name="types">
+ <option value="1">Tabular</option>
+ <option value="2" disabled="disabled">Resumen</option>
+ <option value="3" disabled="disabled">Matriz</option>
+ </select>
+ </li>
+</ol>
+</fieldset>
+<fieldset class="rows">
+<legend>SQL:</legend>
+<div style="margin:1em;">
+<textarea  id="sql" name="sql" cols="50" rows="10">[% sql %]</textarea>
+</div>
+</fieldset>
+
+<fieldset class="action"><input type="hidden" name="phase" value="Save Report" />
+<input value="Guardar informe" name="submit" type="submit" /> <a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved" class="cancel">Cancelar</a>
+</fieldset>
+</form>
+[% END %] [% IF ( compound ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+Master: <select name="master">
+[% FOREACH savedreport IN savedreports %] <option value="[% savedreport.id %]">[% savedreport.report_name %]</option>
+[% END %] </select>
+&nbsp; Pre-informe:<select name="subreport">
+[% FOREACH savedreport IN savedreports %] <option value="[% savedreport.id %]">[% savedreport.report_name %]</option>
+[% END %] </select>
+<br />
+<input type="hidden" name="phase" value="Save Compound" />
+<input value="Guardar compuesto" name="submit" type="submit" />
+</form>
+[% END %] [% IF ( save_compound ) %] [% master %] <br />
+[% subsql %] [% END %] [% IF ( retresults ) %] <h1>Guardar resultados de informe</h1>
+<h2>[% name %]</h2>
+<p>[% notes %]</p>
+<table>
+[% FOREACH result IN results %] [% result.row %] [% END %] </table>
+[% END %] [% IF ( showsql ) %] <fieldset class="rows">
+ <legend>[% reportname %]</legend>
+ <ol>
+ [% IF ( notes ) %]<li><span class="label">Notas:</span> [% notes %]</li>[% ELSE %][% END %] <li><textarea id="sql">[% sql %]</textarea></li>
+ </ol>
+</fieldset>
+[% END %] [% IF ( editsql ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<input type="hidden" name="phase" value="Update SQL" />
+<input type="hidden" name="id" value="[% id %]"/>
+<fieldset class="rows">
+<legend>Editar informe SQL </legend>
+<ol>
+<li><label for="reportname">Nombre de informe:</label><input type="text" id="reportname" name="reportname" value="[% reportname %]" size="50" /></li>
+[% PROCESS group_and_subgroup_selection %] [% IF (public) %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0">No (predeterminado)</option> <option value="1" selected="selected">Sí</option> </select></li>
+[% ELSE %] <li><label for="public">Informe es público:</label><select id="public" name="public"> <option value="0" selected="selected">No (predeterminado)</option> <option value="1">Sí</option> </select></li>
+[% END %] [% IF (usecache) %] <li>
+<label for="cache_expiry">Caché de caducidad: </label><input type="text" id="cache_expiry" name="cache_expiry" value="[% cache_expiry %]"></input>
+<select id="cache_expiry_units" name="cache_expiry_units">
+<option value="seconds">Segundo (predeterminado)</option>
+<option value="minutes">Minutos</option>
+<option value="hours">Horas</option>
+<option value="days">Días</option>
+</select>
+</li>[% END %] <li><label for="notes">Notas:</label><textarea id="notes" name="notes" cols="50" rows="2">[% notes %]</textarea></li>
+<li><textarea id="sql" name="sql" rows="10" cols="60">[% sql %]</textarea></li>
+</ol>
+</fieldset>
+
+<fieldset class="action">
+<input value="Actualizar SQL" name="submit" type="submit" /> <a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved" class="cancel">Cancelar</a>
+</fieldset>
+</form>
+
+
+[% END %] [% IF ( save_successful ) %] [% UNLESS ( errors ) %] <h2>Su informe ha sido guardado</h2>
+<h4>[% reportname %]</h4>
+<ul>
+ [% IF ( id ) %] <li><a href="/cgi-bin/koha/reports/guided_reports.pl?reports=[% id %]&amp;phase=Run%20this%20report">Ejecutar el informe</a></li>
+ [% END %] <li>Acceder a este informe desde: <a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved">Página de informes guardados</a></li>
+ <li>Programar este informe usando la: <a href="/cgi-bin/koha/tools/scheduler.pl">Herramienta de planificación</a></li>
+ <li>Devolver a: <a href="/cgi-bin/koha/reports/guided_reports.pl?phase=Use%20saved">Informes guiados</a></li>
+</ul>
+[% END %] [% END %] [% IF ( errors ) %] <form action="/cgi-bin/koha/reports/guided_reports.pl" method="post">
+<div class="dialog alert">
+<b>Se encontró el siguiente error:</b><br />
+[% FOREACH error IN errors %] [% IF ( error.sqlerr ) %]Este informe contiene la palabra clave SQL <b>[% error.sqlerr %]</b>. <br />El uso de esta palabra clave no está permitido en los informes de Koha debido a riesgos de seguridad e integridad de los datos. Solo se permiten consultas SELECT <br />Por favor, vuelva a la pantalla de "Informes guardados" y borre este informe o trate de crear otro.[% ELSIF ( error.queryerr ) %]La base de datos devolvió el siguiente error: <br />[% error.queryerr %]<br />Por favor compruebe el registro para más detalles. [% ELSIF ( error.cache_expiry ) %]Por favor seleccionar una cache que aspire en menos de 30 días. [% ELSE %] [% END %] [% END %] </div>
+<fieldset class="action"><input type="hidden" name="phase" value="Use saved" />
+<input value="Informes guardados" name="submit" type="submit" /></fieldset>
+</form>
+[% END %] </div>
+</div>
+<div class="yui-b">
+
+[% IF ( saved1 ) %] <div id="saved-reports-filter">
+<form action="/cgi-bin/koha/reports/guided_reports.pl" method="get">
+ <input type="hidden" name="phase" value="Use saved" />
+ <input type="hidden" name="filter_set" value="1" />
+ <fieldset class="brief">
+ <h3>Filtro</h3>
+ <ol>
+ <li><label for="filter_date">Fecha:</label> <input type="text" id="filter_date" name="filter_date" size="10" value="[% filter_date %]" class="datepicker" />
+ <div class="hint">[% INCLUDE 'date-format.inc' %]</div>
+
+ </li>
+ <li><label for="filter_author">Autor:</label> <input type="text" id="filter_author" name="filter_author" value="[% filter_author %]" /></li>
+ <li><label for="filter_keyword">Palabra clave:</label> <input type="text" id="filter_keyword" name="filter_keyword" value="[% filter_keyword %]" /></li>
+ </ol>
+ </fieldset>
+ <fieldset class="action"><input value="Aplicar filtro" type="submit" /></fieldset>
+</form>
+</div>
+[% END %] [% INCLUDE 'guided-reports-view.inc' %] </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+function addColumn() {
+    $("#availableColumns option:selected").clone().appendTo("#selectedColumns").attr("selected", "selected");
+}
+function delColumn() {
+    $("#selectedColumns option:selected").remove();
+}
+$("#column_submit").submit(function() {
+    if ($("#selectedColumns option").size() < 1) {
+        alert(_("¡No se han seleccionado columnas!"));
+        return false;
+    }
+    $("#selectedColumns option").attr("selected", "selected");  // Select everything still in #selectedColumns
+    return true;
+});
+//]]>
+</script>
+[% INCLUDE 'intranet-bottom.inc' %] [% BLOCK group_and_subgroup_selection %] <li id="group">
+ <label>Informe de grupo</label>
+ <input type="radio" name="select_or_create_group"
+            id="select_group" checked="checked" />
+ <label for="select_group" style="float:none">Seleccionar</label>
+ <select name="group" onChange="load_group_subgroups();" id="group_select">
+ <option value="">(Ninguno)</option>
+ [% FOREACH group IN groups_with_subgroups %] [% IF (group.selected) %] <option value="[% group.id %]" selected="selected">
+ [% ELSE %] <option value="[% group.id %]">
+ [% END %] [% group.name %] </option>
+ [% END %] </select>
+ <input type="radio" name="select_or_create_group" id="create_group" />
+ <label for="create_group" style="float:none">o crear</label>
+ <input name="group" type="text" id="group_input" title="Coódigo de grupo" placeholder="Código" />
+ <input name="groupdesc" type="text" id="groupdesc_input" title="Nombre del grupo" placeholder="Nombre" />
+ </li>
+ <li id="subgroup">
+ <label>Informe de subgrupo:</label>
+ <input type="radio" name="select_or_create_subgroup"
+            id="select_subgroup" checked="checked" />
+ <label for="select_subgroup" style="float:none">Seleccionar</label>
+ <select name="subgroup" id="subgroup_select">
+ <option value="">(Ninguno)</option>
+ [% FOREACH group IN groups_with_subgroups %] [% IF (group.selected) %] [% FOREACH subgroup IN group.subgroups %] [% IF (subgroup.selected) %] <option value="[% subgroup.id %]" selected="selected">
+ [% ELSE %] <option value="[% subgroup.id %]">
+ [% END %] [% subgroup.name %] </option>
+ [% END %] [% END %] [% END %] </select>
+ <input type="radio" name="select_or_create_subgroup"
+            id="create_subgroup" />
+ <label for="create_subgroup" style="float:none">o crear</label>
+ <input name="subgroup" type="text" id="subgroup_input" title="Código de subgrupo" placeholder="Código" />
+ <input name="subgroupdesc" type="text" id="subgroupdesc_input" title="Nombre de subgrupo" placeholder="Nombre" />
+ </li>
+[% END %] 

@@ -1,0 +1,34 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Catalogación &rsaquo; Vincular a ítem local</title>
+[% INCLUDE 'doc-head-close.inc' %] </head>
+<body id="catalog_linkitem" class="catalog">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/cataloguing/addbooks.pl">Catalogación</a> &rsaquo; Enlazar el ítem a <i>[% bibliotitle |html %]</i></div>
+<div id="doc3" class="yui-t2">
+
+[% IF ( error ) %] <div class="dialog alert">
+ [% IF ( errornomodbiblio ) %]ERROR: Incapaz de modificar el registro bibliográfico.[% END %] [% IF ( errornohostbiblionumber ) %]ERROR: Incapaz de obtener el número de biblio del ítem.[% END %] [% IF ( errornohostitemnumber ) %]ERROR: Incapaz de obtener el número de ítem para el código de barras.[% END %] </div>
+ <form action="/cgi-bin/koha/catalogue/MARCdetail.pl" method="post">
+ <input type="submit" value="OK" />
+ <input type="hidden" name="biblionumber" value="[% biblionumber %]" />
+ </form>
+[% ELSE %] [% IF ( success ) %] <div class="dialog">El ítem ha sido enlazado exitosamente a <i>[% bibliotitle |html %]</i>.</div> 
+ <form action="/cgi-bin/koha/catalogue/MARCdetail.pl" method="post">
+ <input type="submit" value="OK" />
+ <input type="hidden" name="biblionumber" value="[% biblionumber %]" />
+ </form>
+ [% ELSE %] [% IF ( missingparameter ) %] <form method="post" action="/cgi-bin/koha/cataloguing/linkitem.pl">
+ [% IF ( missingbiblionumber ) %] <fieldset id="biblionumber_fieldset">
+ <label for="biblionumber_fieldset">Seleccione el biblionumber al cual asignar el ítem</label>
+ <div class="hint">Introduzca biblionumber:</div>
+ <input type="text" name="biblionumber" id="biblionumber" class="focus" size="14" /> 
+ </fieldset>
+ [% ELSE %] <input type="hidden" name="biblionumber" id="biblionumber" value="[% biblionumber %]" />
+ [% END %] [% IF ( missingbarcode ) %] <fieldset id="barcode_fieldset">
+ <label for="barcode_fieldset">Seleccione el ítem para enlazar [% IF ( bibliotitle ) %] a <i>[% bibliotitle |html %]</i>[% END %]</label>
+ <div class="hint">Introduzca el código de barras del ítem:</div>
+ <input type="text" name="barcode" id="barcode" class="barcode focus" size="14" /> 
+ </fieldset>
+ [% ELSE %] <input type="hidden" name="barcode" id="barcode" value="[% barcode %]" />
+ [% END %] <input value="Seleccionar" type="submit" />
+
+ </form>
+ [% END %] [% END %] [% END %] [% INCLUDE 'intranet-bottom.inc' %] 

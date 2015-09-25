@@ -1,0 +1,43 @@
+[% INCLUDE 'help-top.inc' %] <h1>Actualizar Cita del día</h1>
+
+<p>El actualizador de QOTD (Cita del día) permite cargar un gran volumen de citas que sirven de fuente de la funcionalidad QOTD (Cita del Día) en el OPAC.</p>
+
+<p>Existen cuatro funciones básicas en la carga: </p>
+
+<ol>
+ <li><b>Subida fichero CSV</b></li>
+ <ol>
+ <li>Esta función permite seleccionar y cargar un fichero CSV que contiene citas.</li>
+ <li>Seleccionar botón 'Cambiar Fichero' debajo de las instrucciones.</li>
+ <li>Se le presentará con un explorador de archivos que le permite seleccionar el archivo CSV que desea cargar.</li>
+ <li>Después de seleccionar el fichero CSV, seleccionar el botón 'Abrir' y el fichero se cargará en una tabla de edición temporalmente.</li>
+ <li>El fichero CSV deberá tener dos columnas en el formulario:"source","text" sin fila de encabezado.</li>
+ <li><b>Nota:</b> Se le presentará un mensaje de confirmación para descargas de archivos superiores a 512kb</li>
+ </ol>
+ <li><b>Pre-salvar Edición</b></li>
+ <ol>
+ <li>Una vez el fichero CSV ha sido cargado en la tabla temporal de edición, debe ser editada las citas antes de ser guardadas.</li>
+ <li>Editar  campos de  'Fuente' o 'Texto'  seleccionando en el campo deseado.</li>
+ <li>Cuando haya terminado de editar un campo, presione la tecla  &lt;Enter&gt; para guardar los cambios.</li>
+ <li>La lista será actualizada y las ediciones ahora debería ser visibles. </li>
+ </ol>
+ <li><b>Eliminar Cita(s)</b></li>
+ <ol>
+ <li>Esta opción permite la eliminación de una o más citas a la vez.</li>
+ <li>Seleccionar la(s) cita(s) que desee borrar seleccionando la ID de la cita correspondiente.</li>
+ <li>Una vez haya seleccionado la cita, simplemente seleccione la tecla  'Borrar cita(s)'.</li>
+ <li>Se le presentará un mensaje de confirmación de borrado.</li>
+ <li>Después de confirmar la eliminación, la lista se actualizará y las cita(s) no aparecerán más.</li>
+ </ol>
+ <li><b>Guardar citas</b></li>
+ <ol>
+ <li>Esta opción permite guardar todas las citas en una tabla de edición temporal para el conjunto de citas.</li>
+ <li>Una vez haya hecho sus cambios con las citas, seleccione el botón 'Guardar citas' en la barra de herramientas y las citas serán guardadas.</li>
+ <li><b>Nota:</b>El proceso de guardar citas es "asincrónico" significa que puede navegar por otras secciones del usuario personal mientras las citas son guardadas.</li>
+ <li>Si eliges permanecer en la página de carga de QOTD (cita del día), recibirá un mensaje de confirmación una vez  que las citas se hayan guardado satisfactoriamente.</li>
+ </ol>
+</ol>
+
+<p><strong>Ver la documentación completa para el Actualizador de Cita del Día en el <a href="http://es.koha-community.org/manual/3.12/es/additionaltools.html#importquote">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

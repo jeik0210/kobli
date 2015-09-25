@@ -1,0 +1,56 @@
+[% INCLUDE 'help-top.inc' %] <h1>Exportar MARC</h1>
+
+<p>Koha tiene una herramienta que le permitirá exportar sus registros bibliográficos y/o existencias de forma masiva. Esto se puede utilizar para enviar sus registros a bibliotecas colegas, organizaciones o servicios, o simplemente con fines de respaldo. </p>
+
+<h3>Exportar Registros Bibliográficos </h3>
+
+<p>En la parte superior de la pantalla que usted necesita para recoger los datos que va a exportar. Si va a exportar registros bibliográficos con o sin la información de las publicaciones que desee, haga clic en la pestaña 'Exportar registros bibliográficos'.</p>
+
+<ul>
+ <li>Rellene el formulario con el fin de limitar su exportación a un rango específico (todos los campos son opcionales) <ul>
+ <li>Seleccione limitar su exportación por una o varias de las siguientes opciones <ul>
+ <li>Limitar a un rango de números bibliográficos</li>
+ <li>Limitar a un tipo de ítem específico</li>
+ <li>Limitar a una biblioteca específica</li>
+ <li>Limitar a un rango de signatura</li>
+ <li>Limitar a un rango de fecha de adquisición</li>
+</ul>
+</li>
+ <li>A continuación, elija lo que omite al exportar <ul>
+ <li>Por defecto los ítems se exportarán, si desea exportar sólo los datos bibliográficos, marque la casilla 'No exportar ítems'</li>
+ <li>Para limitar la exportación sólo a los ítems de la biblioteca que está conectado (si deja el campo 'Biblioteca' en 'Todas') o la biblioteca que seleccionó arriba marque la casilla 'Eliminar ítems no locales '</li>
+ <li>También puede elegir qué campos que no desea exportar. Esto puede ser útil si va a compartir sus datos, puede quitar todos los campos locales antes de enviar sus datos a otra biblioteca</li>
+</ul>
+</li>
+ <li>Por último elegir el tipo de archivo y el nombre del archivo <ul>
+ <li>Seleccione exportar sus datos en formato MARC o MARCXML</li>
+ <li>Seleccione el nombre que desea para guardar su archivo</li>
+</ul>
+</li>
+ <li>Selecciona 'Exportar registros bibliográficos'</li>
+</ul>
+</li>
+</ul>
+
+<h3>Exportar registros de autoridad </h3>
+
+<p>En la parte superior de la pantalla que usted necesita para recoger los datos que va a exportar. Si va a exportar registros de autoridad que desea, haga clic en la pestaña 'Exportar registros de autoridad'.</p>
+
+<ul>
+ <li>Rellene el formulario con el fin de limitar su exportación a un rango específico (todos los campos son opcionales) </li>
+ <li>A continuación, seleccione los campos que desea excluir de la exportación separadas por un espacio (sin comas)<ul>
+ <li>Si desea excluir todos los subcampos del 200 por ejemplo, introduce 200</li>
+ <li>Si desea excluir un subcampo específico introducirlo al lado de los 100 campos de valor se excluye sólo el subcampo 'a' de los 100</li>
+</ul>
+</li>
+ <li>Por último elegir el tipo de archivo y el nombre del archivo <ul>
+ <li>Seleccione exportar sus datos en formato MARC o MARCXML</li>
+ <li>Seleccione el nombre que desea para guardar su archivo</li>
+</ul>
+</li>
+ <li>Seleccionar 'Exportar registros de autoridad'</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Exportación de registros MARC en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#exportbibs">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

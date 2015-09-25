@@ -1,0 +1,53 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Catálogo &rsaquo; [% IF ( unknownbiblionumber ) %] Registro desconocido [% ELSE %] Detalles en MARC etiquetado para [% bibliotitle %] [% END %] </title>
+
+ [% INCLUDE 'doc-head-close.inc' %]
+
+ [% INCLUDE 'browser-strings.inc' %]
+ <!--[if lt IE 9]>
+ <script type="text/javascript" src="[% interface %]/lib/shims/json2.min.js"></script>
+ <![endif]-->
+ <script type="text/javascript" src="[% interface %]/js/browser.js"></script>
+ <script type="text/javascript">
+	//<![CDATA[
+        var browser = KOHA.browser('[% searchid %]', parseInt('[% biblionumber %]', 10));
+        browser.show();
+		function Changefwk(FwkList)
+		{
+			var fwk = FwkList.options[FwkList.selectedIndex].value;
+			window.location = "labeledMARCdetail.pl?biblionumber=[% biblionumber %]&frameworkcode="+fwk;
+		}
+	//]]>
+	</script>
+</head>
+
+<body id="catlaog_labeledMARCdetail" class="catalog">
+ [% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs">
+ <a href="/cgi-bin/koha/mainpage.pl">Inicio</a>
+ &rsaquo; <a href="/cgi-bin/koha/catalogue/search.pl">Catálogo</a> &rsaquo; [% IF ( unknownbiblionumber ) %] Registro desconocido [% ELSE %] Detalles MARC para <i>[% bibliotitle %]</i>
+ [% END %] </div>
+
+ <div id="doc3" class="yui-t2">
+
+ [% IF ( unknownbiblionumber ) %] <div class="dialog message">El registro que ha solicitado no existe ([% biblionumber %]).</div>
+ [% ELSE %] <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+ [% INCLUDE 'cat-toolbar.inc' %] [% UNLESS ( popup ) %] <h1>Registro MARC etiquetado: [% biblionumber %] ( [% bibliotitle %] )</h1>
+ [% END %] <p><b>Con hoja de trabajo: [% framework %]</b></p>
+ <!-- div id="bibliotabs" class="toptabs numbered" -->
+ <div>
+ <table class="labeledmarc-table">
+ [% FOREACH marc_dat IN marc_data %] <tr>
+ <td class="labeledmarc-label">[% marc_dat.label %]</td>
+ <td class="labeledmarc-value">[% marc_dat.value %]</td>
+ </tr>
+ [% END %] </table>
+ </div>
+ </div>
+ </div>
+ <div class="yui-b">
+
+ [% INCLUDE 'biblio-view-menu.inc' %] </div>
+ [% END %] </div>
+ [% INCLUDE 'intranet-bottom.inc' %] 

@@ -1,0 +1,31 @@
+[% INCLUDE 'help-top.inc' %] <h2>Puedo acceder, ¿qué es lo siguiente?</h2>
+
+<p>Si es la primera vez que accede a Koha, deberá ir a Administración de Koha y configurar todos los parámetros del sistema, especialmente las categorías de usuario.</p>
+
+<p>Una vez que se hayan creado categorías de usuarios, usted debe crear un nuevo usuario en 'Usuarios' con permisos de superbibliotecario. Luego, use ese usuario para acceder en vez de usar el usuario de la instalación.</p>
+
+<p>Aquí hay otras sugerencias:  </p>
+
+<ul>
+<li><a href="http://koha-community.org/documentation/">Leea la documentación de Koha</a></li>
+<li><a href="http://wiki.koha-community.org">Lea/Escriba en la wiki de Koha</a></li>
+<li><a href="http://koha-community.org/support/koha-mailing-lists/">Leer y contribuya a los debates</a></li>
+<li><a href="http://bugs.koha-community.org">Informe sobre errores de Koha</a></li>
+<li><a href="http://wiki.koha-community.org/wiki/Version_Control_Using_Git">Enviar parches a Koha usando git (sistema de sontrol de versiones)</a></li>
+<li><a href="http://koha-community.org/get-involved/irc/">Chat con usuarios y desarrolladores de Koha</a></li>
+</ul>
+
+<h2>¿Puedo editar la ayuda en línea? </h2>
+
+<p>Usted puede editar la ayuda en línea a través del cliente administrador de Koha seleccionando 'Editar ayuda'. Se ha diseñado esta característica para poder documentar dentro de Koha los usos y políticas de la biblioteca.  </p>
+
+<p><strong>NOTA IMPORTANTE: La ayuda en línea se sobrescribe durante una actualización de Koha.</strong></p>
+
+<p>Como parte del proceso de actualización su ayuda en línea será sobreescrita con la nueva ayuda de la instalación. Si desea mantener una copia de su ayuda en línea, debe indicar a su Administrador de Sistema que actualice el directorio de ayuda en linea, en el árbol de archivos de Koha.</p>
+
+<p>El directorio de la ayuda en línea es: <pre>[% themelang %]/modules/help</pre></p>
+
+<p><strong>Ver la documentación completa para Koha en el <a href="http://es.koha-community.org/manual/3.12/es/">manual</a> (en línea).</strong></p>
+
+
+[% INCLUDE 'help-bottom.inc' %] 

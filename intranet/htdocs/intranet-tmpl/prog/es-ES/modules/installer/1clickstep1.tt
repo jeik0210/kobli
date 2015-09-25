@@ -1,0 +1,150 @@
+[% INCLUDE 'doc-head-open.inc' %] 
+<title>Koha-Kobli &rsaquo; Instalador Web </title>
+[% INCLUDE '1click-installer-doc-head-close.inc' %] 
+
+			<img alt="Koha" src="[% interface %]/[% theme %]/img/kobli_nube.png" />
+
+			<div class="panel panel-default" style="margin-top:5px;">
+     				 <div class="panel-heading">
+        				<h3 class="panel-title"> Koha-Kobli de bibliotecas especializadas</h3>
+      				</div>
+      				<div class="panel-body">
+       					<p style="text-align:justify">Está usted en el formulario de <b>Cambio de contraseña</b>, que obliga a establecer una contraseña, diferente a la utilizada en la instalación, para el Administrador</p>			
+				      				
+</div>
+    			</div>
+
+
+<h1 id="logo"> Instalador Web &rsaquo; Cambio contraseña <i>Administrador</i> (de sistema)</h1>
+<p class="text-error">
+[% error %]
+[% message %]	
+<p>
+[% UNLESS ( language ) %] <p>Usted está a punto de instalar Kobli.</p>
+
+<p>Por favor, escoja su idioma de la siguiente lista. Si su idioma no aparece en la lista, por favor, informe a su administrador de sistemas.</p>
+<form name="language" method="post">
+<select name="language">
+[% IF ( installer_languages_loop ) %] [% FOREACH installer_languages_loo IN installer_languages_loop %] [% IF ( installer_languages_loo.plural ) %] <optgroup label="[% installer_languages_loo.language %]">
+ [% FOREACH sublanguages_loo IN installer_languages_loo.sublanguages_loop %] <option value="[% sublanguages_loo.rfc4646_subtag %]">[% IF ( sublanguages_loo.native_description ) %][% sublanguages_loo.native_description %][% ELSE %][% sublanguages_loo.rfc4646_subtag %][% END %]</option>
+ [% END %] </optgroup>
+ [% ELSE %] <option value="[% installer_languages_loo.rfc4646_subtag %]">[% IF ( installer_languages_loo.native_description ) %][% installer_languages_loo.native_description %][% ELSE %][% installer_languages_loo.rfc4646_subtag %][% END %]</option>
+ [% END %] [% END %] [% END %] </select>
+</p>
+
+<p> Haga clic en 'Siguiente' para continuar <input value="Siguiente >>" type="submit" /></p>
+</form>
+[% END %] 	
+[% IF ( language ) %] 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+	<form name="basica" id="basica" method="post"  enctype="multipart/form-data">
+		<input type="hidden" name="step" value="1" />
+		<input type="hidden" name="op" value="[% op %]" />
+		<input type="hidden" name="cuentaConfigurada" value="[% cuentaConfigurada %]" />
+  		<hr />
+<h3>Configure su cuenta
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#Modalcifigcuenta">
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+</button>
+
+</h3>
+<!-- Modal -->
+<div class="modal fade" id="Modalcifigcuenta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Configure su cuenta</h4>
+      </div>
+      <div class="modal-body">
+	
+       	Los datos que introduzca son los que le permitirán el acceso como Administrador a Kobli con las credenciales:
+	<dl class="dl-horizontal">
+  		<dt>Nombre del usuario</dt>
+  		<dd>kobli_usu</dd>
+		<dt>Contraseña</dt>
+  		<dd><i>La introducida en el formulario</i></dd>
+	</dl>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+		
+<div class="form-group">
+    			<label for="nombreBiblioteca">Contraseña del Administrador *</label>
+			<input type="password" class="form-control" name="systempassword" id="systempassword" placeholder="Introduzca la contraseña del Administrador" value="" />
+			  		</div>
+<div class="form-group">
+			<label for="nombreBiblioteca">Repita la contraseña del Administrador *</label>
+
+    			<input type="password" class="form-control" name="systempassword2" id="systempassword2" placeholder="Repita la contraseña del Administrador" value="" />
+<p >&nbsp;<span class="pull-right text-info">(*) Campos obligatorios</span></p>
+  		</div>
+
+<hr />
+<div class="row"> 
+	<div class="col-sm-12 col-lg-12">			
+	<div class="form-group"> 
+	
+			<button type="submit" class="btn btn-default btn-primary">Enviar</button>
+			<p style="text-align:justify"><i>Si una vez enviado el formulario con la nueva contraseña la página no navegara al siguiente paso por favor recargue la página (F5)</i></p> 
+
+	</div>
+	</div>
+
+
+
+</div>
+
+
+	</form>
+    </div>
+  </div>
+</div>
+<script >
+
+$().ready(function() {
+
+		$("#basica").validate({
+			rules: {
+
+							
+					systempassword: {
+						required: true,
+						minlength: 5
+					},
+					systempassword2: {
+						required: true,
+						minlength: 5,
+						equalTo: "#systempassword"
+					}
+					
+				},
+			messages: {
+					systempassword: {
+						required:  "La contraseña es requerida",
+						minlength: "La contraseña debe tener un mínimo de 5 caracteres"
+					},
+					systempassword2: {
+						required: "confirmar la contraseña es requerido",
+						minlength: "La contraseña confirmada debe tener un mínimo de 5 caracteres",
+						equalTo: "Las contraseñas no coinciden"
+					}
+					
+
+									
+			}
+		});
+		$('[data-toggle="popover"]').popover();
+})
+</script>
+[% END %] 
+[% INCLUDE '1click-intranet-bottom.inc' %] 

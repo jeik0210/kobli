@@ -1,0 +1,9 @@
+[% INCLUDE 'help-top.inc' %] <h1>Detalles de la suscripción</h1>
+
+<p>Esta página muestra toda la información sobre su suscripción incluyendo el historial de ejemplares.</p>
+
+<p>Desde aquí se puede editar su suscripción, renovarla y/o recibir ejemplares.</p>
+
+<p><strong>Vea la documentación completa para Publicaciones periódicas en el <a href="http://es.koha-community.org/manual/3.12/es/serials.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

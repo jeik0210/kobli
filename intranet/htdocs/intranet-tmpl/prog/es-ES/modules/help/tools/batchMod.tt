@@ -1,0 +1,33 @@
+[% INCLUDE 'help-top.inc' %] <h1>Modificar ítems en lote</h1>
+
+<p>Esta herramienta le permitirá modificar un lote de ítems en Koha.</p>
+
+<p>Desde la herramienta que puede elegir por cargar un archivo de códigos de barras o identificadores de ítems, o usted puede escanear los ítems uno por uno en la caja abajo de la herramienta de carga. Una vez que haya subido el archivo o los códigos de barras puede hacer clic en 'Continuar'.</p>
+
+<p>Se le presentará un resumen de los ítems a modificar. Desde aquí puede desmarcar los ítems que no desea modificar antes de hacer cambios en le formulario inferior. Puede también ocultar columnas que no desee ver para no tener que deslizarse desde derecha a izquierda para ver el formulario completo.</p>
+
+<p>Utilizando el formulario de edición puede elegir qué campos editar. Haciendo clic en la casilla a la derecha de cada campo puede borrar los valores en ese campo para los registros que está modificando.</p>
+
+<p>Una vez haya hecho sus cambios se le presentarán los ítems resultantes.</p>
+
+<p><strong>Sugerencia:</strong> También puede editar las entradas de un registro bib en un lote por ir al registro bib y haciendo clic en Editar> Editar elementos en el lote</p>
+
+<h1>Eliminar ítems en lote</h1>
+
+<p>Esta herramienta le permitirá eliminar un lote de registros de ítem en Koha.</p>
+
+<p>Desde la herramienta que puede elegir por cargar un archivo de códigos de barras o identificadores de ítems, o usted puede escanear los ítems uno por uno en la caja abajo de la herramienta de carga. Una vez que haya subido el archivo o los códigos de barras puede hacer clic en 'Continuar'. </p>
+
+<p>Una vez que haya cargado el archivo o los códigos de barras escaneado puede hacer clic en "Continuar".</p>
+
+<p>Se le presentará con una pantalla de confirmación. Desde aquí se puede desactivar los ítems que no desea eliminar y decida si Koha  si Koha  debería eliminar el registro bibliográfico que se va a eliminar antes deseleccionar "Eliminar elementos seleccionados'.</p>
+
+<p>Si el archivo (o lista de códigos de barras escaneados) tiene más de 1000 códigos de barras, Koha no podrá presentar a ustedes una lista de los artículos. Usted todavía será capaz de eliminarlos, pero no es capaz de elegir qué elementos específicamente para eliminar o borrar los registros bibliográficos.</p>
+
+<p>Si los elementos están desprotegidos se le presentará con un error después de hacer clic en 'Borrar los ítems seleccionados' y de los artículos no serán eliminados.</p>
+
+<p>Si los ítems se pueden eliminar esto se intentará hacer y se le presentará una confirmación de su eliminación.</p>
+
+<p><strong>Ver la documentación completa para <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#batchmodifyitems">Modificación de ítems en lote</a> y <a href="http://manual.koha-community.org/3.12/en/batchdeleteitems.html">Eliminación de ítems en lote</a> en el manual (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

@@ -1,0 +1,55 @@
+[% INCLUDE 'help-top.inc' %] <h1>Tipos de ítem </h1>
+
+<p>El Koha le permite organizar su colección por tipos de ítem y por códigos de colección.</p>
+
+<p>Los tipos de ítems típicamente se refieren al tipo de material (libros, CD, DVD, etc,), pero se pueden utilizar en la forma más conveniente para su biblioteca.</p>
+
+<h2>Agregando Tipos de Ítem</h2>
+
+<p>Para agregar un nuevo tipo de ítem, simplemente seleccionar en el botón 'Nuevo tipo de ítem' en el parte superior de la página Tipos de ítem.</p>
+
+<ul>
+ <li>En el campo 'Tipo de Ítem', introduzca un código corto para el tipo de ítem</li>
+ <li>La descripción es la definición de texto sin formato del tipo de ítem</li>
+ <li>Usted puede elegir el tener una imagen asociada con un tipo de ítem. <ul>
+ <li>Usted puede elegir entre una serie de colecciones de imágenes</li>
+ <li>Usted pueda enlazar a una imagen remota</li>
+ <li>O simplemente no hay una imagen asociada con el tipo de ítem</li>
+ <li style="color: #990000;">Importante: Para que sus imágenes de tipo de ítem aparezcan en el OPAC es necesario establecer noItemTypeImages a 'Mostrar' <ul>
+ <li>Llegar allí:  More &gt; Administration &gt; Global System Preferences &gt; Admin</li>
+</ul>
+</li>
+</ul>
+</li>
+ <li>Para ítems que no se prestan, marque la opción 'No para préstamo' <ul>
+ <li>Los ítems marcados 'No para préstamo' aparecerán en el catálogo, pero no pueden ser prestados a usuarios</li>
+</ul>
+</li>
+ <li>Introduzca el número total de renovaciones permitidas para el tipo de ítem en la caja 'Renovaciones'</li>
+ <li>Para ítems a los que cobra un cargo, Introduzca el total del cargo en el campo 'Cargo por préstamo' <ul>
+ <li style="color: #990000;">Importante: No introducir símbolos en este campo, sólo números y puntos decimales (por ejemplo, $ 5.00 se debe introducir como 5 o 5.00)</li>
+ <li>Esto cargará con un monto de dinero al usuario en el préstamo</li>
+</ul>
+</li>
+ <li>Cuando haya terminado, seleccionar 'Guardar cambios' <ul>
+ <li>Sugerencia: todos los campos, con la excepción del 'Tipo de ítem' se podrán editar desde la lista de Tipos de Ítem</li>
+</ul>
+</li>
+ <li>Su nuevo tipo de ítem aparecerá ahora en la lista</li>
+</ul>
+
+<h2>Editar Tipos de Ítem</h2>
+
+<p>Cada tipo de ítem tiene un botón Editar a su lado. Para editarlo simplemente haga clic en el enlace 'Editar'.</p>
+
+<p>No podrá editar el código que asignó como 'Tipo de Ítem' pero podrá editar la descripción del ítem. </p>
+
+<h2>Eliminando Tipos de ïtem</h2>
+
+<p>Cada ítem tiene un botón Eliminar a su lado. Para eliminar un ítem, simplemente haga clic en el enlace 'Eliminar'.</p>
+
+<p>Usted no podrá borrar tipos de ítems que estén siendo usados por ítems dentro de su sistema.</p>
+
+<p><strong>Ver la documentación completa para Tipos de ítem en el <a href="http://es.koha-community.org/manual/3.12/es/basicparams.html#itemtypeadmin">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

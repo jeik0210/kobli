@@ -1,0 +1,15 @@
+[% INCLUDE 'help-top.inc' %] <h1>Diseños</h1>
+
+<p>Un diseño se usa para definir los campos que aparecerán en las etiquetas.</p>
+
+<h2>Agregar un diseño</h2>
+
+<p>Para añadir un nuevo diseño, haga clic en el botón 'Diseños' en la parte superior de la página y seleccione 'Nuevo Diseño'</p>
+
+<p>Utilizando el formulario que aparece, usted puede crear un perfil para solucionar los problemas con la plantilla.</p>
+
+<p>Después de guardar, los diseños aparecerán en la página 'Administrar diseños'.</p>
+
+<p><strong>Ver la documentación completa para Diseños de Etiquetas en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#labellayouts">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

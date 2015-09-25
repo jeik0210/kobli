@@ -1,0 +1,41 @@
+[% INCLUDE 'help-top.inc' %] <h1>Disparadores de estado/aviso de retrasos</h1>
+
+<p>Para enviar avisos de vencimiento que ha definido utilizando la herramienta de avisos, es necesario establecer primero los factores que desencadenan que estos mensajes.</p>
+
+<p style="color: #990000;">Importante: Para enviar avisos de vencimiento a sus usuarios, es necesario establecer que dicha categoría de usuarios tendrá avisos de vencimiento.</p>
+
+<p>La herramienta Avisos de retraso/Disparadores de estado da al bibliotecario el poder de enviar hasta tres avisos a cada tipo de usuario para notificar de ítems retrasados</p>
+
+<ul>
+ <li>Demora es el número de días desde que se espera un ejemplar antes que se dispare una acción. <ul>
+ <li style="color: #990000;">Importante: Si desea que Koha dispare una acción (enviar una carta o suspender a un miembro), es necesario un valor de retardo.</li>
+</ul>
+</li>
+ <li>Para enviar avisos adicionales, haga clic en las pestañas de 'Segundo' y 'Tercer' aviso</li>
+ <li>Si desea evitar que un usuario tome prestado ítems debido a sus demoras, marque la casilla 'Suspender', esto hará que aparezca un aviso en el registro del usuario. Cuando el usuario quiera hacer un trámite la bibliotecaria verá que al usuario no se le prestará debido a los ítems atrasados.</li>
+ <li>Ver un ejemplo de aviso de retraso</li>
+</ul>
+
+<h3>Ejemplo de aviso de retraso</h3>
+
+<p>Nicole Engard <br>410 Biblioteca Rd. <br>Filadelfia, PA 19107</p>
+
+<p>Estimada Nicole Engard (23529000035726),</p>
+
+<p>Según nuestros registros, en el momento de esta notificación, tiene ítems que están atrasados. Por favor, devolver o renovar tan pronto como le sea posible para evitar el aumento de multas por demora.</p>
+
+<p>Si ha registrado una contraseña en la biblioteca, es posible usarla con su número de usuario de biblioteca para renovaciones por Internet.</p>
+
+<p>Si usted cree que ha devuelto el ítem por favor llame al personal de la biblioteca y ellos le ayudarán a resolver el problema.</p>
+
+<p>El/los siguiente(s) ítem(s) están retrasados:</p>
+
+<p>07/08/2008 Creando escuelas y comunidades libres de drogas: 502326000054 Fox, C. Lynn.</p>
+
+<p>06/27/2008 Comiendo Fracciones / 502326000022 McMillan, Bruce.</p>
+
+<p>Sinceramente, Personal de la Biblioteca</p>
+
+<p><strong>Vea la documentación completa de Disparadores de estado/aviso de retrasos en el <a href="http://es.koha-community.org/manual/3.12/es/tools.html#noticetriggers">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,12 @@
+[% INCLUDE 'help-top.inc' %] <h1>Pedido desde un Registro Existente</h1>
+
+<p>Si está solicitando hacer un pedido de un registro existente, busque el registro en su sistema.</p>
+
+<ul>
+ <li>Desde los resultados, seleccionar  'Pedido' para ir al formulario de compra.</li>
+ <li>Todos los detalles asociados con el ítem se listarán bajo 'Detalles de catalogación'</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Órdenes de compra en el <a href="http://es.koha-community.org/manual/3.12/es/placingacqorder.html#createacqbasket">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

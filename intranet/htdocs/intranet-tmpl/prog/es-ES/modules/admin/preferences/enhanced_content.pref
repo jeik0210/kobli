@@ -1,0 +1,397 @@
+--- 
+enhanced_content.pref: 
+  Amazon: 
+    - 
+      - Utilice datos de Amazon desde su sitio Web
+      - 
+        choices: 
+          CA: Canadiense
+          DE: "Alem\xC3\xA1n"
+          FR: "Franc\xC3\xA9s"
+          JP: "Japon\xC3\xA9s"
+          UK: "Brit\xC3\xA1nico"
+          US: Americano
+        pref: AmazonLocale
+      - .
+    - 
+      - Ponga la etiqueta asociada
+      - 
+        pref: AmazonAssocTag
+      - "en enlaces de Amazon. Esto puede aportar a su monto por referencias si el usuario decide comprar un \xC3\xADtem."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        default: 1
+        pref: AmazonCoverImages
+      - "im\xC3\xA1genes de cubiertas desde Amazon en resultados de b\xC3\xBAsquedas y en p\xC3\xA1ginas de detalles de \xC3\xADtem en la interfaz administrativa."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        default: 1
+        pref: OPACAmazonCoverImages
+      - "cubiertas de libros desde Amazon en resultados de b\xC3\xBAsqueda y p\xC3\xA1ginas de detalles de \xC3\xADtem en el OPAC."
+  "Babelth\xC3\xA8que": 
+    - 
+      - 
+        choices: 
+          "": 'No'
+          1: Si
+        pref: Babeltheque
+      - "incluya informaci\xC3\xB3n (tal como comentarios o citas) desde Babelth\xC3\xA8que en la p\xC3\xA1gina de detalles de \xC3\xADtem del OPAC."
+    - 
+      - 
+        pref: Babeltheque_url_js
+      - Defina la URL para el archivo JavaScript de Babeltheque (ej. http://www.babeltheque.com/bw_XX.js)
+    - 
+      - 
+        pref: Babeltheque_url_update
+      - "Defina la URL para la actualizaci\xC3\xB3n peri\xC3\xB3dica de Babeltheque (ej. http://www.babeltheque.com/.../file.csv.bz2)."
+  Baker y Taylor: 
+    - 
+      - 
+        choices: 
+          "": No agregar
+          1: Agregar
+        pref: BakerTaylorEnabled
+      - "enlaces y cubiertas de libros de Baker y Taylor en el OPAC y la interfaz administrativa. Esto requiere que haya accedido un nombre de usuario y contrase\xC3\xB1a (que pueden verse en enlaces de im\xC3\xA1genes)."
+    - 
+      - Los enlaces de Baker y Taylor "My Library Bookstore" pueden acceder en <code>https://
+      - 
+        class: url
+        pref: BakerTaylorBookstoreURL
+      - <em>isbn</em></code> (esto debe ser completado como <code>ocls.mylibrarybookstore.com/MLB/actions/searchHandler.do?nextPage=bookDetails&amp;parentNum=10923&amp;key=</code>). Deje en blanco para deshabilitar estos enlaces.
+    - 
+      - Acceda a Baker y Taylor utilizando el nombre de usuario
+      - 
+        class: password
+        pref: BakerTaylorUsername
+      - "y contrase\xC3\xB1a"
+      - 
+        class: password
+        pref: BakerTaylorPassword
+      - .
+  Etiquetado: 
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: TagsEnabled
+      - "a usuarios y personal etiquetar \xC3\xADtems."
+    - 
+      - 
+        choices: 
+          "": No requiera
+          1: Requiera
+        pref: TagsModeration
+      - que las etiquetas enviadas por los usuarios sean revisadas por un miembro del personal antes de mostrarse.
+    - 
+      - Mostrar
+      - 
+        class: integer
+        pref: TagsShowOnList
+      - "etiquetas en resultados de b\xC3\xBAsqueda en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: TagsInputOnList
+      - "a los usuarios etiquetar resultados de b\xC3\xBAsqueda en el OPAC."
+    - 
+      - Muestrar
+      - 
+        class: integer
+        pref: TagsShowOnDetail
+      - "etiquetas en las p\xC3\xA1ginas de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: TagsInputOnDetail
+      - "a los usuarios etiquetar en las p\xC3\xA1ginas de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - Permitir etiquetas en el diccionario del ejecutable ispell
+      - 
+        class: file
+        pref: TagsExternalDictionary
+      - "en el servidor ser aprobadas sin moderaci\xC3\xB3n."
+  Google: 
+    - 
+      - 
+        choices: 
+          "": No agregar
+          1: Agregar
+        pref: GoogleJackets
+      - "cubiertas de libros desde Google Books en los resultados de b\xC3\xBAsqueda y p\xC3\xA1ginas de detalles en el OPAC."
+  Library Thing: 
+    - 
+      - 
+        choices: 
+          "": No use
+          1: Use
+        pref: ThingISBN
+      - "el servicio ThingISBN para mostrar otras ediciones de un t\xC3\xADtulo (cuando ambas FRBRizeEditions o OPACFRBRizeEditions est\xC3\xA1n habilitadas). Esto es separado de Library Thing for Libraries."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: LibraryThingForLibrariesEnabled
+      - "comentarios, \xC3\xADtems similares, y etiquetas desde Library Thing for Libraries en las p\xC3\xA1ginas de detalles de \xC3\xADtem en el OPAC. Si usted habilit\xC3\xB3 esto, necesitar\xC3\xA1"
+      - " <a href=\"http://www.librarything.com/forlibraries/\">sign up</a>, entonces introducizca su ID mas abajo."
+    - 
+      - Acceda a Library Thing for Libraries utilizando el ID de cliente
+      - 
+        pref: LibraryThingForLibrariesID
+      - .
+    - 
+      - Muestre contenido de  Library Thing for Libraries
+      - 
+        choices: 
+          "": "junto con la informaci\xC3\xB3n bibliogr\xC3\xA1fica."
+          1: "en pesta\xC3\xB1as."
+        pref: LibraryThingForLibrariesTabbedView
+  Local Cover Images: 
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: LocalCoverImages
+      - "im\xC3\xA1genes de cubiertas de los registros en b\xC3\xBAsqueda de p\xC3\xA1ginas de intranet y detalles."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: OPACLocalCoverImages
+      - "im\xC3\xA1genes de cubiertas de los registros en p\xC3\xA1ginas de b\xC3\xBAsqueda y detalles del OPAC."
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: AllowMultipleCovers
+      - "a im\xC3\xA1genes m\xC3\xBAltiples ser enlazadas a cada registro bibliogr\xC3\xA1fico."
+  Novelist Select: 
+    - 
+      - 
+        choices: 
+          "": "No a\xC3\xB1adir"
+          1: "A\xC3\xB1adir"
+        pref: NovelistSelectEnabled
+      - "contenido al OPAC desde Novelist Select (requiere que haya accedido un perfil de usuario y contrase\xC3\xB1a, que puede verse en enlaces de im\xC3\xA1genes)."
+    - 
+      - Mostrar contenido Novelist Select
+      - 
+        choices: 
+          above: sobre tabla de reservas
+          below: debajo de la tabla de reservas
+          right: bajo el desplegable Guardar registro, a la derecha
+          tab: en una etiqueta OPAC
+        pref: NovelistSelectView
+      - .
+    - 
+      - Acceda a Novelist Select utilizando el perfil de usuario
+      - 
+        pref: NovelistSelectProfile
+      - "y contrase\xC3\xB1a"
+      - 
+        class: password
+        pref: NovelistSelectPassword
+      - .
+  OCLC: 
+    - 
+      - 
+        choices: 
+          "": No utilice
+          1: Utilice
+        pref: XISBN
+      - "el servicio xISBN de OCLC para mostrar otras ediciones de un t\xC3\xADtulo (cuando cualquiera de las opciones FRBRizeEditions o OPACFRBRizeEditions est\xC3\xA1n habilitadas)."
+    - 
+      - Utilice el <a href="http://www.worldcat.org/affiliate/webservices/xisbn/app.jsp">ID de afilado OCLC</a>
+      - 
+        pref: OCLCAffiliateID
+      - "para acceder al servicio xISBN. Note que salvo se haya registrado para una ID, estar\xC3\xA1 limitado a 1000 consultas diarias."
+    - 
+      - Solo utilice el servicio xISBN
+      - 
+        class: integer
+        pref: XISBNDailyLimit
+      - "veces por d\xC3\xADa. A menos que pague por el servicio xISBN, deber\xC3\xA1 dejar  el valor predeterminado 999 (como se detalla abajo)."
+  Open Library: 
+    - 
+      - 
+        choices: 
+          "": "NO a\xC3\xB1adir"
+          1: "A\xC3\xB1adir"
+        pref: OpenLibraryCovers
+      - "im\xC3\xA1genes de cubierta desde Open Library a las p\xC3\xA1ginas de resultados de b\xC3\xBAsqueda y detalles de \xC3\xADtem en el OPAC."
+  Plugins: 
+    - 
+      - 
+        choices: 
+          "": No habilitar
+          1: Habilitar
+        pref: UseKohaPlugins
+      - "la habilitaci\xC3\xB3n para usar los plugins de Koha. Nota, los plugins del sistema deben estar tambi\xC3\xA9n deshabilitados en el archivo de configuraci\xC3\xB3n para estar completamente inhabilitados."
+  Repositorio Local: 
+    - 
+      - 
+        pref: dirFileLocalRepository
+      - "im\xC3\xA1genes de cubierta desde Open Library a las p\xC3\xA1ginas de resultados de b\xC3\xBAsqueda y detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        pref: dirUrlLocalRepository
+      - Introducir la URL para mostrar los archivos del repostorio local
+    - 
+      - 
+        class: integer
+        default: 10
+        pref: MaxSizeFileLocalRepository
+      - "MB max. de tama\xC3\xB1o de los archivos que  subimos al repositorio local."
+  Syndetics: 
+    - 
+      - 
+        choices: 
+          "": No usar
+          1: Usar
+        pref: SyndeticsEnabled
+      - "contenido desde Syndetics. Note que esto requiere que se haya registrado para el servicio y haya introducido su c\xC3\xB3digo de cliente."
+    - 
+      - "Use el c\xC3\xB3digo de cliente"
+      - 
+        pref: SyndeticsClientCode
+      - para acceder a Syndetics.
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsCoverImages
+      - "cubiertas de libros desde Syndetics en los resultados de b\xC3\xBAsqueda y paginas de detalles de \xC3\xADtem en el OPAC con un tama\xC3\xB1o"
+      - 
+        choices: 
+          LC: grande
+          MC: mediano
+        pref: SyndeticsCoverImageSize
+      - .
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsAuthorNotes
+      - "notas acerca del autor de un t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsAwards
+      - "informaci\xC3\xB3n desde Syndetics acerca de premios que ha obtenido un t\xC3\xADtulo en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsEditions
+      - "informaci\xC3\xB3n acerca de otras ediciones de un t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC (cuando OPACFRBRizeEditions est\xC3\xA1 hablitado)."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsExcerpt
+      - "extractos de un t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsReviews
+      - "comentarios de un t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsSeries
+      - "informaci\xC3\xB3n sobre otros libros en la serie del t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsSummary
+      - "un resumen de un t\xC3\xADtulo desde Syndetics en la p\xC3\xA1gina de detalles de \xC3\xADtem en el OPAC."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SyndeticsTOC
+      - "el \xC3\xADndice de un t\xC3\xADtulo desde Syndetics en la pagina de detalles de \xC3\xADtem en el OPAC."
+  Todos: 
+    - 
+      - <strong>NOTE:</strong> you can only choose one source of cover images from below, otherwise Koha will show the images from all sources selected.
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        default: 0
+        pref: FRBRizeEditions
+      - "otras ediciones de un \xC3\xADtem en el cliente administrativo (si se encuentran por alguno de los servicios mas abajo)."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        default: 0
+        pref: OPACFRBRizeEditions
+      - "otras ediciones de un \xC3\xADtem en el OPAC."
+  enhanced_content.pref HTML5 Media: 
+    - 
+      - Mostrar etiquetas con un  media player HTML5 para ficheros catalogados en el campo 856
+      - 
+        choices: 
+          both: en OPAC y cliente personal.
+          not: en absoluto.
+          opac: en el OPAC.
+          staff: en el cliente de personal.
+        pref: HTML5MediaEnabled
+    - 
+      - Extensiones de ficheros de media
+      - 
+        class: multi
+        pref: HTML5MediaExtensions
+      - (separado con |).
+  enhanced_content.pref IDreamLibraries: 
+    - 
+      - 
+        choices: 
+          "": "No a\xC3\xB1adir"
+          1: "A\xC3\xB1adir"
+        pref: IDreamBooksReviews
+      - "una etiqueta en la p\xC3\xA1gina de detalles del OPAC con revisiones bibliogr\xC3\xA1ficas de cr\xC3\xADticos agregadas por <a href='http://idreambooks.com/'>IDreamBooks.com</a>."
+    - 
+      - 
+        choices: 
+          "": "No a\xC3\xB1adir"
+          1: "A\xC3\xB1adir"
+        pref: IDreamBooksReadometer
+      - "un \"Readometer\" que resuma las revisiones de <a href='http://idreambooks.com/'>IDreamBooks.com</a> a la p\xC3\xA1gina de detalles del OPAC"
+    - 
+      - 
+        choices: 
+          "": "No a\xC3\xB1adir"
+          1: "A\xC3\xB1adir"
+        pref: IDreamBooksResults
+      - "la clasificaci\xC3\xB3n de <a href='http://idreambooks.com/'>IDreamBooks.com</a> a los resultados de b\xC3\xBAsqueda del OPAC"

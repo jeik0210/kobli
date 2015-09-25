@@ -1,0 +1,30 @@
+[% INCLUDE 'help-top.inc' %] <h1>Analíticas</h1>
+
+<p>Bibliotecas a veces hacen artículos de revistas y artículos dentro de monografías y publicaciones seriadas accesibles a los usuarios de la biblioteca a través de análisis de catalogación. Analytics catalogación crea registros bibliográficos separados para estos artículos, capítulos, secciones, etc encuentra dentro de un recurso más grande, como un libro, un artículo en una revista, un periódico o en serie. En catalogación analítica, aunque un registro bib separado se crea para el título, no está físicamente separado del elemento host. Más información acerca de Google Analytics en el Capítulo 13 de las AACR2.</p>
+
+<p>Si usted desea catalogar registros analíticos en Koha primero tiene que actualizar la preferencia EasyAnalyticalRecords a 'Mostrar'.</p>
+
+<p>Después de su registro de catalogación analítica (véase Adición de registros de más en la creación de registros), haga clic en "Editar" en la vista normal y elegir 'Link a Host artículo'</p>
+
+<p>Nos pedirá introducir el código de barras del ítem que debería ser enlazado a este registro.</p>
+
+<p>Después de introducir el código de barras del ejemplar y seleccionar 'Select' recibirá un mensaje de confirmación.</p>
+
+<p>El registro tendrá ahora el campo 773 debidamente cumplimentado para completar el enlace.</p>
+
+<p>Si ha vinculado un registro analítico incorrectamente puede eliminar dicho enlace modificando el ítem en el expediente analítico (no el registro de host). Para ello, vaya al registro analítico y haga clic en el botón "Editar" y elegir "Editar elementos". A la izquierda de cada ítem que usted verá dos opciones.</p>
+
+<ul>
+ <li>Seleccionar 'Editar' a la derecha de la Hoja de Trabajo, sólo le permitirá editar la Descripción de la Hoja de Trabajo.</li>
+ <li>Al hacer clic en "desconectarse" se eliminará el campo 773 y el enlace entre lo analítico y el host.</li>
+</ul>
+
+<p>Para ver todos los elementos vinculados al registro de host, hacer una búsqueda para el registro, haga clic en la pestaña Analytics de la izquierda y los análisis vinculados a cada código de barras aparecerá en la carpeta "Se utiliza en " de la columna.</p>
+
+<p>Sugerencia: También es posible crear registros analíticos de la pantalla haciendo clic en "Crear Analytics "</p>
+
+<p>También puede ver los análisis adjuntos a este registro haciendo clic en el enlace "Mostrar Analítica" hacia la parte superior del registro en la vista normal.</p>
+
+<p><strong>Ver la documentación completa para Avisos en el  <a href="http://es.koha-community.org/manual/3.12/es/cataloging.html#cataloganalytics">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

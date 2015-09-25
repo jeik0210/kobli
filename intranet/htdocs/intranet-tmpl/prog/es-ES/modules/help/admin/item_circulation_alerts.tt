@@ -1,0 +1,21 @@
+[% INCLUDE 'help-top.inc' %] <h1>Alertas de Circulación de ítem</h1>
+
+<p>Las bibliotecas pueden decidir si quieren tener a los usuarios automáticamente notificados de eventos de circulación (préstamos y devoluciones).</p>
+
+<p>Estas preferencias se establecen sobre la base de los tipos de el usuario y los tipos de ítems.</p>
+
+<p style="color: #990000;">Importante: Estas preferencias pueden ser sobrescritas haciendo cambios en las preferencias de mensajería del usuario.</p>
+
+<p>Para establecer alertas de circulación:</p>
+
+<ul>
+ <li>Seleccione su biblioteca de la lista desplegable situada en la parte superior de la pantalla <ul>
+ <li>Para establecer preferencias para todas las bibliotecas, mantenga el menú posicionado en 'Predeterminado'</li>
+</ul>
+</li>
+ <li>Por defecto para todos los tipos de ítem y todos los usuarios se notifican los préstamos y devoluciones. Para alterar esto, haga clic en el combo tipo de ítem/usuario para el cual desee desactivar notificaciones.</li>
+</ul>
+
+<p><strong>Ver la documentación completa de Alertas de Circulación de Items en el <a href="http://es.koha-community.org/manual/3.12/es/patscirc.html#itemcircalerts">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

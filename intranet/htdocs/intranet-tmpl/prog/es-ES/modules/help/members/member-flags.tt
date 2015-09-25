@@ -1,0 +1,404 @@
+[% INCLUDE 'help-top.inc' %] <h2>Permisos del usuario</h2>
+
+<p>Lo permisos de usuarios se usan para permitir al personal acceder al cliente administrativo.</p>
+
+<p style="color: #990000">Importante: Con el fin de permitir al personal acceder a la interfaz administrativa deberán tener (por lo menos) permisos de 'catálogo' para permitirle ver la interfaz administrativa.</p>
+
+<h3>Confirgurar Permisos de Usuarios</h3>
+
+<p>Para establecer permisos de usuarios, deberá primero tener un usuario de tipo 'Staff' abierto</p>
+
+<ul>
+ <li>En el registro del usuario haga clic en Más y seleccione Establecer permisos para cambiar los permisos del usuario</li>
+ <li>Se le presentará una lista de preferencias, algunas de la cuales pueden ser expandidas haciendo clic en el signo más a la izquierda del título de sección.</li>
+</ul>
+
+<h3>Permisos de usuarios definidos</h3>
+
+<ul>
+ <li>super bibliotecario<ul>
+ <li>Acceso a las funciones del bibliotecario<ul>
+ <li style="background-color: #ffe599;">Consejo: Con esta selección no es necesario elegirotros permisos</li>
+</ul>
+</li>
+</ul>
+</li>
+ <li>circular <ul>
+ <li>Prestar y devolver ítems</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>catálogo <ul>
+ <li><strong>Obligatorio para acceder al sistema.</strong> Acceso al personal , permitir al personal consultar el catálogo en la intranet<ul>
+ <li style="color: #990000">Importante: Deben ser dados a todos los miembros del personal para que tengan permitido el acceso a al intranet.</li>
+</ul>
+</li>
+</ul>
+</li>
+ <li>parámetros<ul>
+ <li>Gestionar configuraciones del sistema de Koha (panel de Administración)</li>
+ <li>Esta sección se puede ampliar </li>
+</ul>
+</li>
+ <li>usuarios <ul>
+ <li>Añadir y modificar usuarios</li>
+</ul>
+</li>
+ <li>permisos<ul>
+ <li>Establecer permisos</li>
+</ul>
+</li>
+ <li>reserveforothers <ul>
+ <li>Aplazar y modifcar reservas de usuarios</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>prestar <ul>
+ <li>Prestar monografías</li>
+</ul>
+</li>
+ <li>editcatalogue <ul>
+ <li>Editar el catálogo (modificar datos bibliográficos)</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>updatecharges <ul>
+ <li>Gestionar usuarios. multas y deudas</li>
+</ul>
+</li>
+ <li>adquisición <ul>
+ <li>Gestión de adiquisiciones y sugerencias</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>gestión<ul>
+ <li>configurar parámetros de gestión de la biblioteca <ul>
+ <li style="color: #990000">Importante: Este nivel de permisos no va a controlar nada más.</li>
+</ul>
+</li>
+</ul>
+</li>
+ <li>Herramientas<ul>
+ <li>Utilizar todas las herramientas</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>editauthorities <ul>
+ <li>Editar Autoridades</li>
+</ul>
+</li>
+ <li>publicaciones periódicas <ul>
+ <li>Gestionar suscripciones</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>informes<ul>
+ <li>Permitir el acceso al módulo de informes</li>
+ <li>Los informes que se encuentran en la página de circulación no están controlados por este permiso</li>
+ <li>Esta sección se puede ampliar</li>
+</ul>
+</li>
+ <li>staffaccess <ul>
+ <li>Permitir al personal modificar los permisos de otros miembros del equipo</li>
+ <li style="color: #990000">Importante: a la tabla de préstamos: Requiere supervisión del permiso de los usuarios</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos de circulación granulares</h4>
+
+<p>Si un miembro del personal tiene permisos de 'circulate' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de circulación en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>circulate_remaining_permissions <ul>
+ <li>Mantener permisos de circulación</li>
+ <li>Todos los derechos de circulación excepto la capacidad de anular las renovaciones</li>
+</ul>
+</li>
+ <li>overdues_report <ul>
+ <li>Ejecutar el informe de ítems atrasados</li>
+ <li>El permiso para ejecutar los informes de retraso den las devoluciones está en el módulo de Circulación.</li>
+</ul>
+</li>
+ <li>override_renewals <ul>
+ <li>Sobrescribir renovaciones bloqueadas:</li>
+ <li>Requerir que los miemebros del personal también tengan circulate_remaining_permissions </li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos de circulación granulares </h4>
+
+<p>Si un miembro del personal tiene permisos de 'reports' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de informes en un nivel más granular, elija entre estas opciones: </p>
+
+<ul>
+ <li>Gestión_reglas_circ <ul>
+ <li>Gestionar reglas de circulación</li>
+ <li>La capacidad de acceder a las reglas de circulación y multas en el área de adminitración</li>
+</ul>
+</li>
+ <li>parameters_remaining_permissions <ul>
+ <li>Mantener permisos sobre parámetros del sistema</li>
+ <li>La posibilidad de acceder a todas las áreas de Administración (además de reglas de circulación y multas)</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos de reservas granulares</h4>
+
+<p>Si un miembro del personal tiene permisos de 'reserveforothers' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de reservas en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>modify_holds_priority <ul>
+ <li>Modificar la prioridad de las reservas</li>
+ <li>Permitir al personal alterar las prioridades de reservas (moviendo usuarios arriba y abajo de la cola)</li>
+</ul>
+</li>
+ <li>place_holds <ul>
+ <li>Realizar reserva para los usuarios</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos de catalogación granulares</h4>
+
+<p>Si un miembro del personal tiene permisos de 'editcatalogue' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de catalogación en un nivel más granular, elija entre estas opciones</p>
+
+<ul>
+ <li>edit_catalogue <ul>
+ <li>Editar Cataálogo (Modificar datos bibliográficos / de fondos)</li>
+ <li>Posibilidad de acceder a todas las funciones de catalogación a través de la página Catalogación</li>
+</ul>
+</li>
+ <li>edit_items <ul>
+ <li>Editar ítems</li>
+ <li>Permiso para modificar registros de ítems, pero no registros bibliográficos</li>
+</ul>
+</li>
+ <li>fast_cataloging <ul>
+ <li>Catalogación rápida</li>
+ <li>La capacidad de catalogar utilizando sólo Agregar hoja de trabajo rápida se encuentra en el página de Circulación</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos de Adquisiciones granulares</h4>
+
+<p>Si un miembro del personal tiene permisos de 'acquisition' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de adquisiciones en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>budget_add_del <ul>
+ <li>Añadir y borrar presupuestos (no se podrán modificar)</li>
+</ul>
+</li>
+ <li>budget_manage <ul>
+ <li>Administrar presupuestos</li>
+</ul>
+</li>
+ <li>budget_manage_all<ul>
+ <li>Administrar todos los presupuestos</li>
+</ul>
+</li>
+ <li>budget_modify <ul>
+ <li>Modificar presupuesto (no se pueden crear lineas, pero se pueden modificar las existentes)</li>
+</ul>
+</li>
+ <li>contracts_manage <ul>
+ <li>Administrar contratos</li>
+</ul>
+</li>
+ <li>group_manage <ul>
+ <li>Administrar pedidos y grupos de bolsas</li>
+</ul>
+</li>
+ <li>order_manage <ul>
+ <li>Administrar pedidos y bolsas</li>
+</ul>
+</li>
+ <li>order_receive <ul>
+ <li>Administrar pedidos y bolsas</li>
+</ul>
+</li>
+ <li>period_manage <ul>
+ <li>Administrar periodos</li>
+</ul>
+</li>
+ <li>planning_manage <ul>
+ <li>Administrar planificación del presupuesto</li>
+</ul>
+</li>
+ <li>gestión_proveeedores<ul>
+ <li>Administrar proveedores</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos granulares de publicaciones periódicas</h4>
+
+<p>Si un miembro del personal tiene permisos de 'serials' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos para publicaciones periódicas en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>check_expiration <ul>
+ <li>Controlar vencimiento de publicación periódica</li>
+</ul>
+</li>
+ <li>claim_serials <ul>
+ <li>Reclamar publicaciones periódicas a traves de la sección de reclamaciones</li>
+</ul>
+</li>
+ <li>create_subscription <ul>
+ <li>Crear una nueva suscripción</li>
+</ul>
+</li>
+ <li>delete_subscription <ul>
+ <li>Borrar una suscripción existente</li>
+</ul>
+</li>
+ <li>edit_subscription <ul>
+ <li>Editar una suscripción existente</li>
+ <li>Con este permiso no es posible borrar o crear una suscripción.</li>
+</ul>
+</li>
+ <li>receive_serials <ul>
+ <li>Recepción de publicaciones periódicas</li>
+ <li>Recibe publicaciones periódicas en suscripciones existentes</li>
+</ul>
+</li>
+ <li>renew_subscription <ul>
+ <li>Renovar una suscripción</li>
+</ul>
+</li>
+ <li>circulación <ul>
+ <li>Circulación</li>
+ <li>Administrar hojas de circulación</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos granulares de herramientas</h4>
+
+<p>Si un miembro del personal tiene permisos 'Tools' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos para herramientas en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>batch_upload_patron_images <ul>
+ <li>Subir imágenes de usuarios en lote o una a la vez</li>
+ <li>Acceso a la herramienta de carga de imágenes</li>
+</ul>
+</li>
+ <li>delete_anonymize_patrons <ul>
+ <li>Eliminar usuarios antiguos y anonimizar historial de préstamos (borra historial de lectura del usuario)</li>
+ <li>Acceso a la Herramienta para hacer usuarios anónimos</li>
+</ul>
+</li>
+ <li>edit_calendar <ul>
+ <li>Definir los días en los que la biblioteca permanece cerrada.</li>
+ <li>Acceso a la herramienta de edición del calendario y vacaciones</li>
+</ul>
+</li>
+ <li>edit_news <ul>
+ <li>Escriba novedades para el OPAC y la interfaz administrativa</li>
+ <li>Acceso  a la herramienta Avisos)</li>
+</ul>
+</li>
+ <li>edit_notice_status_triggers <ul>
+ <li>Establecer aviso o disparadores para ítem atrasados</li>
+ <li>Acceso a la herramienta de avisos y disparadores de retraso</li>
+</ul>
+</li>
+ <li>edit_notices <ul>
+ <li>Definir avisos</li>
+ <li>Acceso a la herramienta de avisos</li>
+</ul>
+</li>
+ <li>export_catalog <ul>
+ <li>Exportar un registro bibliográfico y de existencias</li>
+ <li>Acceso a la herramienta de exportación de datos</li>
+</ul>
+</li>
+ <li>import_patrons <ul>
+ <li>Importar datos de usuario</li>
+ <li>Acceso a la herramienta de importación de usuarios</li>
+</ul>
+</li>
+ <li>inventario <ul>
+ <li>Realizar un balance (inventario) de su catálogo</li>
+ <li>Acceso a la herramienta de inventario</li>
+</ul>
+</li>
+ <li>items_batchdel <ul>
+ <li>Elaborar un lote de ítems para el borrado</li>
+ <li>Acceso a la herramienta de borrado de lotes de ítems</li>
+</ul>
+</li>
+ <li>items_batchmod <ul>
+ <li>Elaborar un lote de ítems para la modificación</li>
+ <li>Acceso a la herramienta de modificación de lotes de ítems</li>
+</ul>
+</li>
+ <li>label_creator <ul>
+ <li>Crear etiquetas y códigos de barras para imprimir a partir de los datos del catálogo</li>
+ <li>Acceso al Creador de etiquetas y a la herramienta Creador de tejuelos</li>
+</ul>
+</li>
+ <li>gestion_csv_perfil<ul>
+ <li>Administrar perfiles de exportación CSV</li>
+ <li>Acceso a la herramienta de perfiles CSV</li>
+</ul>
+</li>
+ <li>gestionar_ estado_marc<ul>
+ <li>Administrar registros MARC preparados, incluyendo completar y revertir importaciones</li>
+ <li>Acceso a la herramienta de gestión de registros MARC preparados</li>
+</ul>
+</li>
+ <li>moderate_comments <ul>
+ <li>Moderar comentarios de usuarios</li>
+ <li>Acceso a la herramienta de comentarios</li>
+</ul>
+</li>
+ <li>moderate_tags <ul>
+ <li>Moderar pestañas de usuario</li>
+ <li>Acceso a la Herramienta de etiquetas</li>
+</ul>
+</li>
+ <li>schedule_tasks <ul>
+ <li>Tareas programadas para ser ejecutadas</li>
+ <li>Acceso a la herramienta de gestor de tareas</li>
+</ul>
+</li>
+ <li>stage_marc_import<ul>
+ <li>Subir registros MARC al depósito </li>
+ <li>Acceso a la herramienta de preparación y carga de registros MARC</li>
+</ul>
+</li>
+ <li>upload_local_cover_images <ul>
+ <li>Cargar imágenes de cubierta locales </li>
+ <li>Acceso a la herramienta de carga de cubiertas en el repositorio local</li>
+</ul>
+</li>
+ <li>view_system_logs <ul>
+ <li>Revisar registros del sistema</li>
+ <li>Acceso a la Herramienta de visor de registros</li>
+</ul>
+</li>
+</ul>
+
+<h4>Permisos granulares de informes</h4>
+
+<p>Si un miembro del personal tiene permisos de 'reports' tienen la capacidad para llevar a cabo todas estas acciones. Si desea controlar los permisos de informes en un nivel más granular, elija entre estas opciones:</p>
+
+<ul>
+ <li>create_reports <ul>
+ <li>Nuevo informe SQL</li>
+ <li>La capacidad de crear y editar pero no ejecutar informes de SQL</li>
+</ul>
+</li>
+ <li>execute_reports <ul>
+ <li>Ejecutar informes con SQL </li>
+ <li>La capacidad de correr, pero no crear o editar los informes de SQL</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Vea la documentación completa de Permisos de Usuarios en el <a href="http://es.koha-community.org/manual/3.12/es/patronpermissions.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

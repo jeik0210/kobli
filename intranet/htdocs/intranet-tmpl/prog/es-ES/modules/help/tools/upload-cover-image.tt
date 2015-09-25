@@ -1,0 +1,42 @@
+[% INCLUDE 'help-top.inc' %] <h1>Cargar cubiertas </h1>
+
+<p>Esta herramienta le permitirá cargar imágenes de la cubierta por los materiales en el catálogo. Para acceder a esta herramienta, el personal necesita el permiso upload_local_cover_images. Para que las imágenes se muestren en el usuario administrador tendrá que establecer sus LocalCoverImages y / o preferencias OPACLocalCoverImages en 'Mostrar'. Imágenes se pueden cargar en lotes o de uno en uno.</p>
+
+<p>Si cargas una imagen:</p>
+
+<ul>
+ <li>Consultar la herramienta y seleccione el botón de 'Búsqueda' para buscar la imagen en su ordenar local. </li>
+ <li>Clicar 'Cargar Archivo'</li>
+ <li>Elegir 'Archivo de imagen' debajo de la sección ?Tipo de Archivo'</li>
+ <li>Introducir el biblionumber para el registro que está adjuntando a esta imagen. Este número no es el mismo que el código de barras, este número es generado por el sistema y asignado por Koha</li>
+<ul>
+ <li>Encuentra el biblionumber mirando el final de la URL en la barra de direcciones cuando estáen la página de detalle o seleccionando en la pestaña MARC en la página de detalle en el cliente administrador</li>
+</ul>
+ <li>Si quisiera remplazar alguna otra imagen de cubierta, deberá haberla cargado anteriormente, seleccionar en la caja de texto 'Reemplazar cubiertas existentes' debajo de la sección 'Opciones'</li>
+ <li>Clicar 'Procesar imágenes'</li>
+ <li>Se le presentará con un formulario para rellenar los datos de la carga y un enlace a el registro al que ha sido añadida la imagen</li>
+</ul>
+
+<p>Si cargamos un lote de imágenes a la vez, primero necesitará que preparar un archivo ZIP</p>
+
+<ul>
+ <li>Introducir en el archivo ZIP todas las imágenes qu estás cargando</li>
+ <li>También incluye un archivo de texto (*.TXT) nombrado como  datalink.txt o idlink.txt listando el biblionumber seguido por el nombre de la imagen  para cada imagen, una por línea<ul>
+ <li>ex. 4091,image4091.jpg</li>
+</ul>
+</li>
+ <li>Buscar en su ordenador desde un archivo ZIP</li>
+ <li>Clicar 'Cargar Archivo'</li>
+ <li>Eligir 'archivo Zip' debajo de la sección 'Tipo de archivo'</li>
+ <li>Si quisiera remplazar alguna otra imagen de cubierta, deberá haberla cargado anteriormente, seleccionar en la caja de texto 'Reemplazar cubiertas existentes' debajo de la sección 'Opciones'</li>
+ <li>Clicar 'Procesar imágenes'</li>
+ <li>Se le presentará un mensaje de confirmación en la carga</li>
+</ul>
+
+<p>Usted será capaz de ver sus imágenes de la cubierta en el usuario adminsitrador en la página de detalle en la ficha 'Imagen' en la tabla de participaciones en el fondo</p>
+
+<p>En el OPAC las imágenes de la cubierta también aparecerán en la pestaña de imágenes, al lado del título y en los resultados de búsqueda.</p>
+
+<p><strong>Ver la documentación completa para Cargar Imágenes de Cubiertas en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#uploadlocalimages">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

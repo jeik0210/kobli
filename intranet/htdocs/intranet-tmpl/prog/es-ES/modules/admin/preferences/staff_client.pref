@@ -1,0 +1,168 @@
+--- 
+staff_client.pref: 
+  Apariencia: 
+    - 
+      - Utilice el tema
+      - 
+        choices: staff-templates
+        pref: template
+      - en la interfaz administrativa.
+    - 
+      - El cliente administrativo esta ubicado en http://
+      - 
+        class: url
+        pref: staffClientBaseURL
+      - . No incluya una barra final de la URL.
+    - 
+      - Usar la hoja de estilo CSS
+      - 
+        class: url
+        pref: intranetstylesheet
+      - "en todas las p\xC3\xA1ginas de la intranet, en vez de la css predeterminada (usado cuando se deja en blanco este campo). Introduzca el nombre del fichero, una ruta local completa o una URL que empiece con <code>http://</code> (si el fichero est\xC3\xA1 en un servidor remoto). Por favor, tenga en cuenta que si introduce solamente el nombre del fichero, \xC3\xA9ste debe estar en el subdirectorio css de cada tema y lenguaje activo dentro del directorio templates de koha. Una ruta local completa debe empezar con un documento HTTP."
+    - 
+      - "Usar el siguiente JavaScript para imprimir recibos. Definir al menos la funci\xC3\xB3n printThenClose(). Para usar e.j. con Firefox PlugIn jsPrintSetup, ver http://jsprintsetup.mozdev.org/:"
+      - 
+        class: code
+        pref: IntranetSlipPrinterJS
+        type: textarea
+    - 
+      - "Incluya el siguiente c\xC3\xB3digo CSS en todas la p\xC3\xA1ginas del cliente administrativo:"
+      - 
+        class: code
+        pref: IntranetUserCSS
+        type: textarea
+    - 
+      - Incluir la hoja de estilo CSS adicional
+      - 
+        class: file
+        pref: intranetcolorstylesheet
+      - "para anular las caracter\xC3\xADsticas espec\xC3\xADficas de la hoja de estilo predetermianda (dejar en blanco para desactivar). Introduzca el nombre del fichero, un ruta local completa o un URL que empiece con <code>http://</code> (si el fichero est\xC3\xA1 en un servidor remoto). Por favor, tenga en cuenta que si introduce el nombre del fichero, \xC3\xA9ste debe estar en el subdicterio css  para cada tema y lenguaje dentro del directorio templates de koha. Una ruta completa local debe empezar por documento HTTP."
+    - 
+      - Utilice archivos de tipo <code>includes/</code> desde el directorio
+      - 
+        class: file
+        pref: intranet_includes
+      - dentro del directorio templates,en lugar de <code>includes</code>. (Deje en blanco para deshabilitar.)
+    - 
+      - "Mostrar el siguiente HTML en su propia columna en la p\xC3\xA1gina principal del cliente administrativo:"
+      - 
+        class: code
+        pref: IntranetmainUserblock
+        type: textarea
+    - 
+      - "Mostrar el siguiente HTML para la salida de M\xC3\xA1s menu en la parte superior de cada p\xC3\xA1gina del cliente administrador (deber\xC3\xADa ser una lista de enlaces o en blanco):"
+      - 
+        class: code
+        pref: IntranetNav
+        type: textarea
+    - 
+      - "Incluir el siguiente JavaScript en todas las p\xC3\xA1ginas en el cliente administrador:"
+      - 
+        class: code
+        pref: intranetuserjs
+        type: textarea
+    - 
+      - "Utilice la imagen en "
+      - 
+        class: url
+        pref: IntranetFavicon
+      - para el favicon del cliente administrativo. (Esto debe ser una URL completa, comenzando con <code>http://</code>.)
+    - 
+      - "Mostrar resultados en el cliente administrador utilizando la hoja de estilo XSLT en:"
+      - 
+        class: file
+        pref: XSLTResultsDisplay
+      - "<br />Opciones:<ul><li><a href=\"#\" class=\"set_syspref\" data-syspref=\"XSLTResultsDisplay\" data-value=\"\">Dejar en blanco</a> for \"no xslt\"</li><li>poner \"<a href=\"#\" class=\"set_syspref\" data-syspref=\"XSLTResultsDisplay\" data-value=\"default\">default</a>\"para utilizar la predeterminada</li><li> poner la ruta de un archivo xslt</li><li>poner la URL de una hoja de estilo externa.</li></ul>{langcode} ser\xC3\xA1 reemplazada por la interfaz del lenguaje actual "
+    - 
+      - "Mostrar detalles en el cliente administrador utilizando la hoja de estilo XSLT en:"
+      - 
+        class: file
+        pref: XSLTDetailsDisplay
+      - " <br />Opciones:<ul><li><a href=\"#\" class=\"set_syspref\" data-syspref=\"XSLTDetailsDisplay\" data-value=\"\">Dejar en blanco</a> for \"no xslt\"</li><li>introducir \"<a href=\"#\" class=\"set_syspref\" data-syspref=\"XSLTDetailsDisplay\" data-value=\"default\">default</a>\" para la hoja predeterminada</li><li>poner la ruta de un archivo xslt</li><li>poner la URL para una hoja de estilo externa.</li></ul>{langcode} ser\xC3\xA1 reemplazada con la interfaz del lenguaje actual"
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: DisplayIconsXSLT
+      - "el formato, la audiencia, los iconos del tipo de material en los resultados en XSLT MARC21 y en las p\xC3\xA1ginas de detalle en la intranet."
+    - 
+      - "Utilice las librer\xC3\xADas UI de Yahoo"
+      - 
+        choices: 
+          http://yui.yahooapis.com/2.5.1/build: desde los servidores de Yahoo (menos demanda en sus servidores).
+          local: "incluidas con Koha (m\xC3\xA1s r\xC3\xA1pida, funcionan a\xC3\xBAn si Internet reduce conexi\xC3\xB3n)."
+        pref: yuipath
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: StaffAuthorisedValueImages
+      - "im\xC3\xA1genes para <a href=\"/cgi-bin/koha/admin/authorised_values.pl\">valores autorizados</a> (tal como estado perdidos y localizaciones) en resultados de b\xC3\xBAsquedas."
+    - 
+      - "Mostrar la URI en el campo 856u como imagen en:"
+      - 
+        choices: 
+          "": "No mostrar en la p\xC3\xA1gina de detalles ni en la de resultados"
+          Both: "Tanto la p\xC3\xA1gina de Resultados como de Detalles (para uso futuro, el XSLT de Resultados no es funcional en este momento)."
+          Details: "S\xC3\xB3lo p\xC3\xA1gina de detalles "
+          Results: "P\xC3\xA1gina de resultados (de uso futuro, el XSLT de Resultados no es funcional en este momento)."
+        pref: Display856uAsImage
+      - "Nota: La opci\xC3\xB3n XSLT correspondiente debe estar activa."
+    - 
+      - Incluir la hoja de estilo en
+      - 
+        class: url
+        pref: SlipCSS
+      - "en Pr\xC3\xA9stamo y Reservas Equivocadas. (\xC3\x89sta opci\xC3\xB3n debe ser una URL completa, empezando con <code>http://</code>.)"
+  Opciones: 
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: viewMARC
+      - al personal ver registros MARC sin formato en la interfaz administrativa.
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: viewLabeledMARC
+      - al personal ver registros MARC en forma etiquetada en el cliente administrativo.
+    - 
+      - 
+        choices: 
+          "": No permitir
+          1: Permitir
+        pref: viewISBD
+      - al personal ver registros en forma ISBD en el cliente adminstrativo.
+    - 
+      - 
+        choices: 
+          "": Mostrar
+          1: No mostrar
+        pref: HidePatronName
+      - "los nombres de usuarios que tienen \xC3\xADtems prestados o en reserva en las p\xC3\xA1ginas de detalles o la ventana \"Reservar\"."
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: intranetbookbag
+      - el cesta en el cliente administrativo.
+    - 
+      - 
+        choices: 
+          "": No usar
+          1: Usar
+        pref: UseImportMarcHoldings
+      - "Datos de Fondos Marc21 en la herramienta de importaci\xC3\xB3n de registros. "
+    - 
+      - 
+        choices: 
+          "": No usar
+          1: Usar
+        pref: UseExportMarcHoldings
+      - "Datos de Fondos Marc21 en la herramienta de exportaci\xC3\xB3n de registros. "

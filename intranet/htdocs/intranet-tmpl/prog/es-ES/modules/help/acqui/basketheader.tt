@@ -1,0 +1,19 @@
+[% INCLUDE 'help-top.inc' %] <h2>Añadir una cesta</h2>
+
+<p>Cuando agrega una cesta,  nombrela  para que le ayude posteriormente a identificarla</p>
+
+<p>Entrar en el Lugar de facturación y lugar de entrega (por defecto esta en la biblioteca que está conectado)</p>
+
+<p>Si desea cambiar el proveedor está pidiendo  que puede utilizar el proveedorr menú desplegable</p>
+
+<p>Los campos de notas son opcionales y pueden contener cualquier tipo de información. </p>
+
+<p>Si ha añadido contratos para el proveedor al cual está haciendo el pedido, también tendrá la opción de elegir el contrato bajo el cual está pidiendo estos ítems. </p>
+
+<p>Cuando haya finalizado, seleccione 'Guardar'<h2>Editar Encabezamiento de Cestas</h2>
+
+<p>Después de crear una cesta podrá editar el nombre de la misma, las notas asociadas con ella y el pedido contra el que está ordenando. </p>
+
+<p><strong>Vea la documentación completa para Órdenes de compra en el <a href="http://es.koha-community.org/manual/3.12/es/placingacqorder.html#createacqbasket">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

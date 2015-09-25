@@ -1,0 +1,11 @@
+[% INCLUDE 'help-top.inc' %] <h1>Visor del log</h1>
+
+<p>Las acciones en el sistema Koha son registradas en los archivos de log. Sus preferencias de sistema pueden ser cambiadas para prevenir el registro de diferentes acciones. Estos logs pueden ser visualizados usando la herramienta de revisión de logs.</p>
+
+<p>Seleccionando diferentes combinaciones de opciones del menú producirá el archivo de registros para esa consulta.</p>
+
+<p>Notará que no aparecen nombres reales en el registro, solo números de identificación. Necesitará utilizar los números de identificación cuando busque en el registro.</p>
+
+<p><strong>Vea la documentación completa para Visor del logs en el <a href="http://es.koha-community.org/manual/3.12/es/additionaltools.html#logviewer">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

@@ -1,0 +1,25 @@
+[% INCLUDE 'help-top.inc' %] <h1>Lotes</h1>
+
+<p>Los lotes se hacen con los códigos de barra que desea imprimir. Con esta herramienta puede buscar los registros para los cuales desee imprimir tejuelos.</p>
+
+<h2>Agregar un lote</h2>
+
+<p>Los lotes se pueden crear de dos maneras. La primera es seleccionar en 'Crear Lote de Tejuelos' en la página 'Administración de Registros preparados MARC'</p>
+
+<p>La otra es optar por crear un nuevo lote desde la herramienta de creación de etiquetas</p>
+
+<p>Usted será enviado a un lote vacío con un botón de 'Agregar ítem(s)' en la parte superior de la página. Haciendo clic en el enlace 'Agregar ítem(s)' abrirá una ventana de búsqueda para que encuentre los ítems que quiera agregar al lote.</p>
+
+<p>Desde los resultados, seleccione los ítems que desee agregar al lote y haga clic en 'Agregar seleccionados'. También puede agregar ítems uno a uno haciendo clic en el enlace 'Agregar' a la izquierda de cada ítem.</p>
+
+<p>Una vez que haya agregado todos los ítems, haga clic en el botón "Hecho". La página resultante mostrará una lista de los ítems que ha seleccionado.</p>
+
+<p>Para imprimir sus etiquetas, seleccionar en el botón 'Exportar Biblioteca'. Para imprimir solo algunas de las etiquetas, seleccionar en el botón 'Exportar ítem(s)'. De cualquier manera le será presentada una pantalla de confirmación donde puede elegir su plantilla y diseño.</p>
+
+<p>A Usted entonces se le presentarán tres opciones de descarga: PDF, Excel, y CSV.</p>
+
+<p>Luego de guardar su archivo, simplemente imprima las etiquetas en blanco que tenga en su biblioteca.</p>
+
+<p><strong>Ver la documentación completa para lotes de etiquetas en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#labelbatches">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

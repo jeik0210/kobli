@@ -1,0 +1,141 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Administración &rsaquo; Novedades</title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] [% IF ( opac_news_count ) %] <link rel="stylesheet" type="text/css" href="[% interface %]/[% theme %]/en/css/datatables.css" />
+ <script type="text/javascript" src="[% interface %]/[% theme %]/en/lib/jquery/plugins/jquery.dataTables.min.js"></script>
+ [% INCLUDE 'datatables-strings.inc' %] <script type="text/javascript" src="[% interface %]/[% theme %]/en/js/datatables.js"></script>
+ <script type="text/javascript">//<![CDATA[
+    [% IF (dateformat == 'metric') %]dt_add_type_uk_date();[% END %]
+    $(document).ready(function() {
+        $("#newst").dataTable($.extend(true, {}, dataTablesDefaults, {
+            "sDom": 't',
+            "aoColumnDefs": [
+                { "aTargets": [ 0,-1,-2 ], "bSortable": false, "bSearchable": false }
+            ],
+            "bPaginate": false
+        }));
+    });
+    //]]>
+    </script>
+[% END %] <script language="javascript" type="text/javascript" src="[% interface %]/lib/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">//<![CDATA[
+tinyMCE.init({
+    mode : "textareas",
+    theme : "advanced",
+    content_css : "[% themelang %]/css/tinymce.css",
+    plugins : "table,save,advhr,advlink,searchreplace,print,contextmenu",
+    theme_advanced_buttons1 : "save,|,bold,italic,|,cut,copy,paste,|,search,replace,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,|,link,unlink,anchor,cleanup,help,code,advhr,|,print",
+    theme_advanced_buttons2 : "tablecontrols,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,removeformat,|,visualaid,|,sub,sup,|,charmap",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_path_location : "bottom",
+    theme_advanced_resizing : true,
+    plugin_insertdate_dateFormat : "%Y-%m-%d",
+    plugin_insertdate_timeFormat : "%H:%M:%S",
+    apply_source_formatting : true,
+    height : "300",
+    width : "700"
+//]]>
+});
+//]]>
+</script>
+</head>
+<body id="tools_koha-news" class="tools">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/tools/tools-home.pl">Herramientas</a> &rsaquo; [% IF ( add_form ) %]<a href="/cgi-bin/koha/tools/koha-news.pl">Noticias</a> &rsaquo; [% IF ( id ) %] Editar nuevo ítem[% ELSE %]Agregar nuevo ítem[% END %][% ELSE %]Noticias[% END %]</div>
+
+[% IF ( add_form ) %]<div id="doc" class="yui-t7">[% ELSE %]<div id="doc3" class="yui-t2">[% END %] <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+[% UNLESS ( add_form ) %] <div id="toolbar" class="btn-toolbar">
+ <a class="btn btn-small" id="newentry" href="/cgi-bin/koha/tools/koha-news.pl?op=add_form"><i class="icon-plus"></i> Nueva entrada</a>
+</div>
+[% END %] [% IF ( add_form ) %] <form name="add_form" method="post" action="/cgi-bin/koha/tools/koha-news.pl" >
+ <input type="hidden" name="op" value="[% op %]" />
+ <input type="hidden" name="id" value="[% id %]" />
+ <fieldset class="rows">
+ <legend>Noticias del OPAC y Koha</legend>
+ <ol> <li>
+ <label for="lang">Mostrar ubicación</label>
+ <select id="lang" name="lang">
+ <option value="koha">Interfaz para bibliotecarios</option>
+ [% IF ( slip ) %]<option value="slip" selected="selected">Comprobante</option>[% ELSE %]<option value="slip">Comprobante</option>[% END %] [% FOREACH lang_lis IN lang_list %] [% IF ( lang_lis.selected ) %]<option value="[% lang_lis.language %]" selected="selected">OPAC ([% lang_lis.language %])</option>[% ELSE %]<option value="[% lang_lis.language %]">OPAC ([% lang_lis.language %])</option>[% END %] [% END %] </select>
+ </li>
+ <li>
+ <label for="title">Título: </label>
+ <input id="title" size="30" type="text" name="title" value="[% new_detail.title %]" />
+ </li>
+ <li>
+ <label for="from">Fecha de publicación:</label>
+ <input id="from" type="text" name="timestamp" size="15" value="[% new_detail.timestamp %]" class="datepickerfrom" />
+ <div class="hint">[% INCLUDE 'date-format.inc' %]</div>
+ </li>
+ <li>
+ <label for="to">Fecha de vencimiento: </label>
+ <input id="to" type="text" name="expirationdate" size="15" value="[% new_detail.expirationdate %]" class="datepickerto" />
+ <div class="hint">[% INCLUDE 'date-format.inc' %]</div>
+ </li>
+ <li>
+ <label for="number">Aparece en la posición:</label>
+ [% IF ( new_detail.number ) %] <input id="number" size="3" name="number" type="text" checked="checked" value="[% new_detail.number %]" />
+ [% ELSE %] <input id="number" size="3" name="number" type="text" />
+ [% END %] </li>
+ <li><label for="new">Noticias: </label>
+ <textarea name="new" id="new"  cols="75" rows="10">[% new_detail.new %]</textarea></li>
+ </ol>
+ </fieldset>
+ 
+ <fieldset class="action"><input value="Enviar" class="button" type="submit" /> <a class="cancel" href="/cgi-bin/koha/tools/koha-news.pl">Cancelar</a></fieldset>
+ </form>
+ [% ELSE %] <div style="margin-bottom:5px;">
+ <form name="add_form" method="post" action="/cgi-bin/koha/tools/koha-news.pl" >
+ <label for="lang">Mostrar ubicación:</label>
+ <select name="lang" id="lang">
+ <option value="">Todo</option>
+ <option value="koha">Interfaz para bibliotecarios</option>
+ <option value="slip">Comprobante</option>
+ [% FOREACH lang_lis IN lang_list %] [% IF ( lang_lis.selected ) %] <option value="[% lang_lis.language %]" selected="selected">
+ [% ELSE %] <option value="[% lang_lis.language %]">
+ [% END %] OPAC ([% lang_lis.language %]) </option>
+ [% END %] </select>
+ <input value="Filtro" type="submit" class="button" />
+ </form>
+ </div>
+ [% IF ( opac_news_count ) %] <form name="del_form" method="post" action="/cgi-bin/koha/tools/koha-news.pl" onsubmit="return confirm('Are you sure you want to delete the selected news?')">
+ <table id="newst">
+ <thead> <tr>
+ <th>&nbsp;</th>
+ <th>Ubicación</th>
+ <th>Número</th>
+ <th>Fecha de creación</th>
+ <th>Fecha de vencimiento</th>
+ <th>Título</th>
+ <th>Noticias</th>
+ <th>&nbsp;</th>
+ </tr></thead>
+ <tbody>[% FOREACH opac_new IN opac_news %] [% IF ( opac_new.expired ) %] <tr class="expired">
+ [% ELSE %] <tr>
+ [% END %] <td>
+ <input type="checkbox" name="ids" value="[% opac_new.idnew %]" />
+ </td>
+ <td>[% IF ( opac_new.lang == 'koha' ) %] Interfaz del bibliotecario [% ELSE %] [% IF ( opac_new.lang == 'slip' ) %] Recibo [% ELSE %] OPAC [% END %] [% END %] </td>
+
+ <td>[% opac_new.number %]</td>
+ <td>[% opac_new.newdate %]</td>
+ <td>[% opac_new.expirationdate %] [% IF ( opac_new.expired ) %](<span class="expired">vencido</span>)[% END %]</td>
+ <td>[% opac_new.title %]</td>
+ <td>
+ [% opac_new.new %] </td>
+ <td><a href="/cgi-bin/koha/tools/koha-news.pl?op=add_form&amp;id=[% opac_new.idnew %]">Editar</a></td>
+ </tr>
+ [% END %]</tbody>
+ </table>
+ <input type="hidden" name="op" value="del" />
+ <fieldset class="action"><input value="Eliminar seleccionados" type="submit" class="button" /></fieldset>
+ </form>
+ [% ELSE %] <p>No se cargaron novedades</p>
+ [% END %] [% END %] </div>
+</div>
+[% UNLESS ( add_form ) %] <div class="yui-b noprint">
+ [% INCLUDE 'tools-menu.inc' %] </div>
+[% END %] </div>
+[% INCLUDE 'intranet-bottom.inc' %] 

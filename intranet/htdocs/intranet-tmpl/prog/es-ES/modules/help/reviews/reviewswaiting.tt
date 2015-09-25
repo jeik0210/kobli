@@ -1,0 +1,13 @@
+[% INCLUDE 'help-top.inc' %] <h1>Comentarios</h1>
+
+<p>Todos los comentarios agregados por los usuarios vía OPAC a registros bibliográficos requieren moderación por los bibliotecarios. Para moderar los comentarios simplemente selecione en 'Aprobar' o 'Borrar' a la derecha de los comentarios que están esperando moderación.</p>
+
+<p>Para moderar los comentarios seleccionar en la notificación de la tabla de herramientas o ir directamente a Herramientas de Comentarios y seleccionar 'Aprobar' o 'Borrar' a la derecha de los comentarios pendientes de moderación.</p>
+
+<p>Si no hay comentarios a moderar verá un mensaje indicándole ello</p>
+
+<p>También puede revisar y desaprobar los comentarios que han aprobado en el pasado por la elección de la pestaña 'Comentarios Aprobados'</p>
+
+<p><strong>Ver la documentación completa para Comentarios en el <a href="http://es.koha-community.org/manual/3.12/es/tools.html#comments">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

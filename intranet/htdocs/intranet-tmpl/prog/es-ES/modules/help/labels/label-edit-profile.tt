@@ -1,0 +1,30 @@
+[% INCLUDE 'help-top.inc' %] <h1>Perfiles</h1>
+
+<p>Un perfil es un conjunto de "ajustes" aplicado a una plantilla justo antes de imprimir el cual compensa por anomalías únicas y propias de una impresora determinada (a la cual se le asigna el perfil). Esto significa que si usted se fija una plantilla y luego imprime una muestra de conjunto de datos y encuentra que los ítems no están todos alineados en cada etiqueta, usted debe configurar un perfil para la impresora para compensar las diferencias en estilos de impresión, como el desplazamiento de texto a la izquierda, derecha, arriba o abajo.</p>
+
+<p>Si los carnets se imprimen de la manera que desea, usted no necesitará un perfil.</p>
+
+<h2>Agregar un perfil</h2>
+
+<p>Para agregar un nuevo perfil, haga clic en el botón 'Perfiles' en la parte superior de la página y seleccione 'Nuevo perfil'</p>
+
+<p>Utilizando el formulario que aparece, usted puede crear un perfil para solucionar los problemas con la plantilla.</p>
+
+<ul>
+ <li>El nombre de impresora y bandeja de papel no tienen que coincidir exactamente con su impresora, son para su referencia para que pueda recordar para que impresora ha configurado el perfil. Así que si desea puede utilizar el número de modelo de impresora como nombre de la impresora o se la puede llamar 'la impresora en mi escritorio'</li>
+ <li>La plantilla será llenada una vez que haya elegido a cual plantilla aplicar al perfil en el formulario de edición de plantillas</li>
+ <li>El desplegable 'Unidades' se utiliza para definir qué escala de medición va a usar para profile.&nbsp;</li>
+ <li>Offset describe lo que sucede cuando la imagen no está centrada tanto vertical como horizontalmente y la fluencia describe la distancia entre las etiquetas dentro de la página o entre páginas <ul>
+ <li>Para estos valores, los números negativos mueven el error hacia arriba y a la izquierda y los números positivos mueven el error hacia abajo y a la derecha</li>
+ <li>Ejemplo: el texto es .25" desde el borde izquierdo de la primera etiqueta, .28" desde el borde izquierdo de la segunda etiqueta y .31" desde el borde izquierdo de la tercera etiqueta. Esto significa que la fluencia horizontal se debe establecer en 0.03" para compensar esta diferencia.</li>
+</ul>
+</li>
+</ul>
+
+<p>Después de guardar, los perfiles aparecerán en la página 'Administrar perfiles'.</p>
+
+<p>Una vez que haya guardado el nuevo perfil, puede volver a la lista de plantillas y editar la plantilla del perfil.</p>
+
+<p><strong>Ver la documentación completa para Perfiles de Etiquetas en el <a href="http://es.koha-community.org/manual/3.12/es/catalogtools.html#labelprofiles">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

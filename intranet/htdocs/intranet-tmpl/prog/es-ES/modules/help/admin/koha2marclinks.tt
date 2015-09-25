@@ -1,0 +1,15 @@
+[% INCLUDE 'help-top.inc' %] <h1>Correspondencia Koha a MARC</h1>
+
+<p>Mientras Koha guarda el registro MARC completo, también guarda los campos comunes en varias tablas de la base de datos  para un fácil acceso. El mapeo de Koha a MARC se utiliza para indicar a Koha donde encontrar estos valores en el registro MARC. En muchos casos Usted no tendrá que cambiar los valores por defecto establecidos por esta herramienta en la instalación, pero es importante saber que la herramienta existe y que puede ser usada en cualquier momento.</p>
+
+<p>La página de correspondencia Koha a MARC le ofrece la opción de elegir entre una de tres tablas en la base de datos para asignarle valores. </p>
+
+<p>Después de seleccionar la tabla que desea ver, haga clic en 'OK.' Para editar cualquier correspondencia haga clic en los enlaces 'Campo Koha' o 'Editar'.</p>
+
+<p>Elija el campo MARC que quiere enlazar con este campo Koha y haga clic en OK. Si quiere eliminar todos los enlaces haga clic en el botón 'Clic para "De-enlazar"'.<p>
+
+<p style="color: #990000;">Importante: En este momento puede asignar sólo 1 campo MARC a un campo Koha. Esto significa que usted no será capaz de asignar tanto el 100a y el 700a para el campo de autor, debe elegir uno u otro.</p>
+
+<p><strong>Ver la documentación completa para Koha del Mapeo MARC en el <a href="http://es.koha-community.org/manual/3.12/es/catadmin.html#kohamarcmapping">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

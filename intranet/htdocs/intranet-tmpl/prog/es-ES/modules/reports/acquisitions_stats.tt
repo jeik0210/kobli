@@ -1,0 +1,226 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Informes [% IF ( do_it ) %]&rsaquo; Estadísticas de adquisiciones &rsaquo; Resultados[% ELSE %]&rsaquo; Estadísticas de adquisiciones[% END %]</title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <script type="text/javascript">
+//<![CDATA[
+        $(document).ready(function() {
+        // http://jqueryui.com/demos/datepicker/#date-range
+        var dates = $( "#from, #to" ).datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "from" ? "minDate" : "maxDate",
+                    instance = $( this ).data( "datepicker" );
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings );
+                dates.not( this ).datepicker( "option", option, date );
+            }
+        });
+        var datesRO = $( "#fromRO, #toRO" ).datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "fromRO" ? "minDate" : "maxDate",
+                    instance = $( this ).data( "datepicker" );
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings );
+                datesRO.not( this ).datepicker( "option", option, date );
+            }
+        });
+        });
+//]]>
+</script>
+</head>
+<body id="rep_acquisitions_stats" class="rep">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/reports/reports-home.pl">Informes</a> [% IF ( do_it ) %]&rsaquo; <a href="/cgi-bin/koha/reports/acquisitions_stats.pl">Estadística de adquisiciones</a> &rsaquo; Resultados[% ELSE %] &rsaquo; Estadística de adquisiciones [% END %]</div>
+
+<div id="doc3" class="yui-t2">
+
+ <div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+
+[% IF ( do_it ) %] [% FOREACH mainloo IN mainloop %] <h1>Estadística de adquisiciones </h1>
+ [% IF ( mainloo.loopfilter.size ) %] <p><b>Filtrado en:</b></p>
+ [% FOREACH loopfilte IN mainloo.loopfilter %] <p>
+ [% SWITCH loopfilte.crit %] [% CASE '0' %] Aplazado (desde) [% CASE '1' %] Aplazado (hasta) [% CASE '2' %] Recibido (desde) [% CASE '3' %] Recibido (hasta) [% CASE '4' %] Proveedor [% CASE '5' %] Biblioteca de origen [% CASE '6' %] Colección [% CASE '7' %] Tipo de ítem [% CASE '8' %] Fondo [% CASE '9' %] Tipo1 [% CASE '10' %] Tipo2 [% CASE %] Filtro desconocido [% END %] : [% loopfilte.filter %] </p>
+ [% END %] [% END %] <table>
+ <tr >
+ <th>[% mainloo.line %] / [% mainloo.column %]</th>
+ [% FOREACH loopco IN mainloo.loopcol %] <th>[% loopco.coltitle %]</th>
+ [% END %] <th>TOTAL</th>
+ </tr>
+ [% FOREACH loopro IN mainloo.looprow %] <tr>
+ [% IF ( loopro.hilighted ) %]<td class="hilighted">[% ELSE %]<td>[% END %] [% loopro.rowtitle %]</td>
+ [% FOREACH loopcel IN loopro.loopcell %] [% IF ( loopcel.hilighted ) %]<td>[% ELSE %]<td>[% END %] [% IF ( loopcel.value ) %][% loopcel.value %] [% ELSE %] &nbsp; [% END %] </td>
+ [% END %] [% IF ( loopro.hilighted ) %]<td>[% ELSE %]<td>[% END %] [% loopro.totalrow %] </td>
+ </tr>
+ [% END %] <tr >
+ <th>TOTAL</th>
+ [% FOREACH loopfoote IN mainloo.loopfooter %] <th>
+ [% loopfoote.totalcol %] </th>
+ [% END %] <th>[% mainloo.total %]</th>
+ </tr>
+ </table>
+ [% END %] [% ELSE %] <form method="post" action="/cgi-bin/koha/reports/acquisitions_stats.pl">
+ <fieldset class="rows">
+ <legend>Estadística de adquisiciones</legend>
+ <table>
+ <thead>
+ <tr>
+ <th>Título</th>
+ <th>Fila</th>
+ <th>Columna</th>
+ <th>Filtro</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr class="hilighted">
+ <td>Puesto en</td>
+ <td><input type="radio" name="Line" value="aqbasket.closedate" /></td>
+ <td><input type="radio" checked="checked" name="Column" value="aqbasket.closedate" /> </td>
+ <td> Desde <input type="text" size="10" id="from" name="Filter" value="" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ A <input size="10" id="to" name="Filter" type="text" value="" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ </td>
+ </tr>
+ <tr class="hilighted">
+ <td>&nbsp;</td>
+ <td colspan="2">agrupado por <select name="PlacedOnDisplay">
+ <option value="">Ninguno</option>
+ <option value ="1">Día de la semana</option>
+ <option value ="2">Mes</option>
+ <option value ="3">Año</option>
+ </select>
+
+ </td>
+ <td>&nbsp;</td>
+ </tr>
+ <tr>
+ <td>Recibido en</td>
+ <td><input type="radio" name="Line" value="aqorders.datereceived" /></td>
+ <td><input type="radio" name="Column" value="aqorders.datereceived" /></td>
+ <td> Desde <input type="text" size="10" id="fromRO" name="Filter" value="" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ A <input type="text" size="10" id="toRO" name="Filter" value="" />
+ <span class="hint">[% INCLUDE 'date-format.inc' %]</span>
+ </td>
+ </tr>
+ <tr>
+ <td>&nbsp;</td>
+ <td colspan="2">agrupado por <select name="ReceivedOnDisplay">
+ <option value="">Ninguno</option>
+ <option value ="1">Día de la semana</option>
+ <option value ="2">Mes</option>
+ <option value ="3">Año</option>
+ </select>
+
+ </td>
+ <td>&nbsp;</td>
+ </tr>
+ <tr class="hilighted">
+ <td>Proveedor</td>
+ <td><input type="radio" checked="checked" name="Line" value="aqbooksellers.name" /></td>
+ <td><input type="radio" name="Column" value="aqbooksellers.name" /></td>
+ <td>
+ <select name="Filter">
+ <option value="">Todos los proveedores</option>
+ [% FOREACH bookseller IN booksellers %] <option value="[% bookseller.name %]">[% bookseller.name %]</option>
+ [% END %] </select>
+ </td>
+ </tr>
+ <tr>
+ <td>Biblioteca de origen</td>
+ <td><input type="radio" name="Line" value="items.homebranch" /></td>
+ <td><input type="radio" name="Column" value="items.homebranch" /></td>
+ <td>
+ <select name="Filter">
+ <option value="" selected="selected">Todas las bibliotecas</option>
+ [% FOREACH branch IN branches %] <option value="[% branch.branchcode %]">[% branch.branchname %]</option>
+ [% END %] </select>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ [% IF ccode_label %] [% ccode_label %] [% ELSE %] Collección [% END %] </td>
+ <td><input type="radio" name="Line" value="items.ccode" /></td>
+ <td><input type="radio" name="Column" value="items.ccode" /></td>
+ <td>
+ [% IF ccode_avlist.size %] <select name="Filter">
+ <option value="" selected="selected">Todo</option>
+ [% FOREACH ccode_av IN ccode_avlist %] <option value="[% ccode_av.value %]">[% ccode_av.lib %]</option>
+ [% END %] </select>
+ [% ELSE %] <input type="text" name="Filter" />
+ [% END %] </td>
+ </tr>
+ <tr>
+ <td>Tipo de ítem</td>
+ <td><input type="radio" name="Line" value="biblioitems.itemtype" /></td>
+ <td><input type="radio" name="Column" value="biblioitems.itemtype" /></td>
+ <td>[% CGIItemType %]</td>
+ </tr>
+
+ <tr>
+ <td>Fondo</td>
+ <td><input type="radio" name="Line" value="aqbudgets.budget_code" /></td>
+ <td><input type="radio" name="Column" value="aqbudgets.budget_code" /></td>
+ <td>[% CGIBudget %]</td>
+ </tr>
+
+ [% IF ( hassort1 ) %] <tr class="hilighted">
+ <td>Control1</td>
+ <td><input type="radio" name="Line" value="aqorders.sort1" /></td>
+ <td><input type="radio" name="Column" value="aqorders.sort1" /></td>
+ <td>[% CGISort1 %] </td>
+ </tr>
+ [% END %] [% IF ( hassort2 ) %] [% IF ( HglghtSort2 ) %]<tr class="hilighted"> [% ELSE %]<tr>[% END %] <td>Control2</td>
+ <td><input type="radio" name="Line" value="aqorders.sort2" /></td>
+ <td><input type="radio" name="Column" value="aqorders.sort2" /></td>
+ <td>[% CGISort2 %] </td>
+ </tr>
+ [% END %] </tbody>
+ </table><br />
+ </fieldset>
+
+<fieldset class="rows">
+ <legend> Valores de la celda </legend>
+ <ol>
+ <li>
+ <label for="cellvalue1">Cantidad de ítems</label><input type="radio" name="Cellvalue" id="cellvalue1" value="1" checked="checked" />
+ </li>
+ <li>
+ <label for="cellvalue2">Contar registros únicos</label><input type="radio" name="Cellvalue" id="cellvalue2" value="2" />
+ </li>
+ <li>
+ <label for="cellvalue3">Monto</label><input type="radio" name="Cellvalue" id="cellvalue3" value="3" />
+ </li>
+ <li>
+ <label for="cellvalue4">Costo del pedido </label><input type="radio" name="Cellvalue" id="cellvalue4" value="4" />
+ </li>
+ <li>
+ <label for="cellvalue5">Monto de pago </label><input type="radio" name="Cellvalue" id="cellvalue5" value="5" />
+ </li>
+ </ol>
+</fieldset>
+
+ <fieldset class="rows">
+ <legend>Salida</legend>
+<ol><li><label for="outputscreen">Para mostrarlo en el navegador: </label><input type="radio" checked="checked" name="output" id="outputscreen" value="screen" /> </li>
+<li><label for="outputfile">A archivo:</label> <input type="radio" name="output" value="file" id="outputfile" /> <label class="inline" for="basename">Nombrado/a: </label><input type="text" name="basename" id="basename" value="Export" /> <label class="inline" for="MIME">En la aplicación </label>[% CGIextChoice %] [% CGIsepChoice %]</li></ol>
+ </fieldset>
+
+ <fieldset class="action">
+ <input value="Enviar" type="submit" />
+ <input type="hidden" name="report_name" value="[% report_name %]" />
+ <input type="hidden" name="do_it" value="1" />
+ </fieldset>
+ </form>
+[% END %] </div>
+</div>
+<div class="yui-b">
+[% INCLUDE 'reports-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

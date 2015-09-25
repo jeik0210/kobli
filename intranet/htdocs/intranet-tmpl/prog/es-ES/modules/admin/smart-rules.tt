@@ -1,0 +1,371 @@
+[% INCLUDE 'doc-head-open.inc' %] <title>Koha-Kobli &rsaquo; Administración &rsaquo; Reglas de circulación y multas</title>
+[% INCLUDE 'doc-head-close.inc' %] [% INCLUDE 'calendar.inc' %] <script type="text/javascript">
+//<![CDATA[
+
+function clear_edit(){
+    var cancel = confirm(_("¿Está seguro de que quiere cancelar sus cambios?"));
+    if ( !cancel ) return;
+    $('#default-circulation-rules td').removeClass('highlighted-row');
+    var edit_row = $("#edit_row");
+    $(edit_row).find("input").each(function(){
+        var type = $(this).attr("type");
+        if (type != "button" && type != "submit" ) {
+            $(this).val("");
+            $(this).removeAttr("disabled");
+        }
+    });
+    $(edit_row).find("select").removeAttr("disabled");
+    $(edit_row).find("select option:first").attr("selected", "selected");
+    $(edit_row).find("td:last input[name='clear']").remove();
+}
+
+$(document).ready(function() {
+        $('#selectlibrary').find("input:submit").hide();
+        $('#branch').change(function() {
+                $('#selectlibrary').submit();
+        });
+        $(".editrule").click(function(){
+            if ( $(edit_row).find("input[type='text'][value!='']").length > 0 ) {
+                var edit = confirm(_("¿Está seguro de que quiere editar otra regla?"));
+                if (!edit) return false;
+            }
+            $('#default-circulation-rules td').removeClass('highlighted-row');
+            $(this).parent().parent().find("td").each(function (i) {
+                $(this).addClass('highlighted-row');
+                itm = $(this).text();
+                itm = itm.replace(/^\s*|\s*$/g,'');
+                var current_column = $("#edit_row td:eq("+i+")");
+                if ( i != 5 ) {
+                    $(current_column).find("input[type='text']").val(itm);
+                    // select the corresponding option
+                    $(current_column).find("select option").each(function(){
+                        if ( $(this).text().toLowerCase() == itm.toLowerCase() ) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+                    if ( i == 0 || i == 1 ) {
+                        // Disable the 2 first columns, we cannot update them.
+                        var val = $(current_column).find("select option:selected").val();
+                        var name = "categorycode";
+                        if ( i == 1 ) {
+                            name="itemtype";
+                        }
+                        // Remove potential previous input added
+                        $(current_column).find("input").remove();
+                        $(current_column).append("<input type='hidden' name='"+name+"' value='"+val+"' />");
+                    } else if ( i == 2 ) {
+                        // If the value is not an integer for "Current checkouts allowed"
+                        // The value is "Unlimited" (or an equivalent translated string)
+                        // an it should be set to an empty string
+                        if( !((parseFloat(itm) == parseInt(itm)) && !isNaN(itm)) ) {
+                            $(current_column).find("input[type='text']").val("");
+                        }
+                    }
+                } else {
+                    // specific processing for the Hard due date column
+                    var select_value = $(this).find("input[type='hidden'][name='hardduedatecomparebackup']").val();
+                    var input_value = '';
+                    if (typeof select_value === 'undefined'){
+                        select_value = '-1';
+                    }else {
+                        input_value = itm.split(' ')[1];
+                    }
+                    $(current_column).find("input[type='text']").val(input_value);
+                    $(current_column).find("select").val(select_value);
+                }
+            });
+            $("#default-circulation-rules tr:last td:eq(0) select").attr('disabled', 'disabled');
+            $("#default-circulation-rules tr:last td:eq(1) select").attr('disabled', 'disabled');
+            return false;
+        });
+});
+//]]>
+</script>
+</head>
+<body id="admin_smart-rules" class="admin">
+[% INCLUDE 'header.inc' %] [% INCLUDE 'cat-search.inc' %] <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo; <a href="/cgi-bin/koha/admin/admin-home.pl">Administración</a> &rsaquo; Reglas de circulación y multas </div>
+
+<div id="doc3" class="yui-t1">
+
+<div id="bd">
+ <div id="yui-main">
+ <div class="yui-b">
+ <h1 class="parameters">
+ [% IF ( humanbranch ) %] Definiendo reglas de circulación y multas para "[% humanbranch %]" [% ELSE %] Definiendo reglas de circulación y multas para todas la bibliotecas [% END %] </h1>
+ <div class="help">
+ <p>Las normas se aplicarán de la más específica a la menos específica, utilizando la primera encontrada en este orden:</p>
+ <ul>
+ <li>misma biblioteca, mismo tipo de usuario, mismo tipo de ítem</li>
+ <li>misma biblioteca, mismo tipo de usuario, todos los tipos de ítem</li>
+ <li>misma biblioteca, todo tipo de usuario, mismo tipo de ítem</li>
+ <li>misma biblioteca, todo tipo de usuario, todo tipo de ítem</li>
+ <li>prederterminado (todas las bibliotecas), mismo tipo de usuario, mismo tipo de ítem</li>
+ <li>predeterminada (todas las bibliotecas), mismo tipo de usuario, todos los tipos de ítem</li>
+ <li>prederteminada (todas las bibliotecas), todos los tipos de usuario, mismo tipo de ítem</li>
+ <li>predeterminada (todas las bibliotecas), todos los tipos de usuario, todos los tipos de ítem</li>
+ </ul>
+ <p>Para modificar una regla, cree una nueva con el mismo tipo de usuario y tipo de ítem.</p>
+ </div>
+ <div>
+ <form method="get" action="/cgi-bin/koha/admin/smart-rules.pl" id="selectlibrary">
+ Seleccionar una sede: <select name="branch" id="branch" style="width:20em;">
+ <option value="*">Todas las bibliotecas</option>
+ [% FOREACH branchloo IN branchloop %] [% IF ( branchloo.selected ) %]<option value="[% branchloo.value %]" selected="selected">[% branchloo.branchname %]</option>[% ELSE %]<option value="[% branchloo.value %]">[% branchloo.branchname %]</option>[% END %] [% END %] </select>
+ </form>
+[% IF ( definedbranch ) %]<form action="/cgi-bin/koha/admin/clone-rules.pl" method="post"><label 
+for="tobranch"><strong>Clonar estas reglas a:</strong></label> <input type="hidden" name="frombranch" value="[% current_branch %]" />
+ <select name="tobranch" id="tobranch">[% FOREACH branchloo IN branchloop %]<option value="[% branchloo.value %]">[% branchloo.branchname %]</option>[% END %]</select> <input value="Clonar" type="submit" /></form>[% END %] <form method="post" action="/cgi-bin/koha/admin/smart-rules.pl">
+ <input type="hidden" name="op" value="add" />
+ <input type="hidden" name="branch" value="[% current_branch %]"/>
+ <table id="default-circulation-rules">
+ <thead>
+ <tr>
+ <th>Categoría de usuario</th>
+ <th>Tipo de ítem</th>
+ <th>Préstamos permitidos actualmente </th>
+ <th>Período de préstamo</th>
+ <th>Unidad</th>
+ <th>Fecha de devolución estricta</th>
+ <th>Monto de la multa</th>
+ <th>Intervalo de costo de multa</th>
+ <th>Período de gracia de la multa (día)</th>
+ <th>Vencimiento de las multas (suma total)</th>
+ <th>Suspensión en días (día)</th>
+ <th>Renovaciones permitidas (conteo)</th>
+ <th>Periodo de renovación</th>
+ <th>Reservas permitidas (recuento)</th>
+ <th>Descuento en alquiler (%)</th>
+ <th colspan="2">&nbsp;</th>
+ </tr>
+ </thead>
+ <tbody>
+ [% FOREACH rule IN rules %] [% UNLESS ( loop.odd ) %] <tr class="highlight" id="row_[% loop.count %]">
+ [% ELSE %] <tr id="row_[% loop.count %]">
+ [% END %] <td>[% IF ( rule.default_humancategorycode ) %] <em>Todo</em>
+ [% ELSE %] [% rule.humancategorycode %] [% END %] </td>
+ <td>[% IF ( rule.default_humanitemtype ) %] <em>Todo</em>
+ [% ELSE %] [% rule.humanitemtype %] [% END %] </td>
+ <td>[% IF ( rule.unlimited_maxissueqty ) %] Ilimitado [% ELSE %] [% rule.maxissueqty %] [% END %] </td>
+ <td>[% rule.issuelength %]</td>
+ <td>
+ [% rule.lengthunit %] </td>
+ <td>
+ [% IF ( rule.hardduedate ) %] [% IF ( rule.hardduedatebefore ) %] antes [% rule.hardduedate %]<input type="hidden" name="hardduedatecomparebackup" value="-1" />
+ [% ELSIF ( rule.hardduedateexact ) %] sobre [% rule.hardduedate %] <input type="hidden" name="hardduedatecomparebackup" value="0" />
+ [% ELSIF ( rule.hardduedateafter ) %] después [% rule.hardduedate %] <input type="hidden" name="hardduedatecomparebackup" value="1" />
+ [% END %] [% ELSE %] No definido [% END %] </td>
+ <td>[% rule.fine %]</td>
+ <td>[% rule.chargeperiod %]</td>
+ <td>[% rule.firstremind %]</td>
+ <td>[% rule.overduefinescap FILTER format("%.2f") %]</td>
+ <td>[% rule.finedays %]</td>
+ <td>[% rule.renewalsallowed %]</td>
+ <td>[% rule.renewalperiod %]</td>
+ <td>[% rule.reservesallowed %]</td>
+ <td>[% rule.rentaldiscount %]</td>
+ <td><a href="#" class="editrule">Editar</a></td>
+ <td>
+ <a class="button" href="/cgi-bin/koha/admin/smart-rules.pl?op=delete&amp;itemtype=[% rule.itemtype %]&amp;categorycode=[% rule.categorycode %]&amp;branch=[% rule.current_branch %]">Eliminar</a>
+ </td>
+ </tr>
+ [% END %] <tr id="edit_row">
+ <td>
+ <select name="categorycode" id="categorycode">
+ <option value="*">Todo</option>
+ [% FOREACH categoryloo IN categoryloop %] <option value="[% categoryloo.categorycode %]">[% categoryloo.description %]</option>
+ [% END %] </select>
+ </td>
+ <td>
+ <select name="itemtype" id="matrixitemtype" style="width:13em;">
+ <option value="*">Todo</option>
+ [% FOREACH itemtypeloo IN itemtypeloop %] <option value="[% itemtypeloo.itemtype %]">[% itemtypeloo.description %]</option>
+ [% END %] </select>
+ </td>
+ <td><input type="text" name="maxissueqty" id="maxissueqty" size="3" /></td>
+ <td><input type="text" name="issuelength" id="issuelength" size="3" /> </td>
+ <td>
+ <select name="lengthunit" id="lengthunit">
+ <option value="days" selected>Días</option>
+ <option value="hours">Horas</option>
+ </select>
+ </td>
+ <td>
+ <select name="hardduedatecompare" id="hardduedatecompare">
+ <option value="-1">Antes</option>
+ <option value="0">Exactamente en</option>
+ <option value="1">Después</option>
+ </select>
+ <input type="text" size="10" id="hardduedate" name="hardduedate" value="[% hardduedate %]" class="datepicker" />
+ <div class="hint">[% INCLUDE 'date-format.inc' %]</div>
+ </td>
+ <td><input type="text" name="fine" id="fine" size="4" /></td>
+ <td><input type="text" name="chargeperiod" id="chargeperiod" size="2" /></td>
+ <td><input type="text" name="firstremind" id="firstremind" size="2" /> </td>
+ <td><input type="text" name="overduefinescap" id="overduefinescap" size="6" /> </td>
+ <td><input type="text" name="finedays" id="fined" size="3" /> </td>
+ <td><input type="text" name="renewalsallowed" id="renewalsallowed" size="2" /></td>
+ <td><input type="text" name="renewalperiod" id="renewalperiod" size="3" /></td>
+ <td><input type="text" name="reservesallowed" id="reservesallowed" size="2" /></td>
+ <td><input type="text" name="rentaldiscount" id="rentaldiscount" size="2" /></td>
+ <td colspan="2">
+ <input type="hidden" name="branch" value="[% current_branch %]"/>
+ <input value="Guardar" type="submit" class="submit" />
+ <input value="Borrar" name="cancel" type="button" onclick="clear_edit();return false;" />
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </form>
+ </div>
+ <div id="defaults-for-this-library" class="container">
+ <h3>Políticas predeterminadas de préstamo, reserva y devolución[% IF ( humanbranch ) %] para [% humanbranch %][% END %]</h3>
+ <p>Usted puede establecer un número máximo predeterminado de préstamos, política de reservas y devoluciones que se utilizará si no se definen debajo para un tipo de ítem determinado o categoría.</p>
+ <form method="post" action="/cgi-bin/koha/admin/smart-rules.pl">
+ <input type="hidden" name="op" value="set-branch-defaults" />
+ <input type="hidden" name="branch" value="[% current_branch %]"/>
+ <table>
+ <tr>
+ <th>&nbsp;</th>
+ <th>Total de préstamos actuales permitidos</th>
+ <th>Política de reserva</th>
+ <th>Política de devolución</th>
+ <th>&nbsp;</th>
+ <th>&nbsp;</th>
+ </tr>
+ <tr>
+ <td><em>Por defecto[% UNLESS ( default_rules ) %] (no configurado)[% END %]</em></td>
+ <td><input type="text" name="maxissueqty" size="3" value="[% default_maxissueqty %]"/></td>
+ <td>
+ <select name="holdallowed">
+ [% IF ( default_holdallowed_any ) %] <option value="2" selected="selected">
+ [% ELSE %] <option value="2">
+ [% END %] Desde cualquier biblioteca </option>
+ [% IF ( default_holdallowed_same ) %] <option value="1" selected="selected">
+ [% ELSE %] <option value="1">
+ [% END %] Desde la biblioteca de origen </option>
+ [% IF ( default_holdallowed_none ) %] <option value="0" selected="selected">
+ [% ELSE %] <option value="0">
+ [% END %] No se permiten reservas </option>
+ </select>
+ </td>
+ <td>
+ <select name="returnbranch">
+ [% IF ( default_returnbranch == 'homebranch' ) %] <option value="homebranch" selected="selected">
+ [% ELSE %] <option value="homebranch">
+ [% END %] Item regresa a sede origen </option>
+ [% IF ( default_returnbranch == 'holdingbranch' ) %] <option value="holdingbranch" selected="selected">
+ [% ELSE %] <option value="holdingbranch">
+ [% END %] Item regresa a sede de préstamo  </option>
+ [% IF ( default_returnbranch == 'noreturn' ) %] <option value="noreturn" selected="selected">
+ [% ELSE %] <option value="noreturn">
+ [% END %] Sugerir item </option>
+ </select>
+ </td>
+ <td><input value="Guardar" type="submit" class="submit" /></td>
+ <td>
+ <a class="button" href="/cgi-bin/koha/admin/smart-rules.pl?op=delete-branch-cat&amp;categorycode=*&amp;branch=[% current_branch %]">Anular</a>
+ </td>
+ </tr>
+ </table>
+ </form>
+ </div>
+ [% IF ( show_branch_cat_rule_form ) %] <div id="holds-policy-by-patron-category" class="container">
+ <h3>[% IF humanbranch %]Límite de préstamos por categoría de usuario para [% humanbranch %][% ELSE %]Predeterminado el limite de préstamo por categoría de usuario[% END %]</h3>
+ <p>Para esta biblioteca, puede especificar el número máximo de préstamos que un usuario de una determinada categoría puede recibir, independientemente del tipo de ítem. </p>
+ <p>Si la cantidad total de préstamos a una dada categoría de usuario se deja en blanco, no tendrá límites, a menos que defina un límite específico para un dado tipo de ítem. </p>
+ <form method="post" action="/cgi-bin/koha/admin/smart-rules.pl">
+ <input type="hidden" name="op" value="add-branch-cat" />
+ <input type="hidden" name="branch" value="[% current_branch %]"/>
+ <table>
+ <tr>
+ <th>Categoría de usuario</th>
+ <th>Total de préstamos actuales permitidos</th>
+ <th>&nbsp;</th>
+ </tr>
+ [% FOREACH branch_cat_rule_loo IN branch_cat_rule_loop %] [% UNLESS ( loop.odd ) %] <tr class="highlight">
+ [% ELSE %] <tr>
+ [% END %] <td>[% IF ( branch_cat_rule_loo.default_humancategorycode ) %] <em>Predeterminado</em>
+ [% ELSE %] [% branch_cat_rule_loo.humancategorycode %] [% END %] </td>
+ <td>[% IF ( branch_cat_rule_loo.unlimited_maxissueqty ) %] Ilimitado [% ELSE %] [% branch_cat_rule_loo.maxissueqty %] [% END %] </td>
+ <td>
+ <a class="button" href="/cgi-bin/koha/admin/smart-rules.pl?op=delete-branch-cat&amp;categorycode=[% branch_cat_rule_loo.categorycode %]&amp;branch=[% current_branch %]">Eliminar</a>
+ </td>
+ </tr>
+ [% END %] <tr>
+ <td>
+ <select name="categorycode">
+ [% FOREACH categoryloo IN categoryloop %] <option value="[% categoryloo.categorycode %]">[% categoryloo.description %]</option>
+ [% END %] </select>
+ </td>
+ <td><input name="maxissueqty" size="3" /></td>
+ <td><input value="Agregar" type="submit" class="submit" /></td>
+ </tr>
+ </table>
+ </form>
+ </div>
+ [% END %] <div id="holds-policy-by-item-type" class="container">
+ <h3>[% IF humanbranch %]Política de reservas por tipo de ítem para [% humanbranch %][% ELSE %]Predeterminada política de reserva por tipo de ejemplar[% END %]</h3>
+ <p>
+ Para esta biblioteca, podrá editar las reglas para los tipos de ítem, independientemente de las categorías de usuarios. </p>
+ <p>
+ Actualmente, esto significa políticas de reservas. Las diferentes políticas tienen los siguientes efectos: </p>
+ <ul>
+ <li><strong>De cualquier biblioteca:</strong> Los usuarios de cualquier biblioteca pueden reservar este ítem. <cite>(por defecto si no se define ninguno)</cite></li>
+ <li><strong>De la biblioteca de origen:</strong> Solo usuarios de la misma sede que el ítem pueden reservar este libro.</li>
+ <li><strong>No se permiten reservas:</strong> Ningún usuario puede reservar este libro.</li>
+ </ul>
+ <p>
+ Note que si la preferencia del sistema <code>AllowHoldPolicyOverride</code> está habilitada, estas políticas pueden ser alteradas por el personal de circulación. Además, estas políticas están basadas en la sede de origen del usuario, <em>no</em> la biblioteca o sede donde la reserva es realizada</p>
+
+ <form method="post" action="/cgi-bin/koha/admin/smart-rules.pl">
+ <input type="hidden" name="op" value="add-branch-item" />
+ <input type="hidden" name="branch" value="[% current_branch %]"/>
+ <table>
+ <tr>
+ <th>Tipo de ítem</th>
+ <th>Política de reserva</th>
+ <th>Política de devolución</th>
+ <th>&nbsp;</th>
+ </tr>
+ [% FOREACH branch_item_rule_loo IN branch_item_rule_loop %] [% UNLESS ( loop.odd ) %] <tr class="highlight">
+ [% ELSE %] <tr>
+ [% END %] <td>[% IF ( branch_item_rule_loo.default_humanitemtype ) %] <em>Predeterminado</em>
+ [% ELSE %] [% branch_item_rule_loo.humanitemtype %] [% END %] </td>
+ <td>[% IF ( branch_item_rule_loo.holdallowed_any ) %] Desde cualquier biblioteca [% ELSIF ( branch_item_rule_loo.holdallowed_same ) %] Desde la biblioteca de origen [% ELSE %] No se permiten reservas [% END %] </td>
+ <td>[% IF ( branch_item_rule_loo.returnbranch == 'homebranch' ) %] Item regresa sede origen [% ELSIF ( branch_item_rule_loo.returnbranch == 'holdingbranch' ) %] Item regresa a sede de préstamo [% ELSIF ( branch_item_rule_loo.returnbranch == 'noreturn' ) %] Item permanece en sede de retorno [% ELSE %] Error - opción desconocida [% END %] </td>
+ <td>
+ <a class="button" href="/cgi-bin/koha/admin/smart-rules.pl?op=delete-branch-item&amp;itemtype=[% branch_item_rule_loo.itemtype %]&amp;branch=[% current_branch %]">Eliminar</a>
+ </td>
+ </tr>
+ [% END %] <tr>
+ <td>
+ <select name="itemtype">
+ [% FOREACH itemtypeloo IN itemtypeloop %] <option value="[% itemtypeloo.itemtype %]">[% itemtypeloo.description %]</option>
+ [% END %] </select>
+ </td>
+ <td>
+ <select name="holdallowed">
+ <option value="2">De cualquier biblioteca</option>
+ <option value="1">De la biblioteca de origen</option>
+ <option value="0">No se permiten reservas</option>
+ </select>
+ </td>
+ <td>
+ <select name="returnbranch">
+ <option value="homebranch">Sede de devolución de ítem</option>
+ <option value="holdingbranch">Ítem vuelve a la biblioteca de préstamo</option>
+ <option value="noreturn">Fluctuación de ítem</option>
+ </select>
+ </td>
+ <td><input value="Agregar" type="submit" class="submit" /></td>
+ </tr>
+ </table>
+ </form>
+ </div>
+</div>
+
+</div>
+<div class="yui-b">
+[% INCLUDE 'admin-menu.inc' %] </div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %] 

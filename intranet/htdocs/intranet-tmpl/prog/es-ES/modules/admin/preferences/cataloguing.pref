@@ -1,0 +1,232 @@
+--- 
+cataloguing.pref: 
+  Estructura de registro: 
+    - 
+      - Rellenar en el idioma por defecto para el campo 008 Rango 35-37 (e.g. eng, nor, ger, see <a href="http://www.loc.gov/marc/languages/language_code.html">MARC Code List for Languages</a>)
+      - 
+        pref: DefaultLanguageField008
+      - "Por defecto vac\xC3\xADo para eng."
+    - 
+      - Interpreta y almacena registros MARC en formato
+      - 
+        choices: 
+          MARC21: MARC21
+          NORMARC: NORMARC
+          UNIMARC: UNIMARC
+        pref: marcflavour
+      - .
+    - 
+      - "Usar el tipo de \xC3\xADtem del"
+      - 
+        choices: 
+          "": "registro bibliogr\xC3\xA1fico"
+          1: "\xC3\xADtem espec\xC3\xADfico"
+        pref: item-level_itypes
+      - "como el tipo de \xC3\xADtem de referencia (para determinar reglas de circulaci\xC3\xB3n y multas, etc.)."
+    - 
+      - Mapear el subcampo MARC
+      - 
+        pref: itemcallnumber
+      - "a la signatura de un \xC3\xADtem. (Esto puede contener m\xC3\xBAltiples subcampos donde buscar; por ejemplo <code>082ab</code> buscar\xC3\xA1 en 082, subcampos a y b.)<br />Ejemplos: <strong>Dewey</strong>: <code>082ab</code> o <code>092ab</code>; <strong>LOC</strong>: <code>050ab</code> o <code>090ab</code>; <strong>del registro del \xC3\xADtem</strong>: <code>852hi</code>"
+    - 
+      - Mostrar el subcampo MARC
+      - 
+        pref: AlternateHoldingsField
+      - "como informaci\xC3\xB3n de existencias para registros que no tienen \xC3\xADtems (puede contener m\xC3\xBAltiples subcampos para buscar; por ejemplo <code>852abhi</code> buscar\xC3\xA1 en 852 subcampos a, b, h, e i.), con los subcampos separados por"
+      - 
+        pref: AlternateHoldingsSeparator
+      - .
+    - 
+      - "Complete con el <a href=\"http://www.loc.gov/marc/organizations/orgshome.html\">c\xC3\xB3digo de organizaci\xC3\xB3n MARC</a>"
+      - 
+        pref: MARCOrgCode
+      - por defecto en nuevos registros MARC (deje en blanco para deshabilitar).
+    - 
+      - "Cuando se crean los \xC3\xADtems, asignarles ubicaci\xC3\xB3n temporal en"
+      - 
+        class: short
+        pref: NewItemsDefaultLocation
+      - "(debe ser un c\xC3\xB3digo de ubicaci\xC3\xB3n, o blanco para deshabilitar)."
+    - 
+      - 
+        choices: 
+          "": No copiar
+          1: Copiar
+        pref: z3950NormalizeAuthor
+      - autores desde campos UNIMARC
+      - 
+        class: multi
+        pref: z3950AuthorAuthFields
+      - (separados por comas) a los campos de autor correctos cuando importe registros utilizando Z39.50.
+    - 
+      - "Los c\xC3\xB3digos de barras"
+      - 
+        choices: 
+          EAN13: "incremental EAN-13 c\xC3\xB3digo de barras"
+          "OFF": "no son generados autom\xC3\xA1ticamente."
+          annual: son generados con la forma &lt;year&gt;-0001, &lt;year&gt;-0002.
+          hbyymmincr: son generados con la forma &lt;branchcode&gt;yymm0001.
+          incremental: son generados con la forma 1, 2, 3.
+        pref: autoBarcode
+    - 
+      - "Cuando un nuevo \xC3\xADtem es a\xC3\xB1adido"
+      - 
+        choices: 
+          "": "el nuevo \xC3\xADtem no se rellena autom\xC3\xA1ticamente con los \xC3\xBAltimos valores de \xC3\xADtem creados."
+          1: "el nuevo \xC3\xADtem se rellena autom\xC3\xA1ticamente con los \xC3\xBAltimos valores de \xC3\xADtem creados."
+        pref: PrefillItem
+    - 
+      - "Defina una lista de subcampos para usar cuando rellenen los \xC3\xADtems (separado por espacio)"
+      - 
+        pref: SubfieldsToUseWhenPrefill
+    - 
+      - Usar el idioma (ISO 690-2)
+      - 
+        class: short
+        pref: UNIMARCField100Language
+      - como idioma por defecto en el campo 100 de UNIMARC cuando se cree un nuevo registro o en el plugin del campo.
+    - 
+      - "El N\xC3\xBAmero de control (001) es"
+      - 
+        choices: 
+          "OFF": "no generado autom\xC3\xA1ticamente."
+          biblionumber: generado igual que el biblionumber.
+          incremental: generado de la manera 1, 2, 3.
+        pref: autoControlNumber
+      - (Debe introducir un valor en la preferencia incrementalControlNumber)
+    - 
+      - "Usar el N\xC3\xBAmero de control (001)"
+      - 
+        class: integer
+        pref: incrementalControlNumber
+      - "como n\xC3\xBAmero incremental. (Esto requiere \"generado con la forma 1,2,3\" en la preferencia autoControlNumber)"
+  Interfaz: 
+    - 
+      - Usar
+      - 
+        choices: class-sources
+        pref: DefaultClassificationSource
+      - "como la fuente de clasificaci\xC3\xB3n por defecto."
+    - 
+      - 
+        choices: 
+          "": Mostrar
+          1: No mostrar
+        pref: advancedMARCeditor
+      - descripciones de campos y subcampos en el editor MARC.
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: EasyAnalyticalRecords
+      - "modo sencillo para crear relaciones de registros anal\xC3\xADticos"
+  Mostrar: 
+    - 
+      - "Separa m\xC3\xBAltiples autores, series o temas con "
+      - 
+        class: short
+        pref: authoritysep
+      - .
+    - 
+      - Mostrar
+      - 
+        pref: URLLinkText
+      - como los textos de enlaces embebidos en registros MARC.
+    - 
+      - 
+        choices: 
+          "": No utilice
+          1: Utilice
+        pref: UseControlNumber
+      - "el n\xC3\xBAmero de control de registro (subcampo $w) y el n\xC3\xBAmero de control (001) para el enlazado de registros bibliogr\xC3\xA1ficos."
+    - 
+      - 
+        choices: 
+          "": Mostrar
+          1: No mostrar
+        pref: hide_marc
+      - "n\xC3\xBAmeros de campos MARC, c\xC3\xB3digos de subcampos e indicadores en vista MARC."
+    - 
+      - 
+        choices: 
+          economical: Hacer
+          standard: No hacer
+        pref: LabelMARCView
+      - "que plieguen las etiquetas repetidas del mismo campo en la visualizaci\xC3\xB3n."
+    - 
+      - Por defecto, mostrar registros en
+      - 
+        choices: 
+          isbd: formato ISBD (ver abajo).
+          labeled_marc: Formato MARC etiquetado
+          marc: formato MARC.
+          normal: forma normal.
+        pref: IntranetBiblioDefaultView
+    - 
+      - "Utilice lo siguiente como plantilla ISBD:"
+      - 
+        class: code
+        pref: ISBD
+        type: textarea
+    - 
+      - 
+        choices: 
+          "": No ocultar
+          1: Ocultar
+        pref: OpacSuppression
+      - "\xC3\xADtems marcados como suprimidos en el resultado de una b\xC3\xBAsqueda OPAC. Note que debe tener el \xC3\xADndice <code>Suprimido</code> configurado en Zebra y por lo menos un \xC3\xADtem suprimido, o no funcionar\xC3\xA1n sus b\xC3\xBAsquedas."
+      - "Restringir la supresi\xC3\xB3n de direcciones IP fuera del rango de IP"
+      - 
+        class: short
+        pref: OpacSuppressionByIPRange
+      - (Dejar en blanco sino se utiliza. Defina un rango como <code>192.168.</code>.)
+    - 
+      - 
+        choices: 
+          "": No separar
+          1: Separar
+        pref: SeparateHoldings
+      - "items mostrados en dos pesta\xC3\xB1as, la primera pesta\xC3\xB1a contiene los \xC3\xADtems que"
+      - 
+        choices: 
+          holdingbranch: biblioteca de transferencia
+          homebranch: biblioteca de origen
+        pref: SeparateHoldingsBranch
+      - "es el que ha accedido a la biblioteca del usuario. La segunda pesta\xC3\xB1a contendr\xC3\xA1 los otros \xC3\xADtems"
+    - 
+      - No mostrar este
+      - 
+        class: multi
+        pref: NotesBlacklist
+      - "campos de notas en la pesta\xC3\xB1a de t\xC3\xADtulo (OPAC detalles de registro en OPAC) y en la pesta\xC3\xB1a de descripci\xC3\xB3n(detalles del registro en Intranet). Los campos deben aparecer separados por comas y de acuerdo con el formato MARC Koha (por ejemplo, 3 .. para UNIMARC, 5 .. por MARC21)"
+    - 
+      - 
+        choices: 
+          "": Ocultar
+          1: No ocultar
+        pref: DisplayPluginValueIndicators
+      - "el enlace al lado del campo del indicador abre un plugin que muestra los valores correctos para este campo. Si CheckValueIndicators est\xC3\xA1 deshabilitado y su variable est\xC3\xA1 habilitada tambi\xC3\xA9n se seleccionar\xC3\xA1 el valor, por ejemplo, si este incluye la funcionalidad CheckValueIndicators."
+  Tejuelos: 
+    - 
+      - "Cuando utilice la impresi\xC3\xB3n r\xC3\xA1pida de tejuelos,"
+      - 
+        choices: 
+          "": 'no'
+          1: si
+        pref: SpineLabelAutoPrint
+      - "abra autom\xC3\xA1ticamente el di\xC3\xA1logo de impresi\xC3\xB3n."
+    - 
+      - "Incluya los siguientes campos en un tejuelo r\xC3\xA1pido:"
+      - (introduzca en columnas desde las tablas <code>biblio</code>, <code>biblioitems</code> o <code>items</code>, rodeadas por &lt; y &gt;.)
+      - 
+        pref: SpineLabelFormat
+        type: textarea
+    - 
+      - 
+        choices: 
+          "": No mostrar
+          1: Mostrar
+        pref: SpineLabelShowPrintOnBibDetails
+      - "botones en la p\xC3\xA1gina de detalles de registros para imprimir tejuelos"
+    - ~

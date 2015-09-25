@@ -1,0 +1,137 @@
+[% INCLUDE 'help-top.inc' %] <h1>Avisos y  recibos</h1>
+
+<p>Todas los avisos y recibos de circulación generados por Koha pueden ser personalizados usando la herramienta de Avisos. El sistema viene con varias plantillas predefinidas que aparecerán cuando visite por primera vez esta herramienta.</p>
+
+<p>Cada aviso puede ser editado, pero solo unos pocos pueden ser eliminados, esto es para evitar errores en el sistema, debe enviar un mensaje sin utilizar una plantilla. Cada aviso y recibo puede ser editado por la biblioteca de origen, por defecto verá los avisos de todas las bibliotecas.</p>
+
+<p>Si usted tiene un estilo que le gustaría que se aplicara a todos los recibos,  puede indicar la preferencia SlipCSS a una hoja de estilos. Lo mismo es posible para los avisos, utilizando la preferencia NoticeCSS para definir una hoja de estilo.</p>
+
+<h3>Añadir avisos y recibos</h3>
+
+<p>Para añadir un nuevo aviso o recibo<ul>
+ <li>Seleccionar 'Nuevo aviso'</li>
+ <li>Seleccionar que biblioteca  de este aviso o recibo por</li>
+ <li>Elija el módulo al cual este aviso está relacionada</li>
+ <li>El código se limita a 20 caracteres</li>
+ <li>Utilice el campo nombre para expandir en su código</li>
+ <li>Si usted planea la escritura del aviso y del recibo en HTML marque la casilla 'Mensaje HTML , de lo contrario el contenido se genera como texto sin formato</li>
+ <li>El asunto de mensaje es lo que aparece en el asunto del email</li>
+ <li>En el cuerpo del mensaje escriba cualquier mensaje que considere apropiado, utilice los campos a la izquierda para incorporar datos individualizados desde la base de datos. <ul>
+ <li style="color: #990000;">Importante: En avisos de retraso puede utilizar &lt;&lt;items.content&gt;&gt;  etiquetas por sí mismos, o utilizar &lt;item&gt;&lt;/item&gt; para abarcar todas las etiquetas. Aprender más sobre Marcas de Aviso de Retraso</li>
+<ul>
+ <li>En avisos de retraso asegúrese de utilizar &lt;&lt;items.content&gt;&gt; etiquetas para imprimir los datos relacionados con todos los  ítems que están atrasados.</li>
+</ul>
+<ul>
+ <li>Otra opción, solo para las notificaciones de vencimiento de préstamo, es usar las etiquetas de &lt;item&gt;&lt;/item&gt; para separar las lineas para que se imprima en varias filas . Un ejemplo de esta opción &lt;item&gt;&lt;/item&gt; is:&lt;item&gt;"&lt;&lt;biblio.title&gt;&gt;" by &lt;&lt;biblio.author&gt;&gt;, &lt;&lt;items.itemcallnumber&gt;&gt;, Barcode: &lt;&lt;items.barcode&gt;&gt; , Fecha de préstamo: &lt;&lt;issues.issuedate&gt;&gt;, Fecha de fin de la multa: &lt;&lt;issues.date_due&gt;&gt; Multa: &lt;&lt;items.fine&gt;&gt; Fecha de fin de la multa: &lt;&lt;issues.date_due&gt;&gt; &lt;/item&gt;</li>
+</ul>
+</ul>
+</li>
+ <li style="color: #990000;">Importante: Solo los avisos de retraso pueden utilizar las etiquetas &lt;item&gt;&lt;/item&gt;, todos los otros avisos que referencian ítems deben utilizar &lt;&lt;items.content&gt;&gt;</li>
+</ul>
+
+<h4>Notificación de vencimiento</h4>
+
+<p>Cuando cree un aviso de retraso hay dos etiquetas además de los varios campos de base de datos que puede utilizar en sus avisos.</p>
+
+<p style="color: #990000;">Importante: Estas nuevas etiquetas solo funcionan en avisos de retrasos, hasta le momento no funciona en ningún otro aviso relacionado.</p>
+
+<ul>
+ <li>&lt;item&gt;&lt;/item&gt; lo cual debería incluir todos los campos de las tablas biblio, biblioitems, e items.</li>
+ <li>&lt;fine&gt;&lt;/fine&gt; la cual debe ser encerrada por la etiqueta del ítem y debe incluir un identificador de moneda correspondiente a la norma ISO 4217. Si esta etiqueta está presente con el identificador apropiado, la multa para ese ítem sera mostrada en el formato de moneda apropiado. <ul>
+ <li>Nota: ISO 4127 se modifica de forma aleatoria por lo que no todas las monedas están representadas. Si encuentra una caso así, por favor inicie un archivo de error con el autor  Locale::Currency::Format Tan D Nguyen &lt;tnguyen at cpan dot org&gt;.</li>
+</ul>
+</li>
+</ul>
+
+<p>Un ejemplo del uso de estas dos etiquetas en una plantilla de aviso podría ser como: </p>
+
+<pre>Los siguientes ítems tienen actualmente multas por retraso :&lt;item&gt;"&lt;&lt;biblio.title&gt;&gt;" by &lt;&lt;biblio.author&gt;&gt;, &lt;&lt;items.itemcallnumber&gt;&gt;, Código de barras: &lt;&lt;items.barcode&gt;&gt; Multa: &lt;&lt;items.fine&gt;&gt; &lt;/item&gt;</pre>
+
+<p>Lo cual, asumiendo dos retrasos, resultará en un aviso como: </p>
+
+<pre>Los siguientes ítems están retrasados: "A Short History of Western Civilization" Harrison, John B, 909.09821 H2451, Barcode: 08030003 Fine: Â£3.50 "History of Western Civilization" by Hayes, Carlton Joseph Huntley, 909.09821 H3261 v.1, Barcode: 08030004 Fine: £3.50</pre>
+
+<h3>Exisitr Avisos y Recibos</h3>
+
+<p>Entre los avisos por defecto hay avisos de varias acciones comunes dentro de Koha.Todos estos avisos pueden ser personalizados modificando el texto a través de herramientas de Avisos  &amp; Recibos y su estilo utilizando preferencias NoticeCSS para definir la hoja de estilo. Éstos son algunos de los avisos que puedes hacer</p>
+
+<ul>
+ <li>Detalles de la cuenta <ul>
+ <li>Enviada a los usuarios cuando se crea su cuenta si la preferencia AutoEmailOPACUser se establece en 'Enviar'</li>
+</ul>
+</li>
+ <li>ACQCLAIM (Reclamación de adquisición) <ul>
+ <li>Usado en el módulo de reclamos de compras</li>
+ <li><em>Llegar:</em> More &gt; Acquisitions &gt; Late issues</li>
+</ul>
+</li>
+ <li>RESERVA (Reserva disponible para retiro) <ul>
+ <li>Este aviso se utiliza si se cumplen dos criterios: <ol>
+ <li>EnhancedMessagingPreferences esta configurado para 'Permitir'</li>
+ <li>El usuario ha requerido recibir este aviso <ul>
+ <li><em>Hay que llegar:</em>OPAC &gt; Login &gt; mi mensaje</li>
+ <li><em>Hay que llegar:</em>Staff Client &gt; Patron Record &gt; Notices</li>
+</ul>
+</li>
+</ol>
+</li>
+ <li>Cuando este aviso referencia la tabla de la biblioteca esto es referenciado para la información de la biblioteca de recogida. </li>
+</ul>
+</li>
+ <li>RESERVAHECHA (un aviso a la biblioteca que se ha puesto una reserva) <ul>
+ <li>Este aviso requiere que la preferencia del sistema emailLibrarianWhenHoldIsPlaced se establezca en 'Habilitar'</li>
+ <li>Cuando este aviso referencia la tabla de la biblioteca esto es referenciado para la información de la biblioteca de recogida. </li>
+</ul>
+</li>
+ <li>RESERVA_IMPRESA (Aviso impreso cuando una reserva está disponible para retiro) <ul>
+ <li>Este aviso se utiliza para confirmaciones de reservas que se envían impresas. Esto no afectará el aspecto del aviso por email.</li>
+ <li>Cuando este aviso referencia la tabla de la biblioteca esto es referenciado para la información de la biblioteca de recogida. </li>
+</ul>
+</li>
+ <li>ODUE (Aviso de retraso) <ul>
+ <li>Este aviso se utiliza para enviar Avisos de Retrasos a Usuarios</li>
+ <li>Ver un ejemplo de aviso de retraso</li>
+ <li>Requiere que establezca Disparadores de estado/aviso de retrasos</li>
+</ul>
+</li>
+ <li>RLIST (Lista de circulación) <ul>
+ <li>Usado en el módulo de publicaciones periódicas para notificar a usuarios/personal de nuevos ejemplares <ul>
+ <li><em>Llegar:</em> Más &gt; Series &gt; NUeva subscripción</li>
+</ul>
+</li>
+ <li>Tiene la opción de seleccionar al aviso de 'Lista de circulación' cuando crea una suscripción (Seleccione desde el desplegable 'Avisos a usuarios').</li>
+ <li style="background-color: #ffe599;">Sugerencia: Note que si desea notificar a usuarios de nuevos ejemplares, puede hacer clic en 'definir un aviso' el cual lo llevará a la herramienta 'Avisos'</li>
+</ul>
+</li>
+</ul>
+
+<p>También hay un conjunto de recibos predefinidos (o recibos) que aparecen en esta página. Todas estos recibos se puede personalizar mediante la alteración de su texto a través de herramienta Notices &amp; Slips y su estilo utilizando el </p>
+
+<p>Aquí está que recibos se están usando para:</p>
+
+<ul>
+ <li>ISSUEQSLIP <ul>
+ <li>Utilizar para imprimir el recibo rápido en circulación</li>
+ <li>El recibo rápido sólo incluye ítems que han sido pre´stados en el día</li>
+</ul>
+</li>
+ <li>ISSUESLIP <ul>
+ <li>Utilizar para imprimir el recibo completo en circulación</li>
+ <li>El recibo mostrará los ítems préstados en el día de hoy, así como registros ítems que todavía están préstados</li>
+</ul>
+</li>
+ <li>RESERVESLIP <ul>
+ <li>Utilizar para imprimir un recibo reservado</li>
+ <li>El comprobante de reserva se generará cuando una reserva esté confirmada</li>
+</ul>
+</li>
+ <li>TRANSFERSLIP <ul>
+ <li>Utilizar para imprimir un recibo de transferencia</li>
+ <li>El recibo de transferencia se imprime cuando se confirmala transferencia desde una biblioteca a otra en el sistema </li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Vea la documentación completa para Avisos en el <a href="http://es.koha-community.org/manual/3.12/es/tools.html#notices">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

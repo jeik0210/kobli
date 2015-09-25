@@ -1,0 +1,9 @@
+[% INCLUDE 'help-top.inc' %] <h1>Avisos del usuario</h1>
+
+<p>Las preferencias de mensajería del usuario se establecen al agregar o modificar el usuario. Esta pestaña muestra los mensajes que se han enviado y los que están en cola para ser enviados</p>
+
+<p>Haciendo clic en el título del mensaje ampliará la vista para mostrarle el texto completo del mensaje enviado.</p>
+
+<p><strong>Vea la documentación completa para Avisos de Usuarios en el <a href="http://es.koha-community.org/manual/3.12/es/patroninformation.html#patnotices">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]

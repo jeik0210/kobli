@@ -1,0 +1,15 @@
+[% INCLUDE 'help-top.inc' %] <h1>Series</h1>
+
+<p>Koha permite enviar correos electrónicos a sus vendedores de revistas si tiene ejemplares retrasados. A la izquierda de la página principal de periódicas hay un enlace a 'Reclamos'</p>
+
+<p>El enlace a reclamos también aparece a la izquierda de la página de detalles de suscripción</p>
+
+<p>Si no tiene un aviso de reclamo definido aun verá un mensaje de advertencia de que necesita primero definir un aviso.</p>
+
+<p>Haciendo clic en 'Reclamos' abrirá un informe que le pedirá elegir entre varios proveedores para generar reclamos de ejemplares retrasados.</p>
+
+<p>Desde la lista de ejemplares retrasados puede elegir a cuales quiere enviar un email de reclamo haciendo clic en la casilla a la izquierda del mismo, eligiendo la plantilla de aviso a utilizar y haciendo clic en 'Enviar notificación'.</p>
+
+<p><strong>Vea la documentación completa para Reclamos de periódicas en el <a href="http://es.koha-community.org/manual/3.12/es/serialclaims.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

@@ -1,0 +1,33 @@
+[% INCLUDE 'help-top.inc' %] <h1>Ayuda de administración </h1>
+
+<p>El área de administración es donde se definen todas sus preferencias para el sistema. Las preferencias se dividen en varias categorías, que se detalladan a continuación.</p>
+
+<h3>Preferencias Globales del Sistema</h3>
+
+<p>Koha cuenta con un amplio conjunto de preferencias del sistema. Las preferencias del sistema controlan todas las características y funciones de Koha , éstas pueden estar activas o no en su instalación. Las preferencias del sistema generalmente se establecen en la instalación y luego rara vez se cambian.</p>
+
+<p>Si no está seguro de qué combinación de las preferencias del sistema utilizar, pruebe utilizar uno de los perfiles de la muestra durante la instalación. </p>
+
+<p style="color: #990000">IMPORTANTE: Muchas preferencias interactúan entre sí. Habilitar una preferencia del sistema puede que exija que otras preferencias sean también habilitadas. </p>
+
+<h3>Parámetros básicos </h3>
+
+<p>"Parámetros Básicos" es donde se establecen y se rigen las políticas bibliotecaría. Lo mejor es establecer las preferencias del sistema y después trabajar con los parámetros básicos, en el orden en que aparecen en esta página.</p>
+
+<p>Tenga en cuenta que no es obligatorio configurar todos los parámetros básicos. Por ejemplo, si usted no planea utilizar las adquisiciones basadas en presupuestos, entonces la configuración de 'Fondos' , 'Presupuestos' and 'Currencies and Exchange Rates'  puede ser ignorada. </p>
+
+<h3>Usuarios y Circulación</h3>
+
+<p>Estos parámetros ayudan con el control de los registros de usuarios y las reglas de circulación. Lo mejor es asegurarse de establecer los parámetros básicos antes de visitar esta sección.</p>
+
+<h3>Catálogo</h3>
+
+<p>Los parámetros del catálogo ayudan a configurar la funcionalidad de catalogación dentro de Koha. </p>
+
+<h3>Parámetros Adicionales</h3>
+
+<p>Esta lista de parámetros incluye una funcionalidad que no encajaban en ninguna otra categoría. Estos ítems son opcionales y puede que no tengan que ser modificadas, en función de cómo su biblioteca esté utilizando Koha.</p>
+
+<p><strong>Ver la documentación completa para Administración de sistemas en el <a href="http://es.koha-community.org/manual/3.12/es/administration.html">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %] 

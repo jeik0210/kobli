@@ -1,0 +1,9 @@
+[% INCLUDE 'help-top.inc' %] <h1>Lista de tags</h1>
+
+<p>La lista muestra todos los títulos etiquetados con el término en el que has clicado.</p>
+
+<p>Para eliminar una etiqueta de un título específico, simplemente clique en el botón "Quitar tag" situado a la derecha del título</p>
+
+<p><strong>Ver la documentación completa para Moderación de Etiquetas en el <a href="http://es.koha-community.org/manual/3.12/es/tools.html#tagsmoderation">manual</a> (en línea).</strong></p>
+
+[% INCLUDE 'help-bottom.inc' %]
