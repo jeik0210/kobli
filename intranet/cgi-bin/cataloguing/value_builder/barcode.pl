@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License along
 # with Koha; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+    
 use strict;
 use warnings;
 no warnings 'redefine'; # otherwise loading up multiple plugins fills the log with subroutine redefine warnings
@@ -91,7 +91,7 @@ sub plugin_javascript {
     elsif ($autoBarcodeType eq 'EAN13') {
         # not the best, two catalogers could add the same barcode easily this way :/
         my $query = "select max(abs(barcode)) from items";
-        my $sth = $dbh->prepare($query);
+        my $sth = $db->prepare($query);
         $sth->execute();
         while (my ($last)= $sth->fetchrow_array) {
             $nextnum = $last;
