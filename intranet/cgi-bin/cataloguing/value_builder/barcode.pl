@@ -33,6 +33,7 @@ my $DEBUG = 0;
 
 plugin_parameters : other parameters added when the plugin is called by the dopop function
 
+
 =cut
 
 sub plugin_parameters {
@@ -92,6 +93,7 @@ sub plugin_javascript {
         # not the best, two catalogers could add the same barcode easily this way :/
         my $query = "select max(abs(barcode)) from items";
         my $sth = $db->prepare($query);
+        # codigo de base de datos modificado de $dbh a $bd ; =D este put.. codigo me hizo cranear demasiado
         $sth->execute();
         while (my ($last)= $sth->fetchrow_array) {
             $nextnum = $last;
