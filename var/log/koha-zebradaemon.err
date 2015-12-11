@@ -32,3 +32,16 @@
 20150925 17:19:27 koha-zebra-ctl.kobli: client (pid 2072) killed by signal 15, stopping
 20150925 19:28:29 koha-zebra-ctl.kobli: client (pid 2073) killed by signal 15, stopping
 20151014 22:44:30 koha-zebra-ctl.kobli: client (pid 2073) killed by signal 15, stopping
+20151027 17:40:34 koha-zebra-ctl.kobli: client (pid 2039) killed by signal 15, stopping
+20151113 16:48:04 koha-zebra-ctl.kobli: client (pid 2044) killed by signal 15, stopping
+20151202 18:20:27 koha-zebra-ctl.kobli: client (pid 2063) killed by signal 15, stopping
+20151202 22:42:44 koha-zebra-ctl.kobli: client (pid 2034) killed by signal 15, stopping
+20151203 18:22:22 koha-zebra-ctl.kobli: client (pid 2052) killed by signal 15, stopping
+20151203 22:20:09 koha-zebra-ctl.kobli: client (pid 2059) killed by signal 15, stopping
+20151209 17:29:54 koha-zebra-ctl.kobli: client (pid 2059) killed by signal 15, stopping
+20151209 18:24:18 koha-zebra-ctl.kobli: client (pid 2023) killed by signal 15, stopping
+20151210 17:35:00 koha-zebra-ctl.kobli: client (pid 2071) killed by signal 15, stopping
+20151210 17:36:07 koha-zebra-ctl.kobli: client (pid 2038) killed by signal 15, stopping
+20151210 17:47:07 koha-zebra-ctl.kobli: client (pid 2068) killed by signal 15, stopping
+20151210 17:54:30 koha-zebra-ctl.kobli: client (pid 2053) killed by signal 15, stopping
+20151210 18:32:03 koha-zebra-ctl.kobli: client (pid 2067) killed by signal 15, stopping
